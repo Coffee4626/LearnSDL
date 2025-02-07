@@ -132,12 +132,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="EventHandle.cpp" />
+    <ClCompile Include="StateManager.cpp" />
     <ClCompile Include="gameBase.cpp" />
+    <ClCompile Include="InputHandle.cpp" />
     <ClCompile Include="loadMedia.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="EventHandle.h" />
     <ClInclude Include="gameBase.h" />
+    <ClInclude Include="Geometry.h" />
+    <ClInclude Include="InputHandle.h" />
     <ClInclude Include="loadMedia.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

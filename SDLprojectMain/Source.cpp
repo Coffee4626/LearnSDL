@@ -1,22 +1,25 @@
 ﻿#include "gameBase.h"
 #include "loadMedia.h"
+#include "InputHandle.h"
 
 using namespace std;
 
 const char* WINDOW_TITLE = "Test";
 
+//Class ball/ray to fly at a certain direction at game start
 
+//Class mirror/panel to bounce the ball at point of impact 
 
-void waitUntilKeyPressed()
-{
-    SDL_Event e;
-    while (true) {
-        if (SDL_PollEvent(&e) != 0 &&
-            (e.type == SDL_KEYDOWN || e.type == SDL_QUIT))
-            return;
-        SDL_Delay(100);
-    }
-}
+//Class endpoint for game score
+
+//given a number of panels, player must move and rotate the panels to bounce the ball to endpoint
+
+//Class wall/obstable to prevent ball from reaching the endpoint
+
+//Physics to handle the point of impact and angle of deflection
+
+//Texture and sprites for the panels and the ball
+
 
 void drawSomething(SDL_Window* window, SDL_Renderer* renderer) 
 {
@@ -35,15 +38,16 @@ void drawSomething(SDL_Window* window, SDL_Renderer* renderer)
 
 int main(int argc, char* argv[])
 {
-    //Khởi tạo môi trường đồ họa
+    //Initialize
     SDL_Window* window = initSDL(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_TITLE);
     SDL_Renderer* renderer = createRenderer(window);
 
     //Xóa màn hình
     SDL_RenderClear(renderer);
 
-    //Vẽ gì đó
-    drawSomething(window, renderer);
+    //Main loop
+
+
 
     //Hiện bản vẽ ra màn hình
     //Khi chạy tại môi trường bình thường
@@ -52,7 +56,6 @@ int main(int argc, char* argv[])
     //SDL_UpdateWindowSurface(window);
 
     //Đợi phím bất kỳ trước khi đóng môi trường đồ họa và kết thúc chương trình
-    waitUntilKeyPressed();
     quitSDL(window, renderer);
     return 0;
 }
