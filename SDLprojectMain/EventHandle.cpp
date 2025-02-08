@@ -1,5 +1,4 @@
 #include "EventHandle.h"
-#include "InputHandle.h"
 void gameEvents()
 {
 	bool quit = false;

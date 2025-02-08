@@ -1,5 +1,5 @@
 ﻿#include "loadMedia.h"
-#include "Geometry.h"
+
 SDL_Window* initSDL(int SCREEN_WIDTH, int SCREEN_HEIGHT, const char* WINDOW_TITLE)
 {
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
@@ -24,11 +24,6 @@ SDL_Renderer* createRenderer(SDL_Window* window)
     SDL_RenderSetLogicalSize(renderer, SCREEN_WIDTH, SCREEN_HEIGHT);
 
     return renderer;
-}
-
-void drawMirror(Point p1, Point p2)
-{
-
 }
 
 void quitSDL(SDL_Window* window, SDL_Renderer* renderer)

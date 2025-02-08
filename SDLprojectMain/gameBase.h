@@ -6,9 +6,9 @@
 #include <cmath>
 #include <iostream>
 #include <string>
-
-const int SCREEN_WIDTH = 800;
-const int SCREEN_HEIGHT = 600;
+#include <SDL_image.h>
+const int SCREEN_WIDTH = 1200;
+const int SCREEN_HEIGHT = 1600;
 
 
 void logErrorAndExit(const char* msg, const char* error);

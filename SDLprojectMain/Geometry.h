@@ -6,7 +6,7 @@
 class Point
 {
 public:
-	int x, y;
+	float x, y;
 
 	Point()
 	{
@@ -78,13 +78,13 @@ public:
 	{
 		//Calculating determinant
 		//https://en.wikipedia.org/wiki/Line%E2%80%93line_intersection#Given_two_points_on_each_line
-		int temp1 = (l1.p1.x * l1.p2.y) - (l1.p1.y * l1.p2.x);
-		int temp2 = (l2.p1.x * l2.p2.y) - (l2.p1.y * l2.p2.x);
+		float temp1 = (l1.p1.x * l1.p2.y) - (l1.p1.y * l1.p2.x);
+		float temp2 = (l2.p1.x * l2.p2.y) - (l2.p1.y * l2.p2.x);
 		// Intersection point P
-		int x1 = temp1 * (l2.p1.x - l2.p2.x) - (l1.p1.x - l1.p2.x) * temp2;
-		int y1 = ((l1.p1.x - l1.p2.x) * (l2.p1.y - l2.p2.y)) - ((l1.p1.y - l1.p2.y) * (l2.p1.x - l2.p2.x));
-		int x2 = temp1 * (l2.p1.y - l2.p2.y) - (l1.p1.y - l1.p2.y) * temp2;
-		int y2 = ((l1.p1.x - l1.p2.x) * (l2.p1.y - l2.p2.y)) - ((l1.p1.y - l1.p2.y) * (l2.p1.x - l2.p2.x));
+		float x1 = temp1 * (l2.p1.x - l2.p2.x) - (l1.p1.x - l1.p2.x) * temp2;
+		float y1 = ((l1.p1.x - l1.p2.x) * (l2.p1.y - l2.p2.y)) - ((l1.p1.y - l1.p2.y) * (l2.p1.x - l2.p2.x));
+		float x2 = temp1 * (l2.p1.y - l2.p2.y) - (l1.p1.y - l1.p2.y) * temp2;
+		float y2 = ((l1.p1.x - l1.p2.x) * (l2.p1.y - l2.p2.y)) - ((l1.p1.y - l1.p2.y) * (l2.p1.x - l2.p2.x));
 		return Point(x1 / y1, x2 / y2);
 	}
 
