@@ -134,9 +134,10 @@
   <ItemGroup>
     <ClCompile Include="Ball.cpp" />
     <ClCompile Include="EventHandle.cpp" />
-    <ClCompile Include="StateManager.cpp" />
+    <ClCompile Include="loadTexture.cpp" />
     <ClCompile Include="gameBase.cpp" />
     <ClCompile Include="loadMedia.cpp" />
+    <ClCompile Include="Paddle.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -145,6 +146,8 @@
     <ClInclude Include="gameBase.h" />
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="loadMedia.h" />
+    <ClInclude Include="loadTexture.h" />
+    <ClInclude Include="Paddle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

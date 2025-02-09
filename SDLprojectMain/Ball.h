@@ -13,19 +13,13 @@ class Ball
 private:
 	int ball_speed = 200;
 	double x;
-	//render texture
+	//position for generation
 	SDL_Rect position;
 
 public:
+
 	Ball();
 
-	//void collision();
-
-	void update();
-
-	void renderBall();
-	
-	
 
 };
 

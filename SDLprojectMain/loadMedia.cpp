@@ -26,9 +26,12 @@ SDL_Renderer* createRenderer(SDL_Window* window)
     return renderer;
 }
 
+
 void quitSDL(SDL_Window* window, SDL_Renderer* renderer)
 {
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
 }
+
+

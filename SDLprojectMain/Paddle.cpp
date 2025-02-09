@@ -1,0 +1,54 @@
+#include "Paddle.h"
+
+Paddle::Paddle()
+{
+	paddleVelocity = 20.0f;
+	paddleDirection = 0;
+	paddlePosition.x = 0;
+	paddlePosition.y = 0;
+	paddlePosition.w = 25;
+	paddlePosition.h = 75;
+}
+
+Paddle::Paddle(float x, float y)
+{
+	paddleVelocity = 20.0f;
+	paddleDirection = 0;
+	paddlePosition.x = static_cast<int>(x);
+	paddlePosition.y = static_cast<int>(y);
+	paddlePosition.w = 25;
+	paddlePosition.h = 75;
+}
+void Paddle::paddleMovement(SDL_Event event, float deltaTime)
+{
+	if (event.type == SDL_KEYUP)
+	{
+		paddleDirection = -1;
+	}
+	if (event.type == SDL_KEYDOWN)
+	{
+		paddleDirection = 1;
+	}
+	if (paddlePosition.y + paddlePosition.w / 2 > SCREEN_HEIGHT)
+	{
+		paddlePosition.y += SCREEN_HEIGHT - paddlePosition.w / 2;
+	}
+	else if (paddlePosition.y - paddlePosition.w / 2 < 0)
+	{
+		paddlePosition.y += 0 + paddlePosition.w / 2;
+	}
+	else
+	{
+		paddlePosition.y += static_cast<float>(paddleDirection) * paddleVelocity * deltaTime;
+	}
+}
+
+
+
+void Paddle::drawPaddle(SDL_Renderer* renderer)
+{
+	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+	SDL_RenderFillRect(renderer, &paddlePosition);
+	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+}
+
