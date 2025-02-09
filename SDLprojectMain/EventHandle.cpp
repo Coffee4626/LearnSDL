@@ -24,16 +24,16 @@ void Game::gameLoop()
 				quit = true;
 			}
 		}
-		SDL_RenderClear(gRenderer);
-
-		paddle1.drawPaddle(gRenderer);
-
-		SDL_RenderPresent(gRenderer);
+		render();
 	}
 	quitSDL(gWindow, gRenderer);
 }
 
 void Game::render()
 {
+	SDL_RenderClear(gRenderer);
 
+	paddle1.drawPaddle(gRenderer);
+
+	SDL_RenderPresent(gRenderer);
 }

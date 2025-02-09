@@ -21,13 +21,21 @@ Paddle::Paddle(float x, float y)
 }
 void Paddle::paddleMovement(SDL_Event event, float deltaTime)
 {
-	if (event.type == SDL_KEYUP)
-	{
-		paddleDirection = -1;
-	}
 	if (event.type == SDL_KEYDOWN)
 	{
-		paddleDirection = 1;
+		switch (event.key.keysym.sym)
+		{
+			case SDLK_UP:
+				paddleDirection = -1;
+				break;
+			case SDLK_DOWN:
+				paddleDirection = 1;
+				break;
+		}
+	}
+	else if (event.type == SDL_KEYUP)
+	{
+		paddleDirection = 0;
 	}
 	if (paddlePosition.y + paddlePosition.w / 2 > SCREEN_HEIGHT)
 	{
