@@ -37,13 +37,13 @@ void Paddle::paddleMovement(SDL_Event event, float deltaTime)
 	{
 		paddleDirection = 0;
 	}
-	if (paddlePosition.y + paddlePosition.w / 2 > SCREEN_HEIGHT)
+	if (paddlePosition.y + paddlePosition.h > SCREEN_HEIGHT)
 	{
-		paddlePosition.y += SCREEN_HEIGHT - paddlePosition.w / 2;
+		paddlePosition.y = SCREEN_HEIGHT - paddlePosition.h - 10;
 	}
-	else if (paddlePosition.y - paddlePosition.w / 2 < 0)
+	else if (paddlePosition.y - paddlePosition.h / 5 < 0)
 	{
-		paddlePosition.y += 0 + paddlePosition.w / 2;
+		paddlePosition.y = 0 + paddlePosition.h / 5;
 	}
 	else
 	{
@@ -59,4 +59,3 @@ void Paddle::drawPaddle(SDL_Renderer* renderer)
 	SDL_RenderFillRect(renderer, &paddlePosition);
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 }
-

@@ -19,6 +19,9 @@ public:
 
 	int getWidth();
 
+	SDL_Texture* lTexture(const char* filename, SDL_Renderer* renderer);
+
+
 private:
 
 	SDL_Texture* mTexture;

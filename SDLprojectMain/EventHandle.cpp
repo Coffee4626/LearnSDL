@@ -1,5 +1,8 @@
 #include "EventHandle.h"
 #include "loadMedia.h"
+#include "loadTexture.h"
+
+
 Game::Game()
 {
 	gWindow = initSDL(SCREEN_WIDTH, SCREEN_HEIGHT, "test");
@@ -32,6 +35,7 @@ void Game::gameLoop()
 void Game::render()
 {
 	SDL_RenderClear(gRenderer);
+
 
 	paddle1.drawPaddle(gRenderer);
 

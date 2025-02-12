@@ -1,6 +1,7 @@
 #ifndef PADDLE_H
 #define PADDLE_H
 #include "gameBase.h"
+#include "loadTexture.h"
 class Paddle
 {
 public:
