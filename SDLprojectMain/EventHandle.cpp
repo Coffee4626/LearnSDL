@@ -5,9 +5,10 @@
 
 Game::Game()
 {
-	gWindow = initSDL(SCREEN_WIDTH, SCREEN_HEIGHT, "test");
+	gWindow = initSDL(SCREEN_WIDTH, SCREEN_HEIGHT, "Game");
 	gRenderer = createRenderer(gWindow);
-	paddle1 = Paddle(100, 100);
+	paddle1 = Paddle(300, 300);
+	paddle2 = Paddle(200, 200);
 }
 
 void Game::gameLoop()
@@ -38,6 +39,10 @@ void Game::render()
 
 
 	paddle1.drawPaddle(gRenderer);
+
+	paddle2.drawPaddle(gRenderer);
+
+	/*SDL_RenderCopy(gRenderer, gTexturePaddle, NULL, NULL);*/
 
 	SDL_RenderPresent(gRenderer);
 }

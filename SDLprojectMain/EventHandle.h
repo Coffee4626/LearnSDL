@@ -18,6 +18,7 @@ private:
 	SDL_Window* gWindow;
 	SDL_Renderer* gRenderer;
 	Paddle paddle1;
+	Paddle paddle2;
 };
 
 #endif // !EVENT_HANDLE

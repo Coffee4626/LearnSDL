@@ -11,7 +11,8 @@ public:
 	void paddleMovement(SDL_Event event, float deltaTime);
 	void drawPaddle(SDL_Renderer* renderer);
 private:
-	int paddleDirection;
+	int paddleDirectionX;
+	int paddleDirectionY;
 	float paddleVelocity = 20.0f;
 	SDL_Rect paddlePosition;
 };

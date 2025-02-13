@@ -26,6 +26,39 @@ SDL_Renderer* createRenderer(SDL_Window* window)
     return renderer;
 }
 
+//bool loadMedia()
+//{
+//    //Loading success flag
+//    bool success = true;
+//
+//    //Load PNG texture
+//    if (gTexture == NULL)
+//    {
+//        printf("Failed to load texture image!\n");
+//        success = false;
+//    }
+//
+//
+//
+//    return success;
+//}
+
+void close(SDL_Texture* gTexture, SDL_Renderer* gRenderer, SDL_Window* gWindow)
+{
+    //Free loaded image
+    SDL_DestroyTexture(gTexture);
+    gTexture = NULL;
+
+    //Destroy window    
+    SDL_DestroyRenderer(gRenderer);
+    SDL_DestroyWindow(gWindow);
+    gWindow = NULL;
+    gRenderer = NULL;
+
+    //Quit SDL subsystems
+    IMG_Quit();
+    SDL_Quit();
+}
 
 void quitSDL(SDL_Window* window, SDL_Renderer* renderer)
 {
