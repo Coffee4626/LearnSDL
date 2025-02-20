@@ -2,37 +2,29 @@
 
 Paddle::Paddle()
 {
-	paddleVelocity = 0;
-	paddleDirectionX = 0;
+	paddleVelocity = 20.0f;
 	paddleDirectionY = 0;
 	paddlePosition.x = 0;
 	paddlePosition.y = 0;
-	paddlePosition.w = 0;
-	paddlePosition.h = 0;
+	paddlePosition.w = 25;
+	paddlePosition.h = 75;
 }
 
 Paddle::Paddle(float x, float y)
 {
 	paddleVelocity = 20.0f;
-	paddleDirectionX = 0;
 	paddleDirectionY = 0;
 	paddlePosition.x = static_cast<int>(x);
 	paddlePosition.y = static_cast<int>(y);
-	paddlePosition.w = 75;
-	paddlePosition.h = 25;
+	paddlePosition.w = 25;
+	paddlePosition.h = 75;
 }
-void Paddle::paddleMovement(SDL_Event event, float deltaTime)
+void Paddle::PaddleMovement1(SDL_Event event, float deltaTime)
 {
 	if (event.type == SDL_KEYDOWN)
 	{
 		switch (event.key.keysym.sym)
 		{
-			case SDLK_LEFT:
-				paddleDirectionX = -1;
-				break;
-			case SDLK_RIGHT:
-				paddleDirectionX = 1;
-				break;
 			case SDLK_UP:
 				paddleDirectionY = -1;
 				break;
@@ -43,25 +35,55 @@ void Paddle::paddleMovement(SDL_Event event, float deltaTime)
 	}
 	else if (event.type == SDL_KEYUP)
 	{
-		paddleDirectionX = 0;
 		paddleDirectionY = 0;
 	}
-	// handling collision with window border
-	if (paddlePosition.x + paddlePosition.w > SCREEN_WIDTH)
+	if (paddlePosition.y + paddlePosition.w / 2 > SCREEN_HEIGHT)
 	{
-		paddlePosition.x = SCREEN_WIDTH - paddlePosition.w - 10;
+		paddlePosition.y += SCREEN_HEIGHT - paddlePosition.w / 2;
 	}
-	else if (paddlePosition.x - paddlePosition.w / 5 < 0)
+	else if (paddlePosition.y - paddlePosition.w / 2 < 0)
 	{
-		paddlePosition.x = 0 + paddlePosition.w / 5;
+		paddlePosition.y += 0 + paddlePosition.w / 2;
 	}
 	else
 	{
-		paddlePosition.x += static_cast<float>(paddleDirectionX) * paddleVelocity * deltaTime;
 		paddlePosition.y += static_cast<float>(paddleDirectionY) * paddleVelocity * deltaTime;
 	}
+	std::cout << paddleDirectionY << std::endl;
 }
 
+void Paddle::PaddleMovement2(SDL_Event event, float deltaTime)
+{
+	if (event.type == SDL_KEYDOWN)
+	{
+		switch (event.key.keysym.sym)
+		{
+			case SDLK_w:
+				paddleDirectionY = -1;
+				break;
+			case SDLK_s:
+				paddleDirectionY = 1;
+				break;
+		}
+	}
+	else if (event.type == SDL_KEYUP)
+	{
+		paddleDirectionY = 0;
+	}
+	if (paddlePosition.y + paddlePosition.w / 2 > SCREEN_HEIGHT)
+	{
+		paddlePosition.y += SCREEN_HEIGHT - paddlePosition.w / 2;
+	}
+	else if (paddlePosition.y - paddlePosition.w / 2 < 0)
+	{
+		paddlePosition.y += 0 + paddlePosition.w / 2;
+	}
+	else
+	{
+		paddlePosition.y += static_cast<float>(paddleDirectionY) * paddleVelocity * deltaTime;
+	}
+	std::cout << paddleVelocity << std::endl;
+}
 
 
 void Paddle::drawPaddle(SDL_Renderer* renderer)

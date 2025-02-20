@@ -3,13 +3,14 @@
 
 #include "gameBase.h"
 #include "Paddle.h"
+#include "loadMedia.h"
+#include "loadTexture.h"
 
 class Game
 {
 public:
 	Game();
 	~Game() = default;
-
 	void gameLoop();
 	void render();
 

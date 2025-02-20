@@ -12,6 +12,7 @@ const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;
 
 
+
 void logErrorAndExit(const char* msg, const char* error);
 
 #endif // !GAME_BASE_H

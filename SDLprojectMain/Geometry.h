@@ -98,6 +98,6 @@ public:
 
 };
 
-
+//accleration for paddle and ball
 #endif // !Geometry
 

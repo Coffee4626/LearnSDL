@@ -1,6 +1,5 @@
 #include "EventHandle.h"
-#include "loadMedia.h"
-#include "loadTexture.h"
+
 
 
 Game::Game()
@@ -8,8 +7,10 @@ Game::Game()
 	gWindow = initSDL(SCREEN_WIDTH, SCREEN_HEIGHT, "Game");
 	gRenderer = createRenderer(gWindow);
 	paddle1 = Paddle(300, 300);
-	paddle2 = Paddle(200, 200);
+	paddle2 = Paddle(200, 300);
 }
+
+
 
 void Game::gameLoop()
 {
@@ -22,12 +23,15 @@ void Game::gameLoop()
 
 		while (SDL_PollEvent(&event))
 		{
-			paddle1.paddleMovement(event, deltaTime);
+			paddle1.PaddleMovement1(event, deltaTime);
+			paddle2.PaddleMovement2(event, deltaTime);
+
 			if (event.type == SDL_QUIT)
 			{
 				quit = true;
 			}
 		}
+
 		render();
 	}
 	quitSDL(gWindow, gRenderer);
