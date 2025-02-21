@@ -2,6 +2,7 @@
 #define PADDLE_H
 #include "gameBase.h"
 #include "loadTexture.h"
+#include "Geometry.h"
 class Paddle
 {
 public:
@@ -11,8 +12,9 @@ public:
 	~Paddle() = default;
 	void PaddleMovement1(SDL_Event event, float deltaTime);
 	void PaddleMovement2(SDL_Event event, float deltaTime);
+	void UpdatePaddlePosition(float deltaTime);
 	void drawPaddle(SDL_Renderer* renderer);
-private:
+
 	int paddleDirectionY;
 	float paddleVelocity = 20.0;
 	SDL_Rect paddlePosition;

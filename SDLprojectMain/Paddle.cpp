@@ -49,7 +49,7 @@ void Paddle::PaddleMovement1(SDL_Event event, float deltaTime)
 	{
 		paddlePosition.y += static_cast<float>(paddleDirectionY) * paddleVelocity * deltaTime;
 	}
-	std::cout << paddleDirectionY << std::endl;
+	std::cout << paddleDirectionY << " " << paddleVelocity << std::endl;
 }
 
 void Paddle::PaddleMovement2(SDL_Event event, float deltaTime)
@@ -82,7 +82,12 @@ void Paddle::PaddleMovement2(SDL_Event event, float deltaTime)
 	{
 		paddlePosition.y += static_cast<float>(paddleDirectionY) * paddleVelocity * deltaTime;
 	}
-	std::cout << paddleVelocity << std::endl;
+	std::cout << paddleDirectionY << " " << paddleVelocity << std::endl;
+}
+
+void Paddle::UpdatePaddlePosition(float deltaTime)
+{
+	paddlePosition.y += paddleDirectionY * paddleVelocity * deltaTime;
 }
 
 
