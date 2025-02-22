@@ -5,6 +5,7 @@
 #include "Paddle.h"
 #include "loadMedia.h"
 #include "loadTexture.h"
+#include "Ball.h"
 
 class Game
 {
@@ -13,13 +14,17 @@ public:
 	~Game() = default;
 	void gameLoop();
 	void render();
-
+	void GetInput();
+	void HandleInput();
 private:
 	Uint32 tickcounts;
 	SDL_Window* gWindow;
 	SDL_Renderer* gRenderer;
 	Paddle paddle1;
 	Paddle paddle2;
+	Ball ball;
+	SDL_Event event;
+	float deltaTime;
 };
 
 #endif // !EVENT_HANDLE

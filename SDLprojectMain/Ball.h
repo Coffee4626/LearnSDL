@@ -3,29 +3,25 @@
 
 #include "gameBase.h"
 
-//constructor
-//constant speed, location, direction
-// parameterized constructor
-
 class Ball
 {
-
-private:
-	int ball_speed = 200;
-	double x;
-	//position for generation
-	SDL_Rect position;
 
 public:
 
 	Ball();
+	Ball(float x, float y);
+	~Ball() = default;
+	void UpdateBallPosition(float deltaTime);
+	void drawBall(SDL_Renderer* renderer);
 
+	float BallVelocity = 0.1;
+	float x, y;
+	float acceleration;
+	SDL_Rect BallPosition;
 
 };
 
 //ball logic
-
-//check collision
 
 //bounce at panel
 
