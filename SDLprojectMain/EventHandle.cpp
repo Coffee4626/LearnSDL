@@ -121,30 +121,66 @@ void Game::render()
 	SDL_RenderPresent(gRenderer);
 }
 
+bool Game::Collision(Ball ball, Paddle paddle)
+{
+
+	float UpperLeftBallCorner = ball.BallPosition.x;
+	float UpperRightBallCorner = ball.BallPosition.x + ball.BallPosition.w;
+	float LowerLeftBallCorner = ball.BallPosition.y;
+	float LowerRightBallCorner = ball.BallPosition.y + ball.BallPosition.h;
+
+	float UpperLeftPaddleCorner = paddle.paddlePosition.x;
+	float UpperRightPaddleCorner = paddle.paddlePosition.x + paddle.paddlePosition.w;
+	float LowerLeftPaddleCorner = paddle.paddlePosition.y;
+	float LowerRightPaddleCorner = paddle.paddlePosition.y + paddle.paddlePosition.h;
+
+	if (UpperLeftBallCorner >= UpperRightPaddleCorner)
+	{
+		return false;
+	}
+
+	if (UpperRightBallCorner <= UpperLeftPaddleCorner)
+	{
+		return false;
+	}
+
+	if (LowerLeftBallCorner >= LowerRightPaddleCorner)
+	{
+		return false;
+	}
+
+	if (LowerRightBallCorner <= LowerLeftPaddleCorner)
+	{
+		return false;
+	}
+	
+	return true;
+}
+
+
+void Game::HandleCollision()
+{
+	if (Collision(ball, paddle1) == true || Collision(ball, paddle2) == true)
+	{
+		ball.BallVelocityX = -ball.BallVelocityX;
+	}
+}
+
 void Game::gameLoop()
 {
-	bool quit = false;
 	while (!quit)
 	{
 		while (SDL_PollEvent(&event))
 		{
 			GetInput();
-
 			if (event.type == SDL_QUIT)
 			{
 				quit = true;
 			}
 		}
+		// handle input
 
 		HandleInput();
-
-		//handling collision
-
-
-
-		//handling bounce
-
-
 
 		//paddle update
 
@@ -155,7 +191,19 @@ void Game::gameLoop()
 
 		ball.UpdateBallPosition(deltaTime);
 
-		//render objects
+		//handle collision with paddle
+
+		HandleCollision();
+
+		//score keeping for 2 players
+
+
+
+		//scene manager for different menu screens
+
+
+
+		// render game objects
 		render();
 	}
 	quitSDL(gWindow, gRenderer);

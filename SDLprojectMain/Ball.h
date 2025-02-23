@@ -13,9 +13,12 @@ public:
 	~Ball() = default;
 	void UpdateBallPosition(float deltaTime);
 	void drawBall(SDL_Renderer* renderer);
+	void ResetBallVelocity();
 
-	float BallVelocity = 0.1;
-	float x, y;
+	float InitialBallVelocityX;
+	float InitialBallVelocityY;
+	float BallVelocityX;
+	float BallVelocityY;
 	float acceleration;
 	SDL_Rect BallPosition;
 

@@ -1,7 +1,6 @@
 ﻿#include "gameBase.h"
 #include "loadMedia.h"
 #include "EventHandle.h"
-#include "Paddle.h"
 
 using namespace std;
 
