@@ -6,8 +6,8 @@ Paddle::Paddle()
 	paddleDirectionY = 0;
 	paddlePosition.x = 0;
 	paddlePosition.y = 0;
-	paddlePosition.w = 25;
-	paddlePosition.h = 75;
+	paddlePosition.w = 0;
+	paddlePosition.h = 0;
 }
 
 Paddle::Paddle(float x, float y)
@@ -16,8 +16,8 @@ Paddle::Paddle(float x, float y)
 	paddleDirectionY = 0;
 	paddlePosition.x = static_cast<int>(x);
 	paddlePosition.y = static_cast<int>(y);
-	paddlePosition.w = 25;
-	paddlePosition.h = 75;
+	paddlePosition.w = 5;
+	paddlePosition.h = 100;
 }
 void Paddle::PaddleMovement1(SDL_Event event, float deltaTime)
 {
@@ -49,7 +49,6 @@ void Paddle::PaddleMovement1(SDL_Event event, float deltaTime)
 	{
 		paddlePosition.y += static_cast<float>(paddleDirectionY) * paddleVelocity * deltaTime;
 	}
-	std::cout << paddleDirectionY << " " << paddleVelocity << std::endl;
 }
 
 void Paddle::PaddleMovement2(SDL_Event event, float deltaTime)
@@ -82,7 +81,6 @@ void Paddle::PaddleMovement2(SDL_Event event, float deltaTime)
 	{
 		paddlePosition.y += static_cast<float>(paddleDirectionY) * paddleVelocity * deltaTime;
 	}
-	std::cout << paddleDirectionY << " " << paddleVelocity << std::endl;
 }
 
 void Paddle::UpdatePaddlePosition(float deltaTime)

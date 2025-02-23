@@ -14,13 +14,13 @@ Ball::Ball()
 Ball::Ball(float x, float y)
 {
 	InitialBallVelocityX = 10.0f;
-	InitialBallVelocityY = 10.0f;
+	InitialBallVelocityY = 0.0f;
 	BallVelocityX = InitialBallVelocityX;
 	BallVelocityY = InitialBallVelocityY;
 	BallPosition.x = x;
 	BallPosition.y = y;
-	BallPosition.w = 10;
-	BallPosition.h = 10;
+	BallPosition.w = 15;
+	BallPosition.h = 15;
 	acceleration = 0.02f;
 }
 

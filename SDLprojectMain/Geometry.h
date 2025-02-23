@@ -3,30 +3,6 @@
 
 #include "gameBase.h"
 
-class Vector2D
-{
-public:
-	float x;
-	float y;
-	Vector2D()
-	{
-		x = 0.0f;
-		y = 0.0f;
-	}
-	Vector2D(float x, float y)
-	{
-		this->x = x;
-		this->y = y;
-	}
-	Vector2D operator+ (Vector2D const& other)
-	{
-		return Vector2D(x + other.x, y + other.y);
-	}
-	Vector2D operator* (float scalar)
-	{
-		return Vector2D(x * scalar, y * scalar);
-	}
-};
 
 class Point
 {
