@@ -14,7 +14,6 @@ public:
 	void UpdateBallPosition(float deltaTime);
 	void drawBall(SDL_Renderer* renderer);
 	void ResetBallVelocity();
-
 	float InitialBallVelocityX;
 	float InitialBallVelocityY;
 	float BallVelocityX;

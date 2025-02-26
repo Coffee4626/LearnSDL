@@ -14,7 +14,7 @@ Ball::Ball()
 Ball::Ball(float x, float y)
 {
 	InitialBallVelocityX = 10.0f;
-	InitialBallVelocityY = 0.0f;
+	InitialBallVelocityY = 5.0f;
 	BallVelocityX = InitialBallVelocityX;
 	BallVelocityY = InitialBallVelocityY;
 	BallPosition.x = x;

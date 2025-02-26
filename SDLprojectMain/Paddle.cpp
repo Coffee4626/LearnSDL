@@ -12,7 +12,7 @@ Paddle::Paddle()
 
 Paddle::Paddle(float x, float y)
 {
-	paddleVelocity = 20.0f;
+	paddleVelocity = 15.0f;
 	paddleDirectionY = 0;
 	paddlePosition.x = static_cast<int>(x);
 	paddlePosition.y = static_cast<int>(y);
@@ -37,13 +37,14 @@ void Paddle::PaddleMovement1(SDL_Event event, float deltaTime)
 	{
 		paddleDirectionY = 0;
 	}
-	if (paddlePosition.y + paddlePosition.w / 2 > SCREEN_HEIGHT)
+	if (paddlePosition.y + paddlePosition.h >= SCREEN_HEIGHT)
 	{
-		paddlePosition.y += SCREEN_HEIGHT - paddlePosition.w / 2;
+		paddlePosition.y = SCREEN_HEIGHT - paddlePosition.h;
+		//std::cout << "YES" << std::endl;
 	}
-	else if (paddlePosition.y - paddlePosition.w / 2 < 0)
+	else if (paddlePosition.y - paddlePosition.h / 2 < 0)
 	{
-		paddlePosition.y += 0 + paddlePosition.w / 2;
+		paddlePosition.y += 0 + paddlePosition.h / 2;
 	}
 	else
 	{
@@ -69,7 +70,7 @@ void Paddle::PaddleMovement2(SDL_Event event, float deltaTime)
 	{
 		paddleDirectionY = 0;
 	}
-	if (paddlePosition.y + paddlePosition.w / 2 > SCREEN_HEIGHT)
+	if (paddlePosition.y + paddlePosition.w / 2 >= SCREEN_HEIGHT)
 	{
 		paddlePosition.y += SCREEN_HEIGHT - paddlePosition.w / 2;
 	}
@@ -85,7 +86,16 @@ void Paddle::PaddleMovement2(SDL_Event event, float deltaTime)
 
 void Paddle::UpdatePaddlePosition(float deltaTime)
 {
-	paddlePosition.y += paddleDirectionY * paddleVelocity * deltaTime;
+	if (paddlePosition.y + paddlePosition.h >= SCREEN_HEIGHT)
+	{
+		paddlePosition.y = SCREEN_HEIGHT - paddlePosition.h - 3;
+		//std::cout << "YES" << std::endl;
+	}
+	else if (paddlePosition.y <= 0)
+	{
+		paddlePosition.y = 3;
+	}
+	else paddlePosition.y += paddleDirectionY * paddleVelocity * deltaTime;
 }
 
 
