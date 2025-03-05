@@ -133,6 +133,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Ball.cpp" />
+    <ClCompile Include="Collision.cpp" />
     <ClCompile Include="EventHandle.cpp" />
     <ClCompile Include="loadTexture.cpp" />
     <ClCompile Include="gameBase.cpp" />
@@ -142,6 +143,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ball.h" />
+    <ClInclude Include="Collision.h" />
     <ClInclude Include="EventHandle.h" />
     <ClInclude Include="gameBase.h" />
     <ClInclude Include="Geometry.h" />

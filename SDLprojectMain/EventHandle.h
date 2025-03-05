@@ -10,13 +10,26 @@
 class Game
 {
 public:
+	enum CollisionPoint
+	{
+		None,
+		Top,
+		Middle,
+		Bottom
+	};
+
+	struct Contact
+	{
+		float PenetrationDepth;
+		CollisionPoint ContactPoint;
+	};
 	Game();
 	~Game() = default;
 	void gameLoop();
 	void render();
 	void GetInput();
 	void HandleInput();
-	bool Collision(Ball ball, Paddle paddle);
+	Contact Collision(Ball ball, Paddle paddle);
 	void HandleCollision();
 private:
 	Uint32 tickcounts;
@@ -24,6 +37,7 @@ private:
 	SDL_Renderer* gRenderer;
 	Paddle paddle1;
 	Paddle paddle2;
+	float PaddleHeight;
 	Ball ball;
 	SDL_Event event;
 	float deltaTime;

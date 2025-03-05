@@ -121,48 +121,102 @@ void Game::render()
 	SDL_RenderPresent(gRenderer);
 }
 
-bool Game::Collision(Ball ball, Paddle paddle)
+Game::Contact Game::Collision(Ball ball, Paddle paddle)
 {
+	float BallLeftSide = ball.BallPosition.x;
+	float BallRightSide = ball.BallPosition.x + ball.BallPosition.w;
+	float BallTopSide = ball.BallPosition.y;
+	float BallBottomSide = ball.BallPosition.y + ball.BallPosition.h;
 
-	float UpperLeftBallCorner = ball.BallPosition.x;
-	float UpperRightBallCorner = ball.BallPosition.x + ball.BallPosition.w;
-	float LowerLeftBallCorner = ball.BallPosition.y;
-	float LowerRightBallCorner = ball.BallPosition.y + ball.BallPosition.h;
+	float PaddleLeftSide = paddle.paddlePosition.x;
+	float PaddleRightSide = paddle.paddlePosition.x + paddle.paddlePosition.w;
+	float PaddleTopSide = paddle.paddlePosition.y;
+	float PaddleBottomSide = paddle.paddlePosition.y + paddle.paddlePosition.h;
 
-	float UpperLeftPaddleCorner = paddle.paddlePosition.x;
-	float UpperRightPaddleCorner = paddle.paddlePosition.x + paddle.paddlePosition.w;
-	float LowerLeftPaddleCorner = paddle.paddlePosition.y;
-	float LowerRightPaddleCorner = paddle.paddlePosition.y + paddle.paddlePosition.h;
+	float PaddleHeight = paddle.paddlePosition.y + paddle.paddlePosition.h;
 
-	if (UpperLeftBallCorner >= UpperRightPaddleCorner)
+	Contact contact = {};
+
+	if (BallLeftSide >= PaddleRightSide)
 	{
-		return false;
+		return contact;
 	}
 
-	if (UpperRightBallCorner <= UpperLeftPaddleCorner)
+	if (BallRightSide <= PaddleLeftSide)
 	{
-		return false;
+		return contact;
 	}
 
-	if (LowerLeftBallCorner >= LowerRightPaddleCorner)
+	if (BallTopSide >= PaddleBottomSide)
 	{
-		return false;
+		return contact;
 	}
 
-	if (LowerRightBallCorner <= LowerLeftPaddleCorner)
+	if (BallBottomSide <= PaddleTopSide)
 	{
-		return false;
+		return contact;
 	}
-	
-	return true;
+
+	float paddleRangeUpper = PaddleBottomSide - (2.0f * PaddleHeight / 3.0f);
+	float paddleRangeMiddle = PaddleBottomSide - (PaddleHeight / 3.0f);
+
+	if (ball.BallVelocityX < 0)
+	{
+		// Left paddle
+		contact.PenetrationDepth = PaddleRightSide - BallLeftSide;
+	}
+	else if (ball.BallVelocityY > 0)
+	{
+		// Right paddle
+		contact.PenetrationDepth = PaddleLeftSide - BallRightSide;
+	}
+
+	if ((BallBottomSide > PaddleTopSide) && (BallBottomSide < paddleRangeUpper))
+	{
+		contact.ContactPoint = CollisionPoint::Top;
+	}
+	else if ((BallBottomSide > paddleRangeUpper) && (BallBottomSide < paddleRangeMiddle))
+	{
+		contact.ContactPoint = CollisionPoint::Middle;
+	}
+	else
+	{
+		contact.ContactPoint = CollisionPoint::Bottom;
+	}
+	return contact;
 }
-
 
 void Game::HandleCollision()
 {
-	if (Collision(ball, paddle1) == true || Collision(ball, paddle2) == true)
+	Contact contact1 = Collision(ball, paddle1);
+	Contact contact2 = Collision(ball, paddle2);
+
+	if (contact1.ContactPoint != CollisionPoint::None)
 	{
+		ball.BallPosition.x += contact1.PenetrationDepth;
 		ball.BallVelocityX = -ball.BallVelocityX;
+		if (contact1.ContactPoint == CollisionPoint::Top)
+		{
+			ball.BallVelocityY = -1.2f * ball.BallVelocityY;
+		}
+		else if (contact1.ContactPoint == CollisionPoint::Bottom)
+		{
+			ball.BallVelocityY = 1.2f * ball.BallVelocityY;
+		}
+	}
+
+	if (contact2.ContactPoint != CollisionPoint::None)
+	{
+		ball.BallPosition.x += contact2.PenetrationDepth;
+		ball.BallVelocityX = -ball.BallVelocityX;
+		if (contact2.ContactPoint == CollisionPoint::Top)
+		{
+			ball.BallVelocityY = -1.2f * ball.BallVelocityY;
+		}
+		else if (contact2.ContactPoint == CollisionPoint::Bottom)
+		{
+			ball.BallVelocityY = 1.2f * ball.BallVelocityY;
+		}
 	}
 }
 
