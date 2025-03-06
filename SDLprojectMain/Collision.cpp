@@ -1,6 +1,7 @@
 #include "Collision.h"
 
-bool Collision::CheckCollision(Ball &ball, Paddle &paddle)
+
+Collision::Contact Collision::CheckCollision(Ball ball, Paddle paddle)
 {
 	float BallLeftSide = ball.BallPosition.x;
 	float BallRightSide = ball.BallPosition.x + ball.BallPosition.w;
@@ -12,40 +13,92 @@ bool Collision::CheckCollision(Ball &ball, Paddle &paddle)
 	float PaddleTopSide = paddle.paddlePosition.y;
 	float PaddleBottomSide = paddle.paddlePosition.y + paddle.paddlePosition.h;
 
+	float PaddleHeight = paddle.paddlePosition.h;
+
+	Contact contact = {};
+
 	if (BallLeftSide >= PaddleRightSide)
 	{
-		return false;
+		return contact;
 	}
 
 	if (BallRightSide <= PaddleLeftSide)
 	{
-		return false;
+		return contact;
 	}
 
 	if (BallTopSide >= PaddleBottomSide)
 	{
-		return false;
+		return contact;
 	}
 
 	if (BallBottomSide <= PaddleTopSide)
 	{
-		return false;
+		return contact;
 	}
-	return true;
+
+	float paddleRangeUpper = PaddleBottomSide - (2.0f * PaddleHeight / 3.0f);
+	float paddleRangeMiddle = PaddleBottomSide - (PaddleHeight / 3.0f);
+
+	if (ball.BallVelocityX < 0)
+	{
+		// Left paddle
+		contact.PenetrationDepth = PaddleRightSide - BallLeftSide;
+	}
+	else if (ball.BallVelocityX > 0)
+	{
+		// Right paddle
+		contact.PenetrationDepth = PaddleLeftSide - BallRightSide;
+	}
+
+	if ((BallBottomSide > PaddleTopSide) && (BallBottomSide < paddleRangeUpper))
+	{
+		contact.ContactPoint = CollisionPoint::Top;
+	}
+	else if ((BallBottomSide > paddleRangeUpper) && (BallBottomSide < paddleRangeMiddle))
+	{
+		contact.ContactPoint = CollisionPoint::Middle;
+	}
+	else
+	{
+		contact.ContactPoint = CollisionPoint::Bottom;
+	}
+	return contact;
 }
 
-
-void HandleCollision(Ball& ball, Paddle& paddle)
+void Collision::HandleCollision(Ball &ball, Paddle &paddle1, Paddle &paddle2)
 {
-	float BallLeftSide = ball.BallPosition.x;
-	float BallRightSide = ball.BallPosition.x + ball.BallPosition.w;
-	float BallTopSide = ball.BallPosition.y;
-	float BallBottomSide = ball.BallPosition.y + ball.BallPosition.h;
+	Contact contact1 = CheckCollision(ball, paddle1);
+	Contact contact2 = CheckCollision(ball, paddle2);
 
-	float PaddleLeftSide = paddle.paddlePosition.x;
-	float PaddleRightSide = paddle.paddlePosition.x + paddle.paddlePosition.w;
-	float PaddleTopSide = paddle.paddlePosition.y;
-	float PaddleBottomSide = paddle.paddlePosition.y + paddle.paddlePosition.h;
+	if (contact1.ContactPoint != CollisionPoint::None)
+	{
+		ball.BallPosition.x += contact1.PenetrationDepth;
+		ball.BallVelocityX = -ball.BallVelocityX;
 
+		if (contact1.ContactPoint == CollisionPoint::Top)
+		{
+			ball.BallVelocityY = -1.15f * ball.BallVelocityY;
+		}
+		else if (contact1.ContactPoint == CollisionPoint::Bottom)
+		{
+			ball.BallVelocityY = 1.15f * ball.BallVelocityY;
+		}
+	}
 
+	if (contact2.ContactPoint != CollisionPoint::None)
+	{
+		ball.BallPosition.x += contact2.PenetrationDepth;
+		ball.BallVelocityX = -ball.BallVelocityX;
+
+		if (contact2.ContactPoint == CollisionPoint::Top)
+		{
+			ball.BallVelocityY = -1.15f * ball.BallVelocityY;
+		}
+		else if (contact2.ContactPoint == CollisionPoint::Bottom)
+		{
+			ball.BallVelocityY = 1.15f * ball.BallVelocityY;
+		}
+	}
 }
+

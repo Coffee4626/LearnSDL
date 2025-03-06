@@ -8,8 +8,22 @@
 class Collision
 {
 public:
-	bool CheckCollision(Ball &ball, Paddle &paddle);
+	enum CollisionPoint
+	{
+		None,
+		Top,
+		Middle,
+		Bottom
+	};
 
+	struct Contact
+	{
+		float PenetrationDepth;
+		CollisionPoint ContactPoint;
+	};
+
+	Contact CheckCollision(Ball ball, Paddle paddle);
+	void HandleCollision(Ball &ball, Paddle &paddle1, Paddle &paddle2);
 };
 
 #endif // !COLLISION_H

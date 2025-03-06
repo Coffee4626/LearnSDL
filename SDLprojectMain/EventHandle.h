@@ -2,6 +2,7 @@
 #define EVENT_HANDLE
 
 #include "gameBase.h"
+#include "Collision.h"
 #include "Paddle.h"
 #include "loadMedia.h"
 #include "loadTexture.h"
@@ -10,27 +11,12 @@
 class Game
 {
 public:
-	enum CollisionPoint
-	{
-		None,
-		Top,
-		Middle,
-		Bottom
-	};
-
-	struct Contact
-	{
-		float PenetrationDepth;
-		CollisionPoint ContactPoint;
-	};
 	Game();
 	~Game() = default;
 	void gameLoop();
 	void render();
 	void GetInput();
 	void HandleInput();
-	Contact Collision(Ball ball, Paddle paddle);
-	void HandleCollision();
 private:
 	Uint32 tickcounts;
 	SDL_Window* gWindow;
