@@ -12,7 +12,8 @@ public:
 	{
 		None,
 		Top,
-		Middle,
+		UpperMiddle,
+		LowerMiddle,
 		Bottom
 	};
 

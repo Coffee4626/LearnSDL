@@ -37,8 +37,9 @@ Collision::Contact Collision::CheckCollision(Ball ball, Paddle paddle)
 		return contact;
 	}
 
-	float paddleRangeUpper = PaddleBottomSide - (2.0f * PaddleHeight / 3.0f);
-	float paddleRangeMiddle = PaddleBottomSide - (PaddleHeight / 3.0f);
+	float PaddleRangeUpper = PaddleBottomSide - (3.0f * PaddleHeight / 4.0f);
+	float PaddleRangeUpperMiddle = PaddleBottomSide - (1.0f * PaddleHeight / 2.0f);
+	float PaddleRangeLowerMiddle = PaddleBottomSide - (1.0f * PaddleHeight / 4.0f);
 
 	if (ball.BallVelocityX < 0)
 	{
@@ -51,13 +52,17 @@ Collision::Contact Collision::CheckCollision(Ball ball, Paddle paddle)
 		contact.PenetrationDepth = PaddleLeftSide - BallRightSide;
 	}
 
-	if ((BallBottomSide > PaddleTopSide) && (BallBottomSide < paddleRangeUpper))
+	if ((BallBottomSide > PaddleTopSide) && (BallBottomSide < PaddleRangeUpper))
 	{
 		contact.ContactPoint = CollisionPoint::Top;
 	}
-	else if ((BallBottomSide > paddleRangeUpper) && (BallBottomSide < paddleRangeMiddle))
+	else if ((BallBottomSide > PaddleRangeUpper) && (BallBottomSide < PaddleRangeUpperMiddle))
 	{
-		contact.ContactPoint = CollisionPoint::Middle;
+		contact.ContactPoint = CollisionPoint::UpperMiddle;
+	}
+	else if ((BallBottomSide > PaddleRangeUpperMiddle) && (BallBottomSide < PaddleRangeLowerMiddle))
+	{
+		contact.ContactPoint = CollisionPoint::LowerMiddle;
 	}
 	else
 	{
@@ -74,15 +79,23 @@ void Collision::HandleCollision(Ball &ball, Paddle &paddle1, Paddle &paddle2)
 	if (contact1.ContactPoint != CollisionPoint::None)
 	{
 		ball.BallPosition.x += contact1.PenetrationDepth;
-		ball.BallVelocityX = -ball.BallVelocityX;
-
+		ball.BallVelocityX = -1.25f * ball.BallVelocityX;
+		std::cout << ball.BallVelocityY << std::endl;
 		if (contact1.ContactPoint == CollisionPoint::Top)
 		{
-			ball.BallVelocityY = -1.15f * ball.BallVelocityY;
+			ball.BallVelocityY = -1.41f * ball.BallVelocityY;
+		}
+		else if (contact1.ContactPoint == CollisionPoint::UpperMiddle)
+		{
+			ball.BallVelocityY = -0.75f * 5;
+		}
+		else if (contact1.ContactPoint == CollisionPoint::LowerMiddle)
+		{
+			ball.BallVelocityY = 0.75f * 5;
 		}
 		else if (contact1.ContactPoint == CollisionPoint::Bottom)
 		{
-			ball.BallVelocityY = 1.15f * ball.BallVelocityY;
+			ball.BallVelocityY = 1.41f * ball.BallVelocityY;
 		}
 	}
 
@@ -90,14 +103,22 @@ void Collision::HandleCollision(Ball &ball, Paddle &paddle1, Paddle &paddle2)
 	{
 		ball.BallPosition.x += contact2.PenetrationDepth;
 		ball.BallVelocityX = -ball.BallVelocityX;
-
+		std::cout << ball.BallVelocityY << std::endl;
 		if (contact2.ContactPoint == CollisionPoint::Top)
 		{
-			ball.BallVelocityY = -1.15f * ball.BallVelocityY;
+			ball.BallVelocityY = -1.41f * ball.BallVelocityY;
+		}
+		else if (contact2.ContactPoint == CollisionPoint::UpperMiddle)
+		{
+			ball.BallVelocityY = -0.75f * 5;
+		}
+		else if (contact2.ContactPoint == CollisionPoint::LowerMiddle)
+		{
+			ball.BallVelocityY = 0.75f * 5;
 		}
 		else if (contact2.ContactPoint == CollisionPoint::Bottom)
 		{
-			ball.BallVelocityY = 1.15f * ball.BallVelocityY;
+			ball.BallVelocityY = 1.41f * ball.BallVelocityY;
 		}
 	}
 }
