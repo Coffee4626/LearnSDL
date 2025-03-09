@@ -21,7 +21,7 @@
     <ClCompile Include="loadMedia.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="gameBase.cpp">
+    <ClCompile Include="GameBase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="EventHandle.cpp">
@@ -39,9 +39,12 @@
     <ClCompile Include="Collision.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GameUtils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="gameBase.h">
+    <ClInclude Include="GameBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="loadMedia.h">
@@ -63,6 +66,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Collision.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameUtils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

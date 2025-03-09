@@ -1,6 +1,6 @@
 #ifndef PADDLE_H
 #define PADDLE_H
-#include "gameBase.h"
+#include "GameBase.h"
 #include "loadTexture.h"
 #include "Geometry.h"
 class Paddle

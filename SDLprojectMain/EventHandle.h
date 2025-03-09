@@ -1,11 +1,10 @@
 #ifndef EVENT_HANDLE
 #define EVENT_HANDLE
 
-#include "gameBase.h"
+#include "GameBase.h"
+#include "GameUtils.h"
 #include "Collision.h"
 #include "Paddle.h"
-#include "loadMedia.h"
-#include "loadTexture.h"
 #include "Ball.h"
 
 class Game
@@ -17,13 +16,14 @@ public:
 	void render();
 	void GetInput();
 	void HandleInput();
+	void ScoreKeeping();
 private:
 	Uint32 tickcounts;
+
 	SDL_Window* gWindow;
 	SDL_Renderer* gRenderer;
 	Paddle paddle1;
 	Paddle paddle2;
-	float PaddleHeight;
 	Ball ball;
 	SDL_Event event;
 	float deltaTime;

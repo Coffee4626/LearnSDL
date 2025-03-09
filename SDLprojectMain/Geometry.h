@@ -1,7 +1,7 @@
 #ifndef Geometry
 #define Geometry
 
-#include "gameBase.h"
+#include "GameBase.h"
 
 
 class Point

@@ -1,4 +1,3 @@
-
 #ifndef GAME_BASE_H
 #define GAME_BASE_H
 
@@ -7,6 +6,10 @@
 #include <iostream>
 #include <string>
 #include <SDL_image.h>
+#include <SDL_mixer.h>
+#include <SDL_ttf.h>
+#include "loadMedia.h"
+#include "loadTexture.h"
 
 const int SCREEN_WIDTH = 1400;
 const int SCREEN_HEIGHT = 800;

@@ -106,9 +106,9 @@ void Game::HandleInput()
 	}
 }
 
-void ScoreKeeping()
+void Game::ScoreKeeping()
 {
-	
+	//std::cout << deltaTime << std::endl;
 }
 
 
@@ -139,6 +139,7 @@ void Game::gameLoop()
 				quit = true;
 			}
 		}
+
 		// handle input
 
 		HandleInput();
@@ -158,7 +159,7 @@ void Game::gameLoop()
 
 		//score keeping for 2 players
 
-
+		ScoreKeeping();
 
 		//scene manager for different menu screens
 

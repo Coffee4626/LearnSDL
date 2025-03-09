@@ -68,6 +68,7 @@ Collision::Contact Collision::CheckCollision(Ball ball, Paddle paddle)
 	{
 		contact.ContactPoint = CollisionPoint::Bottom;
 	}
+
 	return contact;
 }
 
@@ -80,7 +81,7 @@ void Collision::HandleCollision(Ball &ball, Paddle &paddle1, Paddle &paddle2)
 	{
 		ball.BallPosition.x += contact1.PenetrationDepth;
 		ball.BallVelocityX = -1.25f * ball.BallVelocityX;
-		std::cout << ball.BallVelocityY << std::endl;
+
 		if (contact1.ContactPoint == CollisionPoint::Top)
 		{
 			ball.BallVelocityY = -1.41f * ball.BallVelocityY;
@@ -103,7 +104,7 @@ void Collision::HandleCollision(Ball &ball, Paddle &paddle1, Paddle &paddle2)
 	{
 		ball.BallPosition.x += contact2.PenetrationDepth;
 		ball.BallVelocityX = -ball.BallVelocityX;
-		std::cout << ball.BallVelocityY << std::endl;
+
 		if (contact2.ContactPoint == CollisionPoint::Top)
 		{
 			ball.BallVelocityY = -1.41f * ball.BallVelocityY;

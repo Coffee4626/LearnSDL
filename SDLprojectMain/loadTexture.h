@@ -1,7 +1,7 @@
 #ifndef LOAD_TEXTURE_H
 #define LOAD_TEXTURE_H
 
-#include "gameBase.h"
+#include "GameBase.h"
 
 class loadTexture
 {

@@ -1,7 +1,7 @@
 #ifndef BALL_H
 #define BALL_H
 
-#include "gameBase.h"
+#include "GameBase.h"
 
 class Ball
 {
@@ -13,6 +13,7 @@ public:
 	~Ball() = default;
 	void UpdateBallPosition(float deltaTime);
 	void drawBall(SDL_Renderer* renderer);
+
 	float InitialBallVelocityX;
 	float InitialBallVelocityY;
 	float BallVelocityX;
