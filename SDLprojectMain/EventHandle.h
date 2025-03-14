@@ -14,10 +14,12 @@ public:
 	~Game() = default;
 	void gameLoop();
 	void InitObject();
-	void render();
+	void InitGame();
 	void GetInput();
 	void HandleInput();
-	void ScoreKeeping();
+	void UpdateObjects();
+	void render();
+	void close();
 private:
 	Uint32 tickcounts;
 	TTF_Font* scoreFont;

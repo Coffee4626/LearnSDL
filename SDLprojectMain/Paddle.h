@@ -10,7 +10,7 @@ public:
 	Paddle();
 	Paddle(float x, float y);
 	~Paddle() = default;
-	void UpdatePaddlePosition(float deltaTime);
+	void UpdatePaddlePosition(float &deltaTime);
 	void drawPaddle(SDL_Renderer* renderer);
 
 	int paddleDirectionY;

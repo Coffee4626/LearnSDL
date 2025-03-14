@@ -1,7 +1,7 @@
 #include "Collision.h"
 
 
-Collision::Contact Collision::CheckCollision(Ball ball, Paddle paddle)
+Collision::Contact Collision::CheckCollision(Ball &ball, Paddle &paddle)
 {
 	float BallLeftSide = ball.BallPosition.x;
 	float BallRightSide = ball.BallPosition.x + ball.BallPosition.w;

@@ -23,7 +23,7 @@ public:
 		CollisionPoint ContactPoint;
 	};
 
-	Contact CheckCollision(Ball ball, Paddle paddle);
+	Contact CheckCollision(Ball &ball, Paddle &paddle);
 	void HandleCollision(Ball &ball, Paddle &paddle1, Paddle &paddle2);
 };
 

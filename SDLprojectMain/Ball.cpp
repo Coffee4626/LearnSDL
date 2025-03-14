@@ -8,6 +8,8 @@ Ball::Ball()
 	BallPosition.h = 0;
 	InitialBallVelocityX = 0;
 	InitialBallVelocityY = 0;
+	BallVelocityX = InitialBallVelocityX;
+	BallVelocityY = InitialBallVelocityY;
 }
 
 Ball::Ball(float x, float y)
@@ -22,7 +24,7 @@ Ball::Ball(float x, float y)
 	BallPosition.h = 15;
 }
 
-void Ball::UpdateBallPosition(float deltaTime)
+void Ball::UpdateBallPosition(float &deltaTime)
 {
 	BallPosition.x = BallPosition.x + BallVelocityX * deltaTime;
 	BallPosition.y = BallPosition.y + BallVelocityY * deltaTime;

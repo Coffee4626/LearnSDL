@@ -108,10 +108,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <OmitFramePointers>false</OmitFramePointers>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -138,7 +140,6 @@
     <ClCompile Include="GameUtils.cpp" />
     <ClCompile Include="LoadTexture.cpp" />
     <ClCompile Include="GameBase.cpp" />
-    <ClCompile Include="LoadMedia.cpp" />
     <ClCompile Include="Paddle.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
@@ -148,7 +149,6 @@
     <ClInclude Include="EventHandle.h" />
     <ClInclude Include="GameBase.h" />
     <ClInclude Include="GameUtils.h" />
-    <ClInclude Include="LoadMedia.h" />
     <ClInclude Include="LoadTexture.h" />
     <ClInclude Include="Paddle.h" />
   </ItemGroup>

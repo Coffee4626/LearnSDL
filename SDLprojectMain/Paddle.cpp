@@ -19,12 +19,11 @@ Paddle::Paddle(float x, float y)
 	paddlePosition.w = 5;
 	paddlePosition.h = 100;
 }
-void Paddle::UpdatePaddlePosition(float deltaTime)
+void Paddle::UpdatePaddlePosition(float &deltaTime)
 {
 	if (paddlePosition.y + paddlePosition.h >= SCREEN_HEIGHT)
 	{
 		paddlePosition.y = SCREEN_HEIGHT - paddlePosition.h - 3;
-		//std::cout << "YES" << std::endl;
 	}
 	else if (paddlePosition.y <= 0)
 	{

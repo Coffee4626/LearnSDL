@@ -7,6 +7,11 @@ LoadTexture::LoadTexture()
     mHeight = 0;
 }
 
+LoadTexture::~LoadTexture()
+{
+	Free();
+}
+
 void LoadTexture::Free()
 {
     if (mTexture != nullptr)
@@ -15,11 +20,6 @@ void LoadTexture::Free()
         mWidth = 0;
         mHeight = 0;
     }
-}
-
-LoadTexture::~LoadTexture()
-{
-    Free();
 }
 
 
@@ -57,10 +57,9 @@ bool LoadTexture::LoadFromRenderedText(std::string textureText, TTF_Font* gFont,
 			mWidth = textSurface->w;
 			mHeight = textSurface->h;
 		}
-
 		SDL_FreeSurface(textSurface);
 	}
-
+	
 	return mTexture != NULL;
 }
 
@@ -68,10 +67,10 @@ bool LoadTexture::LoadFromFile(std::string path, SDL_Renderer* gRenderer)
 {
 	Free();
 
-	SDL_Texture* tmpTexture = nullptr;
+	SDL_Texture* tmpTexture = NULL;
 
 	SDL_Surface* tmpSurface = IMG_Load(path.c_str());
-	if (tmpSurface == nullptr)
+	if (tmpSurface == NULL)
 	{
 		std::cout << "fail to load texture" << std::endl;
 	}
@@ -80,7 +79,7 @@ bool LoadTexture::LoadFromFile(std::string path, SDL_Renderer* gRenderer)
 		SDL_SetColorKey(tmpSurface, SDL_TRUE, SDL_MapRGB(tmpSurface->format, 0, 255, 255));
 
 		tmpTexture = SDL_CreateTextureFromSurface(gRenderer, tmpSurface);
-		if (tmpTexture == nullptr)
+		if (tmpTexture == NULL)
 		{
 			std::cout << "Can not create texture from surface."<< std::endl;
 		}
@@ -89,13 +88,12 @@ bool LoadTexture::LoadFromFile(std::string path, SDL_Renderer* gRenderer)
 			mWidth = tmpSurface->w;
 			mHeight = tmpSurface->h;
 		}
+		SDL_FreeSurface(tmpSurface);
 	}
-
-	SDL_FreeSurface(tmpSurface);
 
 	mTexture = tmpTexture;
 
-	return mTexture != nullptr;
+	return mTexture != NULL;
 }
 
 

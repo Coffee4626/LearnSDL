@@ -11,7 +11,7 @@ public:
 	Ball();
 	Ball(float x, float y);
 	~Ball() = default;
-	void UpdateBallPosition(float deltaTime);
+	void UpdateBallPosition(float &deltaTime);
 	void drawBall(SDL_Renderer* renderer);
 
 	float InitialBallVelocityX;

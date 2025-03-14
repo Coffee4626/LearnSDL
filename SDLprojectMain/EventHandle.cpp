@@ -16,18 +16,55 @@ void Game::InitObject()
 	paddle1 = new Paddle(50, SCREEN_HEIGHT / 2);
 	paddle2 = new Paddle(SCREEN_WIDTH - 50, SCREEN_HEIGHT / 2);
 	ball = new Ball(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+	deltaTime = (SDL_GetTicks() - tickcounts) / 1000.0f;
+	tickcounts = SDL_GetTicks();
+	player1score.LoadFromRenderedText(std::to_string(p1score), scoreFont, { 0xFF, 0xFF, 0xFF, 0xFF }, gRenderer);
+	player2score.LoadFromRenderedText(std::to_string(p2score), scoreFont, { 0xFF, 0xFF, 0xFF, 0xFF }, gRenderer);
+}
+
+void Game::InitGame()
+{
+	if (SDL_Init(SDL_INIT_EVERYTHING) == -1) 
+	{
+		std::cout << "Unable to initialize SDL: " << SDL_GetError() << std::endl;
+		return;
+	}
+
+	if (TTF_Init() == -1) 
+	{
+		std::cout << "Unable to initialize TTF: " << TTF_GetError() << std::endl;
+		return;
+	}
+
+	gWindow = SDL_CreateWindow("PONG", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+	if (gWindow == NULL)
+	{
+		std::cout << "Unable to create SDL window: " << SDL_GetError() << std::endl;
+		return;
+	}
+
+	gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+	if (gRenderer == NULL) 
+	{
+		std::cout << "Unable to create SDL renderer: " << SDL_GetError() << std::endl;
+		return;
+	}
+
+	scoreFont = TTF_OpenFont("Assets/DejaVuSansMono.ttf", 40);
+	if (scoreFont == NULL) 
+	{
+		std::cout << "Unable to load a font for the application: " << TTF_GetError() << std::endl;
+	}
 }
 
 Game::Game()
 {
-	InitObject();
-	gWindow = initSDL(SCREEN_WIDTH, SCREEN_HEIGHT, "Game");
-	gRenderer = createRenderer(gWindow);
-	scoreFont = TTF_OpenFont("Assets/DejaVuSansMono.ttf", 40);
-	p1score = 0;
-	p2score = 0;
-	deltaTime = (SDL_GetTicks() - tickcounts) / 1000.0f;
-	tickcounts = SDL_GetTicks();
+	scoreFont = NULL;
+	gWindow = NULL;
+	gRenderer = NULL;
+	paddle1 = NULL;
+	paddle2 = NULL;
+	ball = NULL;
 }
 
 void Game::GetInput()
@@ -114,16 +151,35 @@ void Game::HandleInput()
 	}
 }
 
-void Game::ScoreKeeping()
+void Game::close()
 {
-	if (ball->BallPosition.x <= 0)
-	{
-		p2score++;
-	}
-	if (ball->BallPosition.x >= SCREEN_WIDTH)
-	{
-		p1score++;
-	}
+	//Free loaded texture
+	player1score.Free();
+	player2score.Free();
+	scoreTexture.Free();
+
+	//Destroy window    
+	SDL_DestroyRenderer(gRenderer);
+	SDL_DestroyWindow(gWindow);
+	gWindow = NULL;
+	gRenderer = NULL;
+	TTF_CloseFont(scoreFont);
+	scoreFont = NULL;
+
+	//Quit SDL subsystems
+	IMG_Quit();
+	TTF_Quit();
+	Mix_Quit();
+	SDL_Quit();
+}
+
+
+void Game::UpdateObjects()
+{
+	paddle1->UpdatePaddlePosition(deltaTime);
+	paddle2->UpdatePaddlePosition(deltaTime);
+	ball->UpdateBallPosition(deltaTime);
+	//update score
 }
 
 
@@ -131,9 +187,9 @@ void Game::render()
 {
 	SDL_RenderClear(gRenderer);
 
-	DisplayPlayerScore(player1score, scoreTexture, { 0xFF, 0xFF, 0xFF, 0xFF }, gRenderer, scoreFont, p1score, SCREEN_WIDTH / 4, 20);
+	player1score.renderTexture(gRenderer, SCREEN_WIDTH / 4, 20);
 
-	DisplayPlayerScore(player2score, scoreTexture, { 0xFF, 0xFF, 0xFF, 0xFF }, gRenderer, scoreFont, p2score, 3 * SCREEN_WIDTH / 4, 20);
+	player2score.renderTexture(gRenderer, 3 * SCREEN_WIDTH / 4, 20);
 
 	paddle1->drawPaddle(gRenderer);
 
@@ -141,13 +197,14 @@ void Game::render()
 
 	ball->drawBall(gRenderer);
 
-	/*SDL_RenderCopy(gRenderer, gTexturePaddle, NULL, NULL);*/
-
 	SDL_RenderPresent(gRenderer);
 }
 
+
 void Game::gameLoop()
 {
+	InitGame();
+	InitObject();
 	while (!quit)
 	{
 		while (SDL_PollEvent(&event))
@@ -159,33 +216,15 @@ void Game::gameLoop()
 			}
 		}
 
-		// handle input
-
 		HandleInput();
 
-		//paddle update
+		UpdateObjects();
 
-		paddle1->UpdatePaddlePosition(deltaTime);
-		paddle2->UpdatePaddlePosition(deltaTime);
-
-		//ball update
-
-		ball->UpdateBallPosition(deltaTime);
-
-		//handle collision with paddle
 		Collision collision;
 		collision.HandleCollision(*ball, *paddle1, *paddle2);
 
-		//score keeping for 2 players
-
-		ScoreKeeping();
-
-		//scene manager for different menu screens
-
-
-		// render game objects
 		render();
 
 	}
-	quitSDL(gWindow, gRenderer);
+	close();
 }
