@@ -1,16 +1,14 @@
-﻿#include "gameBase.h"
-#include "loadMedia.h"
-#include "EventHandle.h"
+﻿#include "EventHandle.h"
 
 using namespace std;
 
+Game* game = NULL;
 
 int main(int argc, char* argv[])
 {
+    game = new Game();
 
-    Game game;
-
-    game.gameLoop();
+    game->gameLoop();
 
     return 0;
 }

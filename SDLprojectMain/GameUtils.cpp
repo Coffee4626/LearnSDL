@@ -1,76 +1,19 @@
 #include "GameUtils.h"
 
-GraphicalTimer::GraphicalTimer()
+
+void DisplayPlayerScore(LoadTexture gTextTexture,
+	LoadTexture gScoreTexture,
+	SDL_Color color,
+	SDL_Renderer* renderer,
+	TTF_Font* font,
+	const int& score, float x, float y)
 {
-	mStartTicks = 0;
-	mPausedTicks = 0;
+	std::string scoreText = std::to_string(score);
 
-	mPaused = false;
-	mStarted = false;
-}
-
-void GraphicalTimer::start()
-{
-	mStarted = true;
-	mPaused = false;
-
-	mStartTicks = SDL_GetTicks64();
-	mPausedTicks = 0;
-}
-
-void GraphicalTimer::reset()
-{
-	mStarted = false;
-	mPaused = false;
-
-	mStartTicks = 0;
-	mPausedTicks = 0;
-}
-
-void GraphicalTimer::pause()
-{
-	if (mStarted && !mPaused)
+	if (!gScoreTexture.LoadFromRenderedText(scoreText, font, color, renderer))
 	{
-		mPaused = true;
-		mPausedTicks = SDL_GetTicks() - mStartTicks;
-		mStartTicks = 0;
+		std::cout << "Failed to render score texture!" << std::endl;
 	}
-}
 
-void GraphicalTimer::unpause()
-{
-	if (mStarted && mPaused)
-	{
-		mPaused = false;
-		mStartTicks = mPausedTicks - SDL_GetTicks();
-		mPausedTicks = 0;
-	}
-}
-
-Uint32 GraphicalTimer::GetTicks()
-{
-	Uint32 time = 0;
-	
-	if (mStarted)
-	{
-		if (mPaused)
-		{
-			time = mPausedTicks;
-		}
-		else
-		{
-			time = SDL_GetTicks() - mStartTicks;
-		}
-	}
-	return time;
-}
-
-bool GraphicalTimer::IsPaused()
-{
-	return mPaused && mStarted;
-}
-
-bool GraphicalTimer::IsStarted()
-{
-	return mStarted;
+	gScoreTexture.renderTexture(renderer, x, y);
 }

@@ -2,27 +2,13 @@
 #define GAME_UTILS_H
 
 #include "GameBase.h"
+#include "LoadMedia.h"
 
-class GraphicalTimer
-{
-public:
-	GraphicalTimer();
-
-	void start();
-	void pause();
-	void unpause();
-	void reset();
-
-	Uint32 GetTicks();
-	bool IsStarted();
-	bool IsPaused();
-
-private:
-	Uint32 mStartTicks;
-	Uint32 mPausedTicks;
-
-	bool mPaused;
-	bool mStarted;
-};
+void DisplayPlayerScore(LoadTexture gTextTexture,
+	LoadTexture gScoreTexture,
+	SDL_Color color,
+	SDL_Renderer* renderer,
+	TTF_Font* font,
+	const int& score, float x, float y);
 
 #endif // !GAME_UTILS_H

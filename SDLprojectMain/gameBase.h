@@ -8,13 +8,11 @@
 #include <SDL_image.h>
 #include <SDL_mixer.h>
 #include <SDL_ttf.h>
-#include "loadMedia.h"
-#include "loadTexture.h"
+#include "LoadMedia.h"
+#include "LoadTexture.h"
 
 const int SCREEN_WIDTH = 1400;
 const int SCREEN_HEIGHT = 800;
-
-
 
 void logErrorAndExit(const char* msg, const char* error);
 

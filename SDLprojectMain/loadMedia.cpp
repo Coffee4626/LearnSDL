@@ -1,11 +1,20 @@
-﻿#include "loadMedia.h"
+﻿#include "LoadMedia.h"
 
 SDL_Window* initSDL(int SCREEN_WIDTH, int SCREEN_HEIGHT, const char* WINDOW_TITLE)
 {
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
         logErrorAndExit("SDL_Init", SDL_GetError());
 
-    SDL_Window* window = SDL_CreateWindow(WINDOW_TITLE, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+    SDL_Window* window = SDL_CreateWindow(WINDOW_TITLE, 
+                                    SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 
+                                    SCREEN_WIDTH, 
+                                    SCREEN_HEIGHT, 
+                                    SDL_WINDOW_SHOWN);
+    if (TTF_Init() == -1)
+    {
+        std::cout << "Failed to initialize TTF" << std::endl;
+    }
+
     //full screen
     //window = SDL_CreateWindow(WINDOW_TITLE, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_FULLSCREEN_DESKTOP);
     if (window == nullptr) logErrorAndExit("CreateWindow", SDL_GetError());
@@ -43,7 +52,7 @@ SDL_Renderer* createRenderer(SDL_Window* window)
 //    return success;
 //}
 
-void close(SDL_Texture* gTexture, SDL_Renderer* gRenderer, SDL_Window* gWindow)
+void close(SDL_Texture* gTexture, SDL_Renderer* gRenderer, SDL_Window* gWindow, TTF_Font* score)
 {
     //Free loaded image
     SDL_DestroyTexture(gTexture);
@@ -54,9 +63,13 @@ void close(SDL_Texture* gTexture, SDL_Renderer* gRenderer, SDL_Window* gWindow)
     SDL_DestroyWindow(gWindow);
     gWindow = NULL;
     gRenderer = NULL;
+    TTF_CloseFont(score);
+    score = NULL;
 
     //Quit SDL subsystems
     IMG_Quit();
+    TTF_Quit();
+    Mix_Quit();
     SDL_Quit();
 }
 

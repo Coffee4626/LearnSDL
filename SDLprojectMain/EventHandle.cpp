@@ -11,13 +11,21 @@ enum Buttons
 
 bool ButtonsInput[TOTAL_PADDLE];
 
+void Game::InitObject()
+{
+	paddle1 = new Paddle(50, SCREEN_HEIGHT / 2);
+	paddle2 = new Paddle(SCREEN_WIDTH - 50, SCREEN_HEIGHT / 2);
+	ball = new Ball(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+}
+
 Game::Game()
 {
+	InitObject();
 	gWindow = initSDL(SCREEN_WIDTH, SCREEN_HEIGHT, "Game");
 	gRenderer = createRenderer(gWindow);
-	paddle1 = Paddle(50, SCREEN_HEIGHT / 2);
-	paddle2 = Paddle(SCREEN_WIDTH - 50, SCREEN_HEIGHT / 2);
-	ball = Ball(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+	scoreFont = TTF_OpenFont("Assets/DejaVuSansMono.ttf", 40);
+	p1score = 0;
+	p2score = 0;
 	deltaTime = (SDL_GetTicks() - tickcounts) / 1000.0f;
 	tickcounts = SDL_GetTicks();
 }
@@ -67,48 +75,55 @@ void Game::HandleInput()
 {
 	if (ButtonsInput[LEFT_PADDLE_UP] == false)
 	{
-		paddle1.paddleDirectionY = 0;
+		paddle1->paddleDirectionY = 0;
 	}
 
 	if (ButtonsInput[LEFT_PADDLE_DOWN] == false)
 	{
-		paddle1.paddleDirectionY = 0;
+		paddle1->paddleDirectionY = 0;
 	}
 
 	if (ButtonsInput[RIGHT_PADDLE_UP] == false)
 	{
-		paddle2.paddleDirectionY = 0;
+		paddle2->paddleDirectionY = 0;
 	}
 
 	if (ButtonsInput[RIGHT_PADDLE_DOWN] == false)
 	{
-		paddle2.paddleDirectionY = 0;
+		paddle2->paddleDirectionY = 0;
 	}
 
 	if (ButtonsInput[LEFT_PADDLE_UP] == true)
 	{
-		paddle1.paddleDirectionY = -1;
+		paddle1->paddleDirectionY = -1;
 	}
 
 	if (ButtonsInput[LEFT_PADDLE_DOWN] == true)
 	{
-		paddle1.paddleDirectionY = 1;
+		paddle1->paddleDirectionY = 1;
 	}
 
 	if (ButtonsInput[RIGHT_PADDLE_UP] == true)
 	{
-		paddle2.paddleDirectionY = -1;
+		paddle2->paddleDirectionY = -1;
 	}
 
 	if (ButtonsInput[RIGHT_PADDLE_DOWN] == true)
 	{
-		paddle2.paddleDirectionY = 1;
+		paddle2->paddleDirectionY = 1;
 	}
 }
 
 void Game::ScoreKeeping()
 {
-	//std::cout << deltaTime << std::endl;
+	if (ball->BallPosition.x <= 0)
+	{
+		p2score++;
+	}
+	if (ball->BallPosition.x >= SCREEN_WIDTH)
+	{
+		p1score++;
+	}
 }
 
 
@@ -116,11 +131,15 @@ void Game::render()
 {
 	SDL_RenderClear(gRenderer);
 
-	paddle1.drawPaddle(gRenderer);
+	DisplayPlayerScore(player1score, scoreTexture, { 0xFF, 0xFF, 0xFF, 0xFF }, gRenderer, scoreFont, p1score, SCREEN_WIDTH / 4, 20);
 
-	paddle2.drawPaddle(gRenderer);
+	DisplayPlayerScore(player2score, scoreTexture, { 0xFF, 0xFF, 0xFF, 0xFF }, gRenderer, scoreFont, p2score, 3 * SCREEN_WIDTH / 4, 20);
 
-	ball.drawBall(gRenderer);
+	paddle1->drawPaddle(gRenderer);
+
+	paddle2->drawPaddle(gRenderer);
+
+	ball->drawBall(gRenderer);
 
 	/*SDL_RenderCopy(gRenderer, gTexturePaddle, NULL, NULL);*/
 
@@ -146,16 +165,16 @@ void Game::gameLoop()
 
 		//paddle update
 
-		paddle1.UpdatePaddlePosition(deltaTime);
-		paddle2.UpdatePaddlePosition(deltaTime);
+		paddle1->UpdatePaddlePosition(deltaTime);
+		paddle2->UpdatePaddlePosition(deltaTime);
 
 		//ball update
 
-		ball.UpdateBallPosition(deltaTime);
+		ball->UpdateBallPosition(deltaTime);
 
 		//handle collision with paddle
 		Collision collision;
-		collision.HandleCollision(ball, paddle1, paddle2);
+		collision.HandleCollision(*ball, *paddle1, *paddle2);
 
 		//score keeping for 2 players
 
@@ -164,9 +183,9 @@ void Game::gameLoop()
 		//scene manager for different menu screens
 
 
-
 		// render game objects
 		render();
+
 	}
 	quitSDL(gWindow, gRenderer);
 }

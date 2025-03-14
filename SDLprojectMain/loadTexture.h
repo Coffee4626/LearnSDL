@@ -3,13 +3,13 @@
 
 #include "GameBase.h"
 
-class loadTexture
+class LoadTexture
 {
 
 public:
-	loadTexture();
+	LoadTexture();
 
-	~loadTexture();
+	~LoadTexture();
 
 	void Free();
 
@@ -19,7 +19,9 @@ public:
 
 	int getWidth();
 
-	SDL_Texture* lTexture(std::string path, SDL_Renderer* renderer);
+	bool LoadFromRenderedText(std::string textureText, TTF_Font* gFont, SDL_Color textColor, SDL_Renderer* gRenderer);
+
+	bool LoadFromFile(std::string path, SDL_Renderer* gRenderer);
 
 
 private:

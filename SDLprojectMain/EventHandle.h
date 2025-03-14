@@ -13,18 +13,24 @@ public:
 	Game();
 	~Game() = default;
 	void gameLoop();
+	void InitObject();
 	void render();
 	void GetInput();
 	void HandleInput();
 	void ScoreKeeping();
 private:
 	Uint32 tickcounts;
-
+	TTF_Font* scoreFont;
 	SDL_Window* gWindow;
 	SDL_Renderer* gRenderer;
-	Paddle paddle1;
-	Paddle paddle2;
-	Ball ball;
+	LoadTexture player1score;
+	int p1score;
+	LoadTexture player2score;
+	int p2score;
+	LoadTexture scoreTexture;
+	Paddle* paddle1;
+	Paddle* paddle2;
+	Ball* ball;
 	SDL_Event event;
 	float deltaTime;
 	bool quit = false;

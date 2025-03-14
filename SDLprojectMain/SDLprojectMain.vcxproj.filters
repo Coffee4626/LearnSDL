@@ -18,7 +18,7 @@
     <ClCompile Include="Source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="loadMedia.cpp">
+    <ClCompile Include="LoadMedia.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GameBase.cpp">
@@ -30,7 +30,7 @@
     <ClCompile Include="Ball.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="loadTexture.cpp">
+    <ClCompile Include="LoadTexture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Paddle.cpp">
@@ -47,10 +47,7 @@
     <ClInclude Include="GameBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="loadMedia.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Geometry.h">
+    <ClInclude Include="LoadMedia.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EventHandle.h">
@@ -59,7 +56,7 @@
     <ClInclude Include="Ball.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="loadTexture.h">
+    <ClInclude Include="LoadTexture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Paddle.h">

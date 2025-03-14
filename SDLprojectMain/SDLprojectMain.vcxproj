@@ -136,9 +136,9 @@
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="EventHandle.cpp" />
     <ClCompile Include="GameUtils.cpp" />
-    <ClCompile Include="loadTexture.cpp" />
+    <ClCompile Include="LoadTexture.cpp" />
     <ClCompile Include="GameBase.cpp" />
-    <ClCompile Include="loadMedia.cpp" />
+    <ClCompile Include="LoadMedia.cpp" />
     <ClCompile Include="Paddle.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
@@ -148,9 +148,8 @@
     <ClInclude Include="EventHandle.h" />
     <ClInclude Include="GameBase.h" />
     <ClInclude Include="GameUtils.h" />
-    <ClInclude Include="Geometry.h" />
-    <ClInclude Include="loadMedia.h" />
-    <ClInclude Include="loadTexture.h" />
+    <ClInclude Include="LoadMedia.h" />
+    <ClInclude Include="LoadTexture.h" />
     <ClInclude Include="Paddle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

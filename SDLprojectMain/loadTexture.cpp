@@ -1,15 +1,13 @@
-#include "loadTexture.h"
+#include "LoadTexture.h"
 
-
-
-loadTexture::loadTexture()
+LoadTexture::LoadTexture()
 {
     mTexture = nullptr;
     mWidth = 0;
     mHeight = 0;
 }
 
-void loadTexture::Free()
+void LoadTexture::Free()
 {
     if (mTexture != nullptr)
     {
@@ -19,13 +17,13 @@ void loadTexture::Free()
     }
 }
 
-loadTexture::~loadTexture()
+LoadTexture::~LoadTexture()
 {
     Free();
 }
 
 
-void loadTexture::renderTexture(SDL_Renderer* renderer, int x, int y, SDL_Rect* clip)
+void LoadTexture::renderTexture(SDL_Renderer* renderer, int x, int y, SDL_Rect* clip)
 {
     SDL_Rect renderingSpace = { x, y, mWidth, mHeight };
 
@@ -38,40 +36,75 @@ void loadTexture::renderTexture(SDL_Renderer* renderer, int x, int y, SDL_Rect* 
     SDL_RenderCopy(renderer, mTexture, clip, &renderingSpace);
 }
 
-SDL_Texture* loadTexture::lTexture(std::string path, SDL_Renderer* renderer)
+bool LoadTexture::LoadFromRenderedText(std::string textureText, TTF_Font* gFont, SDL_Color textColor, SDL_Renderer* gRenderer)
 {
-    //The final texture
-    SDL_Texture* newTexture = NULL;
+	Free();
 
-    //Load image at specified path
-    SDL_Surface* loadedSurface = IMG_Load(path.c_str());
-    if (loadedSurface == NULL)
-    {
-        logErrorAndExit("lTexture error", SDL_GetError());
-    }
-    else
-    {
-        //Create texture from surface pixels
-        newTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
-        if (newTexture == NULL)
-        {
-            logErrorAndExit("lTexture error", SDL_GetError());
-        }
+	SDL_Surface* textSurface = TTF_RenderText_Solid(gFont, textureText.c_str(), textColor);
+	if (textSurface == NULL)
+	{
+		std::cout << "fail to load text texture" << std::endl;
+	}
+	else
+	{
+		mTexture = SDL_CreateTextureFromSurface(gRenderer, textSurface);
+		if (mTexture == NULL)
+		{
+			std::cout << "Can not create texture from surface." << std::endl;
+		}
+		else
+		{
+			mWidth = textSurface->w;
+			mHeight = textSurface->h;
+		}
 
-        //Get rid of old loaded surface
-        SDL_FreeSurface(loadedSurface);
-    }
+		SDL_FreeSurface(textSurface);
+	}
 
-    return newTexture;
+	return mTexture != NULL;
+}
+
+bool LoadTexture::LoadFromFile(std::string path, SDL_Renderer* gRenderer)
+{
+	Free();
+
+	SDL_Texture* tmpTexture = nullptr;
+
+	SDL_Surface* tmpSurface = IMG_Load(path.c_str());
+	if (tmpSurface == nullptr)
+	{
+		std::cout << "fail to load texture" << std::endl;
+	}
+	else
+	{
+		SDL_SetColorKey(tmpSurface, SDL_TRUE, SDL_MapRGB(tmpSurface->format, 0, 255, 255));
+
+		tmpTexture = SDL_CreateTextureFromSurface(gRenderer, tmpSurface);
+		if (tmpTexture == nullptr)
+		{
+			std::cout << "Can not create texture from surface."<< std::endl;
+		}
+		else
+		{
+			mWidth = tmpSurface->w;
+			mHeight = tmpSurface->h;
+		}
+	}
+
+	SDL_FreeSurface(tmpSurface);
+
+	mTexture = tmpTexture;
+
+	return mTexture != nullptr;
 }
 
 
-int loadTexture::getHeight()
+int LoadTexture::getHeight()
 {
     return mHeight;
 }
 
-int loadTexture::getWidth()
+int LoadTexture::getWidth()
 {
     return mWidth;
 }
