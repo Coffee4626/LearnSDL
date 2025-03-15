@@ -18,6 +18,7 @@ public:
 	void GetInput();
 	void HandleInput();
 	void UpdateObjects();
+	void UpdatePlayerScore();
 	void render();
 	void close();
 private:
@@ -35,6 +36,7 @@ private:
 	Ball* ball;
 	SDL_Event event;
 	float deltaTime;
+	Collision collision;
 	bool quit = false;
 };
 

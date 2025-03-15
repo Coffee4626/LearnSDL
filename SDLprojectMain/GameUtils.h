@@ -3,10 +3,8 @@
 
 #include "GameBase.h"
 
+//void update score
 
-
-SDL_Window* initSDL(int SCREEN_WIDTH, int SCREEN_HEIGHT, const char* WINDOW_TITLE);
-
-SDL_Renderer* createRenderer(SDL_Window* window);
+//void 
 
 #endif // !GAME_UTILS_H

@@ -43,12 +43,10 @@ Collision::Contact Collision::CheckCollision(Ball &ball, Paddle &paddle)
 
 	if (ball.BallVelocityX < 0)
 	{
-		// Left paddle
 		contact.PenetrationDepth = PaddleRightSide - BallLeftSide;
 	}
 	else if (ball.BallVelocityX > 0)
 	{
-		// Right paddle
 		contact.PenetrationDepth = PaddleLeftSide - BallRightSide;
 	}
 
@@ -68,7 +66,35 @@ Collision::Contact Collision::CheckCollision(Ball &ball, Paddle &paddle)
 	{
 		contact.ContactPoint = CollisionPoint::Bottom;
 	}
+	return contact;
+}
 
+Collision::Contact Collision::CheckCollisionWithWall(Ball& ball)
+{
+	float BallLeftSide = ball.BallPosition.x;
+	float BallRightSide = ball.BallPosition.x + ball.BallPosition.w;
+	float BallTopSide = ball.BallPosition.y;
+	float BallBottomSide = ball.BallPosition.y + ball.BallPosition.h;
+	
+	Contact contact{};
+	if (BallLeftSide <= 0.0f)
+	{
+		contact.ContactPoint = Collision::LeftWall;
+	}
+	else if (BallRightSide >= SCREEN_WIDTH)
+	{
+		contact.ContactPoint = Collision::RightWall;
+	}
+	else if (BallTopSide < 0.0f)
+	{
+		contact.ContactPoint = Collision::Top;
+		contact.PenetrationDepth = -BallTopSide;
+	}
+	else if (BallBottomSide > SCREEN_HEIGHT)
+	{
+		contact.ContactPoint = Collision::Bottom;
+		contact.PenetrationDepth = SCREEN_HEIGHT - BallBottomSide;
+	}
 	return contact;
 }
 
@@ -76,6 +102,7 @@ void Collision::HandleCollision(Ball &ball, Paddle &paddle1, Paddle &paddle2)
 {
 	Contact contact1 = CheckCollision(ball, paddle1);
 	Contact contact2 = CheckCollision(ball, paddle2);
+	Contact contact3 = CheckCollisionWithWall(ball);
 
 	if (contact1.ContactPoint != CollisionPoint::None)
 	{
@@ -99,7 +126,6 @@ void Collision::HandleCollision(Ball &ball, Paddle &paddle1, Paddle &paddle2)
 			ball.BallVelocityY = 1.41f * ball.BallVelocityY;
 		}
 	}
-
 	if (contact2.ContactPoint != CollisionPoint::None)
 	{
 		ball.BallPosition.x += contact2.PenetrationDepth;
@@ -121,6 +147,25 @@ void Collision::HandleCollision(Ball &ball, Paddle &paddle1, Paddle &paddle2)
 		{
 			ball.BallVelocityY = 1.41f * ball.BallVelocityY;
 		}
+	}
+	if (contact3.ContactPoint == Collision::Top || contact3.ContactPoint == Collision::Bottom)
+	{
+		ball.BallPosition.y += contact3.PenetrationDepth;
+		ball.BallVelocityY = -ball.BallVelocityY;
+	}
+	else if (contact3.ContactPoint == Collision::LeftWall)
+	{
+		ball.BallPosition.x = SCREEN_WIDTH / 2;
+		ball.BallPosition.y = SCREEN_HEIGHT / 2;
+		ball.BallVelocityX = -ball.InitialBallVelocityX;
+		ball.BallVelocityY = ball.InitialBallVelocityY;
+	}
+	else if (contact3.ContactPoint == Collision::RightWall)
+	{
+		ball.BallPosition.x = SCREEN_WIDTH / 2;
+		ball.BallPosition.y = SCREEN_HEIGHT / 2;
+		ball.BallVelocityX = ball.InitialBallVelocityX;
+		ball.BallVelocityY = ball.InitialBallVelocityY;
 	}
 }
 

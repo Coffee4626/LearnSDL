@@ -28,28 +28,9 @@ void Ball::UpdateBallPosition(float &deltaTime)
 {
 	BallPosition.x = BallPosition.x + BallVelocityX * deltaTime;
 	BallPosition.y = BallPosition.y + BallVelocityY * deltaTime;
-
-	if (BallPosition.x >= SCREEN_WIDTH)
-	{
-		BallPosition.x = SCREEN_WIDTH / 2;
-		BallPosition.y = SCREEN_HEIGHT / 2;
-		BallVelocityX = InitialBallVelocityX;
-		BallVelocityY = InitialBallVelocityY;
-	}
-
-	if (BallPosition.x <= 0)
-	{
-		BallPosition.x = SCREEN_WIDTH / 2;
-		BallPosition.y = SCREEN_HEIGHT / 2;
-		BallVelocityX = -InitialBallVelocityX;
-		BallVelocityY = InitialBallVelocityY;
-	}
-
-	if (BallPosition.y >= SCREEN_HEIGHT || BallPosition.y <= 0)
-	{
-		BallVelocityY = -BallVelocityY;
-	}
 }
+
+//void handle collision within class?
 
 void Ball::drawBall(SDL_Renderer* renderer)
 {

@@ -173,15 +173,28 @@ void Game::close()
 	SDL_Quit();
 }
 
+void Game::UpdatePlayerScore()
+{
+	Collision::Contact contact = collision.CheckCollisionWithWall(*ball);
+	if (contact.ContactPoint == Collision::LeftWall)
+	{
+		p2score++;
+		player2score.LoadFromRenderedText(std::to_string(p2score), scoreFont, { 0xFF, 0xFF, 0xFF, 0xFF }, gRenderer);
+	}
+	if (contact.ContactPoint == Collision::RightWall)
+	{
+		p1score++;
+		player1score.LoadFromRenderedText(std::to_string(p1score), scoreFont, { 0xFF, 0xFF, 0xFF, 0xFF }, gRenderer);
+	}
+}
 
 void Game::UpdateObjects()
 {
 	paddle1->UpdatePaddlePosition(deltaTime);
 	paddle2->UpdatePaddlePosition(deltaTime);
 	ball->UpdateBallPosition(deltaTime);
-	//update score
+	UpdatePlayerScore();
 }
-
 
 void Game::render()
 {
@@ -218,10 +231,9 @@ void Game::gameLoop()
 
 		HandleInput();
 
-		UpdateObjects();
-
-		Collision collision;
 		collision.HandleCollision(*ball, *paddle1, *paddle2);
+
+		UpdateObjects();
 
 		render();
 

@@ -14,7 +14,9 @@ public:
 		Top,
 		UpperMiddle,
 		LowerMiddle,
-		Bottom
+		Bottom,
+		LeftWall,
+		RightWall
 	};
 
 	struct Contact
@@ -24,6 +26,7 @@ public:
 	};
 
 	Contact CheckCollision(Ball &ball, Paddle &paddle);
+	Contact CheckCollisionWithWall(Ball& ball);
 	void HandleCollision(Ball &ball, Paddle &paddle1, Paddle &paddle2);
 };
 

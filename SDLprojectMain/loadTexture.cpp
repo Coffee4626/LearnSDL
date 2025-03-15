@@ -38,9 +38,9 @@ void LoadTexture::renderTexture(SDL_Renderer* renderer, int x, int y, SDL_Rect* 
 
 bool LoadTexture::LoadFromRenderedText(std::string textureText, TTF_Font* gFont, SDL_Color textColor, SDL_Renderer* gRenderer)
 {
-	Free();
 
 	SDL_Surface* textSurface = TTF_RenderText_Solid(gFont, textureText.c_str(), textColor);
+	Free();
 	if (textSurface == NULL)
 	{
 		std::cout << "fail to load text texture" << std::endl;
