@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -136,21 +136,28 @@
   <ItemGroup>
     <ClCompile Include="Ball.cpp" />
     <ClCompile Include="Collision.cpp" />
-    <ClCompile Include="EventHandle.cpp" />
+    <ClCompile Include="CourtScreen.cpp" />
     <ClCompile Include="GameUtils.cpp" />
     <ClCompile Include="LoadTexture.cpp" />
     <ClCompile Include="GameBase.cpp" />
     <ClCompile Include="Paddle.cpp" />
+    <ClCompile Include="ResultScreen.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="TitleScreen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ball.h" />
     <ClInclude Include="Collision.h" />
-    <ClInclude Include="EventHandle.h" />
+    <ClInclude Include="CourtScreen.h" />
     <ClInclude Include="GameBase.h" />
     <ClInclude Include="GameUtils.h" />
+    <ClInclude Include="GameState.h" />
     <ClInclude Include="LoadTexture.h" />
     <ClInclude Include="Paddle.h" />
+    <ClInclude Include="ResultScreen.h" />
+    <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="TitleScreen.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

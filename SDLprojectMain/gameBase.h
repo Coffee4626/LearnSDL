@@ -13,6 +13,9 @@
 const int SCREEN_WIDTH = 1400;
 const int SCREEN_HEIGHT = 800;
 
+static bool p1win;
+static bool p2win;
+
 void logErrorAndExit(const char* msg, const char* error);
 
 #endif // !GAME_BASE_H

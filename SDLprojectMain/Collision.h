@@ -25,9 +25,9 @@ public:
 		CollisionPoint ContactPoint;
 	};
 
-	Contact CheckCollision(Ball &ball, Paddle &paddle);
-	Contact CheckCollisionWithWall(Ball& ball);
-	void HandleCollision(Ball &ball, Paddle &paddle1, Paddle &paddle2);
+	Contact		CheckCollision(Ball &ball, Paddle &paddle);
+	Contact		CheckCollisionWithWall(Ball& ball);
+	void		HandleCollision(Ball &ball, Paddle &paddle1, Paddle &paddle2);
 };
 
 #endif // !COLLISION_H

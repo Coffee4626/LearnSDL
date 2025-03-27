@@ -12,13 +12,14 @@ Paddle::Paddle()
 
 Paddle::Paddle(float x, float y)
 {
-	paddleVelocity = 15.0f;
+	paddleVelocity = 8.0f;
 	paddleDirectionY = 0;
 	paddlePosition.x = static_cast<float>(x);
 	paddlePosition.y = static_cast<float>(y);
 	paddlePosition.w = 5;
 	paddlePosition.h = 100;
 }
+
 void Paddle::UpdatePaddlePosition(float &deltaTime)
 {
 	if (paddlePosition.y + paddlePosition.h >= SCREEN_HEIGHT)
@@ -31,7 +32,6 @@ void Paddle::UpdatePaddlePosition(float &deltaTime)
 	}
 	else paddlePosition.y += static_cast<float>(paddleDirectionY) * paddleVelocity * deltaTime;
 }
-
 
 void Paddle::drawPaddle(SDL_Renderer* renderer)
 {

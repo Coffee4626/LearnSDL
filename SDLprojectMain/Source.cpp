@@ -1,14 +1,14 @@
-﻿#include "EventHandle.h"
+﻿#include "SceneManager.h"
 
 using namespace std;
 
-Game* game = NULL;
+SceneManager* game;
 
 int main(int argc, char* argv[])
 {
-    game = new Game();
+    game = new SceneManager();
 
-    game->gameLoop();
+    game->MainLoop();
 
     return 0;
 }
