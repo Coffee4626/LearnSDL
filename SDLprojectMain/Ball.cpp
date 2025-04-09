@@ -1,5 +1,5 @@
 #include "Ball.h"
-
+using namespace pong;
 Ball::Ball()
 {
 	BallPosition.x = 0;
@@ -14,8 +14,8 @@ Ball::Ball()
 
 Ball::Ball(float x, float y)
 {
-	InitialBallVelocityX = 3.5f;
-	InitialBallVelocityY = 3.0f;
+	InitialBallVelocityX = 1.0f;
+	InitialBallVelocityY = 0.5f;
 	BallVelocityX = InitialBallVelocityX;
 	BallVelocityY = InitialBallVelocityY;
 	BallPosition.x = x;
@@ -26,11 +26,10 @@ Ball::Ball(float x, float y)
 
 void Ball::UpdateBallPosition(float &deltaTime)
 {
-	BallPosition.x = BallPosition.x + BallVelocityX * deltaTime;
-	BallPosition.y = BallPosition.y + BallVelocityY * deltaTime;
+	BallPosition.x = BallPosition.x + BallVelocityX * (deltaTime / 2);
+	BallPosition.y = BallPosition.y + BallVelocityY * (deltaTime / 2);
+	std::cout << BallVelocityY << std::endl;
 }
-
-//void handle collision within class?
 
 void Ball::drawBall(SDL_Renderer* renderer)
 {

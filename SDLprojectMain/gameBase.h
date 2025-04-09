@@ -10,11 +10,34 @@
 #include <SDL_ttf.h>
 #include "LoadTexture.h"
 
-const int SCREEN_WIDTH = 1400;
-const int SCREEN_HEIGHT = 800;
+namespace pong
+{
+	const int SCREEN_WIDTH = 1400;
+	const int SCREEN_HEIGHT = 800;
 
-static bool p1win;
-static bool p2win;
+	const float FPS = 60;
+	const float FrameDelay = 1000.0f / FPS;
+
+	enum buttons
+	{
+		left_paddle_up,
+		left_paddle_down,
+		right_paddle_up,
+		right_paddle_down,
+		total_paddle = 4,
+	};
+
+	enum PlayerIndex
+	{
+		first,
+		second,
+		total = 2,
+	};
+
+};
+
+
+
 
 void logErrorAndExit(const char* msg, const char* error);
 

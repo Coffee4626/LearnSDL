@@ -1,5 +1,5 @@
 #include "Paddle.h"
-
+using namespace pong;
 Paddle::Paddle()
 {
 	paddleVelocity = 0.0f;
@@ -12,7 +12,7 @@ Paddle::Paddle()
 
 Paddle::Paddle(float x, float y)
 {
-	paddleVelocity = 8.0f;
+	paddleVelocity = 1.5f;
 	paddleDirectionY = 0;
 	paddlePosition.x = static_cast<float>(x);
 	paddlePosition.y = static_cast<float>(y);

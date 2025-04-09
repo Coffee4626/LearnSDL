@@ -2,27 +2,29 @@
 #define TITLE_SCREEN_H
 
 #include "GameState.h"
-
-class Title : public GameState
+namespace pong
 {
-public:
-	Title();
-	void		enter(SDL_Renderer* renderer, TTF_Font* font)	override;
-	void		exit()											override;
-	void		handleEvent(SDL_Event& e)						override;
-	void		update()										override;
-	void		render()										override;
-	bool		checkChangeState()								override;
-	SceneType	getNextScene()									override;
-private:
-	LoadTexture mInstructionsForP1;
-	LoadTexture mInstructionsForP2;
-	LoadTexture mInstructionsToBegin;
-	//LoadTexture mInstructionsToConfig;
-	//LoadTexture mBackgroundTexture;
-	LoadTexture mInstructionsForQuit;
-	SDL_Renderer* mRenderer;
-	bool changeState;
-};
+	class Game;
+
+	class Title : public GameState
+	{
+	public:
+		Title		(Game& game);
+		void		enter(SDL_Renderer* renderer, TTF_Font* font)	override;
+		void		exit()											override;
+		void		handleEvent(SDL_Event& e)						override;
+		void		update(float deltaTime)							override;
+		void		render()										override;
+	private:
+		SDL_Renderer* mRenderer;
+		TTF_Font* mFont;
+		Game& mGame;
+		LoadTexture mInstructionsForP1;
+		LoadTexture mInstructionsForP2;
+		LoadTexture mInstructionsToBegin;
+		LoadTexture mInstructionsForQuit;
+		LoadTexture mTitleScreen;
+	};
+}
 
 #endif // !TITLE_SCREEN_H

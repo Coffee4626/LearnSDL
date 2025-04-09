@@ -7,35 +7,34 @@
 #include "Paddle.h"
 #include "Ball.h"
 #include "Collision.h"
-
-class Court : public GameState
+namespace pong
 {
-public:
-	Court();
-	void			enter(SDL_Renderer* renderer, TTF_Font* font)		override;
-	void			exit()												override;
-	void			handleEvent(SDL_Event &e)							override;
-	void			update()											override;
-	void			render()											override;
-	bool			checkChangeState()									override;
-	SceneType		getNextScene()										override;
-	void			updatePlayerScore();
-	void			updateGameObjects();
-	void			handleInput();
-private:
-	Uint32			tickcounts;
-	SDL_Renderer*	mRenderer;
-	TTF_Font*		playerScore;
-	LoadTexture		mBackgroundTexture;
-	LoadTexture		player1score;
-	LoadTexture		player2score;
-	Collision		collision;
-	Paddle*			paddle1;
-	Paddle*			paddle2;
-	Ball*			ball;
-	float			deltaTime;
-	int				p1score;
-	int				p2score;
-};
+	class Game;
+
+	class Court : public GameState
+	{
+	public:
+		Court			(Game& game);
+		void			enter(SDL_Renderer* renderer, TTF_Font* font)		override;
+		void			exit()												override;
+		void			handleEvent(SDL_Event& e)							override;
+		void			update(float deltaTime)								override;
+		void			render()											override;
+		void			updatePlayerScore();
+		void			updateGameObjects(float &mTime);
+		void			handleInput();
+	private:
+		Game&			mGame;
+		SDL_Renderer*	mRenderer;
+		TTF_Font*		mFont;
+		LoadTexture		mBackgroundTexture;
+		LoadTexture		player1score;
+		LoadTexture		player2score;
+		Collision		collision;
+		Paddle*			paddle1;
+		Paddle*			paddle2;
+		Ball*			ball;
+	};
+}
 
 #endif // !COURT_SCREEN_H

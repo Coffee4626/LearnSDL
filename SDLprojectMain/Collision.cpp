@@ -1,6 +1,5 @@
 #include "Collision.h"
-
-
+using namespace pong;
 Collision::Contact Collision::CheckCollision(Ball &ball, Paddle &paddle)
 {
 	float BallLeftSide = ball.BallPosition.x;
@@ -107,45 +106,45 @@ void Collision::HandleCollision(Ball &ball, Paddle &paddle1, Paddle &paddle2)
 	if (contact1.ContactPoint != CollisionPoint::None)
 	{
 		ball.BallPosition.x += contact1.PenetrationDepth;
-		ball.BallVelocityX = -1.25f * ball.BallVelocityX;
+		ball.BallVelocityX = -1.05f * ball.BallVelocityX;
 
 		if (contact1.ContactPoint == CollisionPoint::Top)
 		{
-			ball.BallVelocityY = -1.41f * ball.BallVelocityY;
+			ball.BallVelocityY = -0.75f * 2;
 		}
 		else if (contact1.ContactPoint == CollisionPoint::UpperMiddle)
 		{
-			ball.BallVelocityY = -0.75f * 5;
+			ball.BallVelocityY = -0.75f * 1;
 		}
 		else if (contact1.ContactPoint == CollisionPoint::LowerMiddle)
 		{
-			ball.BallVelocityY = 0.75f * 5;
+			ball.BallVelocityY = 0.75f * 1;
 		}
 		else if (contact1.ContactPoint == CollisionPoint::Bottom)
 		{
-			ball.BallVelocityY = 1.41f * ball.BallVelocityY;
+			ball.BallVelocityY = 0.75f * 2;
 		}
 	}
 	if (contact2.ContactPoint != CollisionPoint::None)
 	{
 		ball.BallPosition.x += contact2.PenetrationDepth;
-		ball.BallVelocityX = -ball.BallVelocityX;
+		ball.BallVelocityX = -1.05 * ball.BallVelocityX;
 
 		if (contact2.ContactPoint == CollisionPoint::Top)
 		{
-			ball.BallVelocityY = -1.41f * ball.BallVelocityY;
+			ball.BallVelocityY = -0.75 * 2;
 		}
 		else if (contact2.ContactPoint == CollisionPoint::UpperMiddle)
 		{
-			ball.BallVelocityY = -0.75f * 5;
+			ball.BallVelocityY = -0.75f * 1;
 		}
 		else if (contact2.ContactPoint == CollisionPoint::LowerMiddle)
 		{
-			ball.BallVelocityY = 0.75f * 5;
+			ball.BallVelocityY = 0.75f * 1;
 		}
 		else if (contact2.ContactPoint == CollisionPoint::Bottom)
 		{
-			ball.BallVelocityY = 1.41f * ball.BallVelocityY;
+			ball.BallVelocityY = 0.75f * 2;
 		}
 	}
 	if (contact3.ContactPoint == Collision::Top || contact3.ContactPoint == Collision::Bottom)

@@ -3,25 +3,27 @@
 
 #include "GameBase.h"
 #include "GameState.h"
-
-class End : public GameState
+namespace pong
 {
-public:
-	End();
-	void enter(SDL_Renderer* renderer, TTF_Font* font);
-	void exit();
-	void handleEvent(SDL_Event& event);
-	void update();
-	void render();
-	bool checkChangeState();
-	SceneType getNextScene();
-private:
-	SDL_Renderer*	mRenderer;
-	TTF_Font*		mFont;
-	LoadTexture		p1message;
-	LoadTexture		p2message;
-	bool			changeState;
-};
+	class Game;
+
+	class End : public GameState
+	{
+	public:
+		End(Game& game);
+		void enter(SDL_Renderer* renderer, TTF_Font* font)	override;
+		void exit()											override;
+		void handleEvent(SDL_Event& event)					override;
+		void update(float deltaTime)						override;
+		void render()										override;
+	private:
+		Game&			mGame;
+		SDL_Renderer*	mRenderer;
+		TTF_Font*		mFont;
+		LoadTexture		p1message;
+		LoadTexture		p2message;
+	};
+}
 
 #endif // !RESULT_SCREEN_H
 

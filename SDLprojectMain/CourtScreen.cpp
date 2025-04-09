@@ -1,46 +1,42 @@
 #include "CourtScreen.h"
+#include "ResultScreen.h"
+#include "Game.h"
 
-enum buttons
-{
-	left_paddle_up,
-	left_paddle_down,
-	right_paddle_up,
-	right_paddle_down,
-	total_paddle = 4,
-};
+using namespace pong;
 
 bool buttonsinput[total_paddle];
 
-
-Court::Court()
+Court::Court(Game& game) : 
+	mGame(game),
+	mRenderer(nullptr),
+	mFont(nullptr),
+	paddle1(nullptr), 
+	paddle2(nullptr), 
+	ball(nullptr)
 {
-	paddle1 = NULL;
-	paddle2 = NULL;
-	ball = NULL;
-	p1score = 0;
-	p2score = 0;
+
 }
 
 void Court::enter(SDL_Renderer* renderer, TTF_Font* font)
 {
+	this->mRenderer = renderer;
+	this->mFont = font;
 	SDL_Color color = { 0xFF, 0xFF, 0xFF, 0xFF };
-	if (!player1score.LoadFromRenderedText(std::to_string(p1score), font, color, renderer))
+	paddle1 = new Paddle(50, SCREEN_HEIGHT / 2);
+	paddle2 = new Paddle(SCREEN_WIDTH - 50, SCREEN_HEIGHT / 2);
+	ball = new Ball(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+	mGame.getPlayerScores()[PlayerIndex::first] = 0;
+	mGame.getPlayerScores()[PlayerIndex::second] = 0;
+	if (!player1score.LoadFromRenderedText(std::to_string(mGame.getPlayerScores()[PlayerIndex::first]), mFont, color, mRenderer))
 	{
 		std::cout << "Failed to load instructions for p1" << std::endl;
 		return;
 	}
-	if (!player2score.LoadFromRenderedText(std::to_string(p2score), font, color, renderer))
+	if (!player2score.LoadFromRenderedText(std::to_string(mGame.getPlayerScores()[PlayerIndex::second]), mFont, color, mRenderer))
 	{
 		std::cout << "Failed to load instructions for p2" << std::endl;
 		return;
 	}
-	paddle1 = new Paddle(50, SCREEN_HEIGHT / 2);
-	paddle2 = new Paddle(SCREEN_WIDTH - 50, SCREEN_HEIGHT / 2);
-	ball = new Ball(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
-	deltaTime = (SDL_GetTicks() - tickcounts) / 1000.0f;
-	tickcounts = SDL_GetTicks();
-	this->mRenderer = renderer;
-	this->playerScore = font;
 }
 
 void Court::handleEvent(SDL_Event& event)
@@ -134,71 +130,58 @@ void Court::exit()
 	paddle1 = NULL;
 	paddle2 = NULL;
 	ball = NULL;
-	delete paddle1;
-	delete paddle2;
 	delete ball;
+	delete paddle2;
+	delete paddle1;
 }
 
 void Court::updatePlayerScore()
 {
 	SDL_Color color = { 0xFF, 0xFF, 0xFF, 0xFF };
 	Collision::Contact contact = collision.CheckCollisionWithWall(*ball);
-	if (contact.ContactPoint == Collision::LeftWall)
-	{
-		p2score++;
-		player2score.LoadFromRenderedText(std::to_string(p2score), playerScore, color, mRenderer);
-	}
+	auto& scores = mGame.getPlayerScores();
 	if (contact.ContactPoint == Collision::RightWall)
 	{
-		p1score++;
-		player1score.LoadFromRenderedText(std::to_string(p1score), playerScore, color, mRenderer);
+		scores[PlayerIndex::first]++;
+		player1score.LoadFromRenderedText(std::to_string(scores[PlayerIndex::first]), mFont, color, mRenderer);
+	}
+	if (contact.ContactPoint == Collision::LeftWall)
+	{
+		scores[PlayerIndex::second]++;
+		player2score.LoadFromRenderedText(std::to_string(scores[PlayerIndex::second]), mFont, color, mRenderer);
+	}
+	if (scores[PlayerIndex::first] > 2 || scores[PlayerIndex::second] > 2)
+	{
+		mGame.ChangeState(std::make_shared<End>(mGame));
 	}
 }
 
-void Court::updateGameObjects()
+void Court::updateGameObjects(float &mTime)
 {
-	paddle1->UpdatePaddlePosition(deltaTime);
-	paddle2->UpdatePaddlePosition(deltaTime);
-	ball->UpdateBallPosition(deltaTime);
+	//Update paddle position based on time
+	paddle1->UpdatePaddlePosition(mTime);
+	paddle2->UpdatePaddlePosition(mTime);
+	//Update ball position based on time
+	ball->UpdateBallPosition(mTime);
+	//Update player score
 	updatePlayerScore();
 }
 
-void Court::update()
+void Court::update(float deltaTime)
 {
 	handleInput();
 	collision.HandleCollision(*ball, *paddle1, *paddle2);
-	updateGameObjects();
+	updateGameObjects(deltaTime);
 }
 
 void Court::render()
 {
+	//Render players score
 	player1score.renderTexture(mRenderer, SCREEN_WIDTH / 4, 20);
-
 	player2score.renderTexture(mRenderer, 3 * SCREEN_WIDTH / 4, 20);
-
+	//Render player paddles
 	paddle1->drawPaddle(mRenderer);
-
 	paddle2->drawPaddle(mRenderer);
-
+	//Render ball
 	ball->drawBall(mRenderer);
-}
-
-bool Court::checkChangeState()
-{
-	if (p1score > 10)
-	{
-		p1win = true;
-		return true;
-	}
-	if (p2score > 10)
-	{
-		p2win = true;
-		return true;
-	}
-	return false;
-}
-
-SceneType Court::getNextScene()
-{
-	return SceneType::RESULT_SCREEN;
 }

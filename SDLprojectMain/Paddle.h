@@ -1,21 +1,22 @@
 #ifndef PADDLE_H
 #define PADDLE_H
 #include "GameBase.h"
-#include "LoadTexture.h"
-
-class Paddle
+namespace pong
 {
-public:
+	class Paddle
+	{
+	public:
 
-	Paddle();
-	Paddle(float x, float y);
-	~Paddle() = default;
-	void UpdatePaddlePosition(float &deltaTime);
-	void drawPaddle(SDL_Renderer* renderer);
+		Paddle();
+		Paddle(float x, float y);
+		~Paddle() = default;
+		void UpdatePaddlePosition(float &deltaTime);
+		void drawPaddle(SDL_Renderer* renderer);
 
-	int paddleDirectionY;
-	float paddleVelocity = 20.0;
-	SDL_Rect paddlePosition;
-};
+		int paddleDirectionY;
+		float paddleVelocity = 20.0;
+		SDL_Rect paddlePosition;
+	};
+}
 
 #endif // !PADDLE_H

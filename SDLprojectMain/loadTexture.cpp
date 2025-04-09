@@ -1,5 +1,5 @@
 #include "LoadTexture.h"
-
+using namespace pong;
 LoadTexture::LoadTexture()
 {
     mTexture = nullptr;
@@ -70,6 +70,9 @@ bool LoadTexture::LoadFromFile(std::string path, SDL_Renderer* gRenderer)
 	SDL_Texture* tmpTexture = NULL;
 
 	SDL_Surface* tmpSurface = IMG_Load(path.c_str());
+
+	std::cout << path.c_str() << std::endl;
+
 	if (tmpSurface == NULL)
 	{
 		std::cout << "fail to load texture" << std::endl;

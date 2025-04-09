@@ -1,14 +1,14 @@
-﻿#include "SceneManager.h"
+﻿#include "Game.h"
 
-using namespace std;
+using namespace pong;
 
-SceneManager* game;
+Game* game;
 
 int main(int argc, char* argv[])
 {
-    game = new SceneManager();
+    game = new Game();
 
-    game->MainLoop();
+    game->GameLoop();
 
     return 0;
 }

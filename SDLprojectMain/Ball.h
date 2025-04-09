@@ -3,24 +3,26 @@
 
 #include "GameBase.h"
 
-class Ball
+namespace pong
 {
+	class Ball
+	{
 
-public:
+	public:
 
-	Ball();
-	Ball(float x, float y);
-	~Ball() = default;
-	void UpdateBallPosition(float &deltaTime);
-	void drawBall(SDL_Renderer* renderer);
+		Ball();
+		Ball(float x, float y);
+		~Ball() = default;
+		void UpdateBallPosition(float &deltaTime);
+		void drawBall(SDL_Renderer* renderer);
+		float InitialBallVelocityX;
+		float InitialBallVelocityY;
+		float BallVelocityX;
+		float BallVelocityY;
+		SDL_Rect BallPosition;
 
-	float InitialBallVelocityX;
-	float InitialBallVelocityY;
-	float BallVelocityX;
-	float BallVelocityY;
-	SDL_Rect BallPosition;
-
-};
+	};
+}
 
 #endif //!BALL_H
 
