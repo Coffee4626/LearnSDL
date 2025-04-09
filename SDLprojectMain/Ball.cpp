@@ -8,49 +8,29 @@ Ball::Ball()
 	BallPosition.h = 0;
 	InitialBallVelocityX = 0;
 	InitialBallVelocityY = 0;
-	acceleration = 0;
+	BallVelocityX = InitialBallVelocityX;
+	BallVelocityY = InitialBallVelocityY;
 }
 
 Ball::Ball(float x, float y)
 {
-	InitialBallVelocityX = 10.0f;
-	InitialBallVelocityY = 0.0f;
+	InitialBallVelocityX = 3.5f;
+	InitialBallVelocityY = 3.0f;
 	BallVelocityX = InitialBallVelocityX;
 	BallVelocityY = InitialBallVelocityY;
 	BallPosition.x = x;
 	BallPosition.y = y;
 	BallPosition.w = 15;
 	BallPosition.h = 15;
-	acceleration = 0.02f;
 }
 
-void Ball::ResetBallVelocity()
-{
-	BallVelocityX = InitialBallVelocityX;
-	BallVelocityY = InitialBallVelocityY;
-}
-
-
-void Ball::UpdateBallPosition(float deltaTime)
+void Ball::UpdateBallPosition(float &deltaTime)
 {
 	BallPosition.x = BallPosition.x + BallVelocityX * deltaTime;
 	BallPosition.y = BallPosition.y + BallVelocityY * deltaTime;
-
-	//Ball collision with border
-
-	if (BallPosition.x >= SCREEN_WIDTH || BallPosition.x <= 0)
-	{
-		BallPosition.x = SCREEN_WIDTH / 2;
-		BallPosition.y = SCREEN_HEIGHT / 2;
-		ResetBallVelocity();
-	}
-
-	if (BallPosition.y >= SCREEN_HEIGHT || BallPosition.y <= 0)
-	{
-		BallVelocityY = -BallVelocityY;
-	}
-
 }
+
+//void handle collision within class?
 
 void Ball::drawBall(SDL_Renderer* renderer)
 {

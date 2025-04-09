@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -71,8 +71,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>F:\Game test\SDL2-2.28.5\include;F:\Game test\SDL2_image-2.8.5\include;$(IncludePath)</IncludePath>
-    <LibraryPath>F:\Game test\SDL2-2.28.5\lib\x64;F:\Game test\SDL2_image-2.8.5\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>F:\Game test\SDL2-2.28.5\include;F:\Game test\SDL2_image-2.8.5\include;F:\Game test\SDL2_ttf-2.20.0\include;F:\Game test\SDL2_mixer-2.8.1\include;$(IncludePath)</IncludePath>
+    <LibraryPath>F:\Game test\SDL2-2.28.5\lib\x64;F:\Game test\SDL2_image-2.8.5\lib\x64;F:\Game test\SDL2_mixer-2.8.1\lib\x64;F:\Game test\SDL2_ttf-2.20.0\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -108,11 +108,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <OmitFramePointers>false</OmitFramePointers>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -133,21 +135,29 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Ball.cpp" />
-    <ClCompile Include="EventHandle.cpp" />
-    <ClCompile Include="loadTexture.cpp" />
-    <ClCompile Include="gameBase.cpp" />
-    <ClCompile Include="loadMedia.cpp" />
+    <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="CourtScreen.cpp" />
+    <ClCompile Include="GameUtils.cpp" />
+    <ClCompile Include="LoadTexture.cpp" />
+    <ClCompile Include="GameBase.cpp" />
     <ClCompile Include="Paddle.cpp" />
+    <ClCompile Include="ResultScreen.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="TitleScreen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ball.h" />
-    <ClInclude Include="EventHandle.h" />
-    <ClInclude Include="gameBase.h" />
-    <ClInclude Include="Geometry.h" />
-    <ClInclude Include="loadMedia.h" />
-    <ClInclude Include="loadTexture.h" />
+    <ClInclude Include="Collision.h" />
+    <ClInclude Include="CourtScreen.h" />
+    <ClInclude Include="GameBase.h" />
+    <ClInclude Include="GameUtils.h" />
+    <ClInclude Include="GameState.h" />
+    <ClInclude Include="LoadTexture.h" />
     <ClInclude Include="Paddle.h" />
+    <ClInclude Include="ResultScreen.h" />
+    <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="TitleScreen.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

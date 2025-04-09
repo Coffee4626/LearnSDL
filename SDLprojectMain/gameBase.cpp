@@ -1,4 +1,4 @@
-#include "gameBase.h"
+#include "GameBase.h"
 
 
 void logErrorAndExit(const char* msg, const char* error)

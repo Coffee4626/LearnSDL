@@ -1,16 +1,14 @@
-﻿#include "gameBase.h"
-#include "loadMedia.h"
-#include "EventHandle.h"
+﻿#include "SceneManager.h"
 
 using namespace std;
 
+SceneManager* game;
 
 int main(int argc, char* argv[])
 {
+    game = new SceneManager();
 
-    Game game;
-
-    game.gameLoop();
+    game->MainLoop();
 
     return 0;
 }
