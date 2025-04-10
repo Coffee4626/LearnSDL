@@ -66,6 +66,7 @@ void Game::InitSDL()
 	{
 		std::cout << "Unable to load a font for the application: " << TTF_GetError() << std::endl;
 	}
+
 	std::cout << "Initialization complete" << std::endl;
 }
 
@@ -85,6 +86,11 @@ void Game::ChangeState(State mState)
 	gState->enter(gRenderer, gFont);
 }
 
+void Game::Quit()
+{
+	quit = true;
+}
+
 void Game::GameLoop()
 {
 	InitSDL();
@@ -102,7 +108,7 @@ void Game::GameLoop()
 		{
 			if (gEvent.type == SDL_QUIT)
 			{
-				quit = true;
+				Quit();
 			}
 			gState->handleEvent(gEvent);
 		}

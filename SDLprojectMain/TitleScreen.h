@@ -17,13 +17,16 @@ namespace pong
 		void		render()										override;
 	private:
 		SDL_Renderer* mRenderer;
-		TTF_Font* mFont;
-		Game& mGame;
-		LoadTexture mInstructionsForP1;
-		LoadTexture mInstructionsForP2;
-		LoadTexture mInstructionsToBegin;
-		LoadTexture mInstructionsForQuit;
+		TTF_Font*	mFont;
+		Game&		mGame;
+		LoadTexture mPlayTextNormal;
+		LoadTexture mPlayTextSelected;
+		LoadTexture mHelpTextNormal;
+		LoadTexture mHelpTextSelected;
+		LoadTexture mQuitTextNormal;
+		LoadTexture mQuitTextSelected;
 		LoadTexture mTitleScreen;
+		int mSelectedMenuIndex;
 	};
 }
 

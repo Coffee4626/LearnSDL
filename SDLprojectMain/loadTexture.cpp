@@ -71,8 +71,6 @@ bool LoadTexture::LoadFromFile(std::string path, SDL_Renderer* gRenderer)
 
 	SDL_Surface* tmpSurface = IMG_Load(path.c_str());
 
-	std::cout << path.c_str() << std::endl;
-
 	if (tmpSurface == NULL)
 	{
 		std::cout << "fail to load texture" << std::endl;

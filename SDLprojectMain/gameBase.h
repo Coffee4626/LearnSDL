@@ -34,6 +34,12 @@ namespace pong
 		total = 2,
 	};
 
+	enum MenuIndex
+	{
+		play,
+		help,
+		quit,
+	};
 };
 
 

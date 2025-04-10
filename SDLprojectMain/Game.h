@@ -12,6 +12,7 @@ namespace pong
 		~Game();
 		void GameLoop();
 		void InitSDL();
+		void Quit();
 		void ChangeState(State mState);
 		std::array<int, 2>& getPlayerScores()
 		{

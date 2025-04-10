@@ -6,7 +6,8 @@ using namespace pong;
 Title::Title(Game& game) : 
 	mGame(game),
 	mRenderer(nullptr),
-	mFont(nullptr)
+	mFont(nullptr),
+	mSelectedMenuIndex(0)
 {
 	//...
 }
@@ -14,28 +15,42 @@ void Title::enter(SDL_Renderer* renderer, TTF_Font* font)
 {
 	this->mRenderer = renderer;
 	this->mFont = font;
-	SDL_Color color = { 0xFF, 0xFF, 0xFF, 0xFF };
-	if (!mInstructionsForP1.LoadFromRenderedText(std::string("Left Player uses W and S keys"), mFont, color, mRenderer))
+	SDL_Color white = { 0xFF, 0xFF, 0xFF, 0xFF };
+	//If line is not selected, display in white
+	if (!mPlayTextNormal.LoadFromRenderedText(std::string("Play"), mFont, white, mRenderer))
+	{
+		std::cout << "Unable to load play text unselected for p1" << std::endl;
+		return;
+	}
+	if (!mHelpTextNormal.LoadFromRenderedText(std::string("Help"), mFont, white, mRenderer))
 	{
 		std::cout << "Unable to load instructions for p1" << std::endl;
 		return;
 	}
-	if (!mInstructionsForP2.LoadFromRenderedText(std::string("Right Player uses UP and DOWN keys"), mFont, color, mRenderer))
+	if (!mQuitTextNormal.LoadFromRenderedText(std::string("Quit"), mFont, white, mRenderer))
 	{
-		std::cout << "Unable to load instructions for p2" << std::endl;
+		std::cout << "Unable to load instructions for p1" << std::endl;
 		return;
 	}
-	if (!mInstructionsToBegin.LoadFromRenderedText(std::string("Press ENTER to begin playing"), mFont, color, mRenderer))
+	//If line is selected, display in yellow
+	SDL_Color yellow = { 0xFF, 0xFF, 0x00, 0xFF };
+	if (!mPlayTextSelected.LoadFromRenderedText(std::string("Play"), mFont, yellow, mRenderer))
 	{
-		std::cout << "Unable to load instructions to play" << std::endl;
+		std::cout << "Unable to load instructions for p1" << std::endl;
 		return;
 	}
-	if (!mInstructionsForQuit.LoadFromRenderedText(std::string("Press ESC to quit"), mFont, color, mRenderer))
+	if (!mHelpTextSelected.LoadFromRenderedText(std::string("Help"), mFont, yellow, mRenderer))
 	{
-		std::cout << "Unable to load instructions to quit" << std::endl;
+		std::cout << "Unable to load instructions for p1" << std::endl;
 		return;
 	}
-	if (!mTitleScreen.LoadFromFile(std::string("Title.png"), mRenderer))
+	if (!mQuitTextSelected.LoadFromRenderedText(std::string("Quit"), mFont, yellow, mRenderer))
+	{
+		std::cout << "Unable to load instructions for p1" << std::endl;
+		return;
+	}
+	//Title screen image
+	if (!mTitleScreen.LoadFromFile("Assets/Title.png", mRenderer))
 	{
 		std::cout << "Unable to load title screen image" << std::endl;
 		return;
@@ -44,19 +59,45 @@ void Title::enter(SDL_Renderer* renderer, TTF_Font* font)
 
 void Title::exit()
 {
-	mInstructionsForP1.Free();
-	mInstructionsForP2.Free();
-	mInstructionsToBegin.Free();
-	mInstructionsForQuit.Free();
+	mPlayTextNormal.Free();
+	mPlayTextSelected.Free();
+	mHelpTextNormal.Free();
+	mHelpTextSelected.Free();
+	mQuitTextNormal.Free();
+	mQuitTextSelected.Free();
 	std::cout << "Title resources freed" << std::endl;
 }
 
 void Title::handleEvent(SDL_Event& event)
 {
-	//Press enter to move from title to game screen
-	if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_RETURN)
+	if (event.type == SDL_KEYDOWN)
 	{
-		mGame.ChangeState(std::make_shared<Court>(mGame));
+		switch (event.key.keysym.sym)
+		{
+			case SDLK_DOWN:
+			{
+				mSelectedMenuIndex = (mSelectedMenuIndex + 1) % 3;
+				break;
+			}
+			case SDLK_UP:
+			{
+				mSelectedMenuIndex = (mSelectedMenuIndex - 1 + 3) % 3;
+				break;
+			}
+			case SDLK_RETURN:
+			{
+				if (mSelectedMenuIndex == MenuIndex::play)
+				{
+					mGame.ChangeState(std::make_shared<Court>(mGame));
+				}
+				else if (mSelectedMenuIndex == MenuIndex::help)
+				{
+					//mGame.ChangeState(std::make_shared<Help>(mGame));
+				}
+				else mGame.Quit();
+				break;
+			}
+		}
 	}
 }
 
@@ -68,8 +109,27 @@ void Title::update(float deltaTime)
 
 void Title::render()
 {
-	mInstructionsForP1.renderTexture(mRenderer, SCREEN_WIDTH / 3.5, SCREEN_HEIGHT / 5);
-	mInstructionsForP2.renderTexture(mRenderer, SCREEN_WIDTH / 4, 2 * SCREEN_HEIGHT / 5);
-	mInstructionsToBegin.renderTexture(mRenderer, SCREEN_WIDTH / 3.5, 3 * SCREEN_HEIGHT / 5);
-	mInstructionsForQuit.renderTexture(mRenderer, SCREEN_WIDTH / 2.7, 4 * SCREEN_HEIGHT / 5);
+	int temp = SCREEN_HEIGHT / 3;
+	int yOffSet = 50;
+	mTitleScreen.renderTexture(mRenderer, 0, 0);
+	if (mSelectedMenuIndex == 0)
+	{
+		std::cout << "play button selected" << std::endl;
+		mPlayTextSelected.renderTexture(mRenderer, SCREEN_WIDTH / 2 - mPlayTextSelected.getWidth(), temp);
+	}
+	else mPlayTextNormal.renderTexture(mRenderer, SCREEN_WIDTH / 2 - mPlayTextSelected.getWidth(), temp);
+
+	if (mSelectedMenuIndex == 1)
+	{
+		std::cout << "help button selected" << std::endl;
+		mHelpTextSelected.renderTexture(mRenderer, SCREEN_WIDTH / 2 - mHelpTextSelected.getWidth(), temp + yOffSet);
+	}
+	else mHelpTextNormal.renderTexture(mRenderer, SCREEN_WIDTH / 2 - mHelpTextSelected.getWidth(), temp + yOffSet);
+
+	if (mSelectedMenuIndex == 2)
+	{
+		std::cout << "quit button selected" << std::endl;
+		mQuitTextSelected.renderTexture(mRenderer, SCREEN_WIDTH / 2 - mQuitTextSelected.getWidth(), temp + 2 * yOffSet);
+	}
+	else mQuitTextNormal.renderTexture(mRenderer, SCREEN_WIDTH / 2 - mQuitTextSelected.getWidth(), temp + 2 * yOffSet);
 }
