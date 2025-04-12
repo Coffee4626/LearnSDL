@@ -69,6 +69,7 @@ void Court::enter(SDL_Renderer* renderer, TTF_Font* font)
 
 void Court::handleEvent(SDL_Event& event)
 {
+	//Left player input
 	if (event.type == SDL_KEYDOWN)
 	{
 		switch (event.key.keysym.sym)
@@ -87,7 +88,7 @@ void Court::handleEvent(SDL_Event& event)
 			break;
 		}
 	}
-
+	//Right player input
 	if (event.type == SDL_KEYUP)
 	{
 		switch (event.key.keysym.sym)
@@ -156,6 +157,7 @@ void Court::exit()
 	player1score.Free();
 	player2score.Free();
 	mBackgroundTexture.Free();
+	mSpriteSheet.Free();
 	paddle1 = NULL;
 	paddle2 = NULL;
 	ball = NULL;

@@ -15,14 +15,14 @@ void End::enter(SDL_Renderer* renderer, TTF_Font* font)
 	this->mRenderer = renderer;
 	this->mFont = font;
 	SDL_Color color = { 0xFF, 0xFF, 0xFF, 0xFF };
-	if (!p1message.LoadFromRenderedText(std::string("Player 1 wins"), mFont, color, mRenderer))
+	if (!p1message.LoadFromFile("Assets/Left player win.png", mRenderer))
 	{
-		std::cout << "Failed to load win message for p1" << std::endl;
+		std::cout << "Unable to load win message for p1" << std::endl;
 		return;
 	}
-	if (!p2message.LoadFromRenderedText(std::string("Player 2 wins"), mFont, color, mRenderer))
+	if (!p2message.LoadFromFile("Assets/Right player win.png", mRenderer))
 	{
-		std::cout << "Failed to load win message for p2" << std::endl;
+		std::cout << "Unable to load win message for p2" << std::endl;
 		return;
 	}
 }
@@ -41,6 +41,10 @@ void End::handleEvent(SDL_Event& event)
 	{
 		mGame.ChangeState(std::make_shared<Court>(mGame));
 	}
+	else if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE)
+	{
+		mGame.Quit();
+	}
 }
 
 void End::update(float deltaTime)
@@ -51,9 +55,9 @@ void End::update(float deltaTime)
 void End::render()
 {
 	const auto& scores = mGame.getPlayerScores();
-	if (scores[0] > 1)
+	if (scores[0] > 2)
 	{
-		p1message.renderTexture(mRenderer, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+		p1message.renderTexture(mRenderer, 0, 0);
 	}
-	else p2message.renderTexture(mRenderer, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+	else p2message.renderTexture(mRenderer, 0, 0);
 }
