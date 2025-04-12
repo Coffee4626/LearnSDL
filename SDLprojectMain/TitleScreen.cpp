@@ -50,7 +50,7 @@ void Title::enter(SDL_Renderer* renderer, TTF_Font* font)
 		return;
 	}
 	//Title screen image
-	if (!mTitleScreen.LoadFromFile("Assets/Title.png", mRenderer))
+	if (!mTitleScreen.LoadFromFile("Assets/Title4.png", mRenderer))
 	{
 		std::cout << "Unable to load title screen image" << std::endl;
 		return;
@@ -88,10 +88,12 @@ void Title::handleEvent(SDL_Event& event)
 			{
 				if (mSelectedMenuIndex == MenuIndex::play)
 				{
+					std::cout << "Play button selected" << std::endl;
 					mGame.ChangeState(std::make_shared<Court>(mGame));
 				}
 				else if (mSelectedMenuIndex == MenuIndex::help)
 				{
+					std::cout << "Help button selected" << std::endl;
 					//mGame.ChangeState(std::make_shared<Help>(mGame));
 				}
 				else mGame.Quit();
@@ -114,22 +116,19 @@ void Title::render()
 	mTitleScreen.renderTexture(mRenderer, 0, 0);
 	if (mSelectedMenuIndex == 0)
 	{
-		std::cout << "play button selected" << std::endl;
-		mPlayTextSelected.renderTexture(mRenderer, SCREEN_WIDTH / 2 - mPlayTextSelected.getWidth(), temp);
+		mPlayTextSelected.renderTexture(mRenderer, 2 * SCREEN_WIDTH / 3 - mPlayTextSelected.getWidth(), temp);
 	}
-	else mPlayTextNormal.renderTexture(mRenderer, SCREEN_WIDTH / 2 - mPlayTextSelected.getWidth(), temp);
+	else mPlayTextNormal.renderTexture(mRenderer, 2 * SCREEN_WIDTH / 3 - mPlayTextSelected.getWidth(), temp);
 
 	if (mSelectedMenuIndex == 1)
 	{
-		std::cout << "help button selected" << std::endl;
-		mHelpTextSelected.renderTexture(mRenderer, SCREEN_WIDTH / 2 - mHelpTextSelected.getWidth(), temp + yOffSet);
+		mHelpTextSelected.renderTexture(mRenderer, 2 * SCREEN_WIDTH / 3 - mHelpTextSelected.getWidth(), temp + yOffSet);
 	}
-	else mHelpTextNormal.renderTexture(mRenderer, SCREEN_WIDTH / 2 - mHelpTextSelected.getWidth(), temp + yOffSet);
+	else mHelpTextNormal.renderTexture(mRenderer, 2 * SCREEN_WIDTH / 3 - mHelpTextSelected.getWidth(), temp + yOffSet);
 
 	if (mSelectedMenuIndex == 2)
 	{
-		std::cout << "quit button selected" << std::endl;
-		mQuitTextSelected.renderTexture(mRenderer, SCREEN_WIDTH / 2 - mQuitTextSelected.getWidth(), temp + 2 * yOffSet);
+		mQuitTextSelected.renderTexture(mRenderer, 2 * SCREEN_WIDTH / 3 - mQuitTextSelected.getWidth(), temp + 2 * yOffSet);
 	}
-	else mQuitTextNormal.renderTexture(mRenderer, SCREEN_WIDTH / 2 - mQuitTextSelected.getWidth(), temp + 2 * yOffSet);
+	else mQuitTextNormal.renderTexture(mRenderer, 2 * SCREEN_WIDTH / 3 - mQuitTextSelected.getWidth(), temp + 2 * yOffSet);
 }

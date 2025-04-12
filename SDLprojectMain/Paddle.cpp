@@ -33,9 +33,7 @@ void Paddle::UpdatePaddlePosition(float &deltaTime)
 	else paddlePosition.y += static_cast<float>(paddleDirectionY) * paddleVelocity * deltaTime;
 }
 
-void Paddle::drawPaddle(SDL_Renderer* renderer)
+void Paddle::RenderPaddle(SDL_Rect* currentClip, SDL_Renderer* renderer, LoadTexture mPaddleTexture)
 {
-	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-	SDL_RenderFillRect(renderer, &paddlePosition);
-	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+	mPaddleTexture.renderTexture(renderer, paddlePosition.x, paddlePosition.y, currentClip);
 }

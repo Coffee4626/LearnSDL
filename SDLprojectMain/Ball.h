@@ -14,7 +14,7 @@ namespace pong
 		Ball(float x, float y);
 		~Ball() = default;
 		void UpdateBallPosition(float &deltaTime);
-		void drawBall(SDL_Renderer* renderer);
+		void RenderBall(SDL_Rect* currentClip, SDL_Renderer* renderer, LoadTexture mBallTexture);
 		float InitialBallVelocityX;
 		float InitialBallVelocityY;
 		float BallVelocityX;

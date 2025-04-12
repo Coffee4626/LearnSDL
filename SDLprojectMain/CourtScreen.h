@@ -28,6 +28,8 @@ namespace pong
 		SDL_Renderer*	mRenderer;
 		TTF_Font*		mFont;
 		LoadTexture		mBackgroundTexture;
+		SDL_Rect		mSpriteClips[3];
+		LoadTexture		mSpriteSheet;
 		LoadTexture		player1score;
 		LoadTexture		player2score;
 		Collision		collision;

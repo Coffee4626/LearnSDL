@@ -11,7 +11,7 @@ namespace pong
 		Paddle(float x, float y);
 		~Paddle() = default;
 		void UpdatePaddlePosition(float &deltaTime);
-		void drawPaddle(SDL_Renderer* renderer);
+		void RenderPaddle(SDL_Rect* currentClip, SDL_Renderer* renderer, LoadTexture mPaddleTexture);
 
 		int paddleDirectionY;
 		float paddleVelocity = 20.0;

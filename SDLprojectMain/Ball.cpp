@@ -20,22 +20,19 @@ Ball::Ball(float x, float y)
 	BallVelocityY = InitialBallVelocityY;
 	BallPosition.x = x;
 	BallPosition.y = y;
-	BallPosition.w = 15;
-	BallPosition.h = 15;
+	BallPosition.w = 30;
+	BallPosition.h = 30;
 }
 
 void Ball::UpdateBallPosition(float &deltaTime)
 {
 	BallPosition.x = BallPosition.x + BallVelocityX * (deltaTime / 2);
 	BallPosition.y = BallPosition.y + BallVelocityY * (deltaTime / 2);
-	std::cout << BallVelocityY << std::endl;
 }
 
-void Ball::drawBall(SDL_Renderer* renderer)
+void Ball::RenderBall(SDL_Rect* currentClip, SDL_Renderer* renderer, LoadTexture mBallTexture)
 {
-	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-	SDL_RenderFillRect(renderer, &BallPosition);
-	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+	mBallTexture.renderTexture(renderer, BallPosition.x, BallPosition.y, currentClip);
 }
 
 
