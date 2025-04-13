@@ -36,6 +36,7 @@ namespace pong
 		Paddle*			paddle1;
 		Paddle*			paddle2;
 		Ball*			ball;
+		bool			mIsPaused;
 	};
 }
 

@@ -89,6 +89,7 @@ void Game::ChangeState(State mState)
 void Game::Quit()
 {
 	quit = true;
+	std::cout << "Game quitted" << std::endl;
 }
 
 void Game::GameLoop()

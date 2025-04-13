@@ -139,8 +139,10 @@
     <ClCompile Include="CourtScreen.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameUtils.cpp" />
+    <ClCompile Include="HelpScreen.cpp" />
     <ClCompile Include="LoadTexture.cpp" />
     <ClCompile Include="GameBase.cpp" />
+    <ClCompile Include="OptionScreen.cpp" />
     <ClCompile Include="Paddle.cpp" />
     <ClCompile Include="ResultScreen.cpp" />
     <ClCompile Include="Source.cpp" />
@@ -154,7 +156,9 @@
     <ClInclude Include="GameBase.h" />
     <ClInclude Include="GameUtils.h" />
     <ClInclude Include="GameState.h" />
+    <ClInclude Include="HelpScreen.h" />
     <ClInclude Include="LoadTexture.h" />
+    <ClInclude Include="OptionScreen.h" />
     <ClInclude Include="Paddle.h" />
     <ClInclude Include="ResultScreen.h" />
     <ClInclude Include="TitleScreen.h" />

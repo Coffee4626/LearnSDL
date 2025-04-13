@@ -12,9 +12,10 @@ Court::Court(Game& game) :
 	mFont(nullptr),
 	paddle1(nullptr), 
 	paddle2(nullptr), 
-	ball(nullptr)
+	ball(nullptr),
+	mIsPaused(false)
 {
-
+	
 }
 
 void Court::enter(SDL_Renderer* renderer, TTF_Font* font)
@@ -29,15 +30,15 @@ void Court::enter(SDL_Renderer* renderer, TTF_Font* font)
 	mGame.getPlayerScores()[PlayerIndex::second] = 0;
 	if (!player1score.LoadFromRenderedText(std::to_string(mGame.getPlayerScores()[PlayerIndex::first]), mFont, color, mRenderer))
 	{
-		std::cout << "Unable to load instructions for p1" << std::endl;
+		std::cout << "Unable to load score texture for p1" << std::endl;
 		return;
 	}
 	if (!player2score.LoadFromRenderedText(std::to_string(mGame.getPlayerScores()[PlayerIndex::second]), mFont, color, mRenderer))
 	{
-		std::cout << "Unable to load instructions for p2" << std::endl;
+		std::cout << "Unable to load score texture for p2" << std::endl;
 		return;
 	}
-	if (!mBackgroundTexture.LoadFromFile("Assets/Final pong court.png", mRenderer))
+	if (!mBackgroundTexture.LoadFromFile("Assets/Pong court.png", mRenderer))
 	{
 		std::cout << "Unable to load map texture" << std::endl;
 		return;
@@ -69,7 +70,7 @@ void Court::enter(SDL_Renderer* renderer, TTF_Font* font)
 
 void Court::handleEvent(SDL_Event& event)
 {
-	//Left player input
+	//Getting inputs
 	if (event.type == SDL_KEYDOWN)
 	{
 		switch (event.key.keysym.sym)
@@ -86,9 +87,12 @@ void Court::handleEvent(SDL_Event& event)
 		case SDLK_DOWN:
 			buttonsinput[right_paddle_down] = true;
 			break;
+		case SDLK_ESCAPE:
+			if (mIsPaused == false) mIsPaused = true;
+			else mIsPaused = false;
 		}
 	}
-	//Right player input
+	//Handle when players stop holding keys
 	if (event.type == SDL_KEYUP)
 	{
 		switch (event.key.keysym.sym)
@@ -111,6 +115,7 @@ void Court::handleEvent(SDL_Event& event)
 
 void Court::handleInput()
 {
+	//Paddles stationary when no inputs
 	if (buttonsinput[left_paddle_up] == false)
 	{
 		paddle1->paddleDirectionY = 0;
@@ -130,7 +135,7 @@ void Court::handleInput()
 	{
 		paddle2->paddleDirectionY = 0;
 	}
-
+	//Paddle moving based on input
 	if (buttonsinput[left_paddle_up] == true)
 	{
 		paddle1->paddleDirectionY = -1;
@@ -154,6 +159,7 @@ void Court::handleInput()
 
 void Court::exit()
 {
+	//Freeing textures
 	player1score.Free();
 	player2score.Free();
 	mBackgroundTexture.Free();
@@ -201,23 +207,30 @@ void Court::updateGameObjects(float &mTime)
 void Court::update(float deltaTime)
 {
 	handleInput();
-	collision.HandleCollision(*ball, *paddle1, *paddle2);
-	updateGameObjects(deltaTime);
+	if (!mIsPaused)
+	{
+		collision.HandleCollision(*ball, *paddle1, *paddle2);
+		updateGameObjects(deltaTime);
+	}
 }
 
 void Court::render()
 {
-	//Render play court
-	mBackgroundTexture.renderTexture(mRenderer, 0, 0);
-	//Render players score
-	player1score.renderTexture(mRenderer, SCREEN_WIDTH / 4, 20);
-	player2score.renderTexture(mRenderer, 3 * SCREEN_WIDTH / 4, 20);
-	//Render player paddles
-	//paddle1->drawPaddle(mRenderer);
-	//paddle2->drawPaddle(mRenderer);
-	//mSpriteSheet.renderTexture(mRenderer, 50, 50, &mSpriteClips[0]);
-	paddle1->RenderPaddle(&mSpriteClips[0], mRenderer, mSpriteSheet);
-	paddle2->RenderPaddle(&mSpriteClips[1], mRenderer, mSpriteSheet);
-	//Render ball
-	ball->RenderBall(&mSpriteClips[2], mRenderer, mSpriteSheet);
+	if (mIsPaused == true)
+	{
+
+	}
+	else
+	{
+		//Render play court
+		mBackgroundTexture.renderTexture(mRenderer, 0, 0);
+		//Render players score
+		player1score.renderTexture(mRenderer, SCREEN_WIDTH / 4, 20);
+		player2score.renderTexture(mRenderer, 3 * SCREEN_WIDTH / 4, 20);
+		//Render player paddles
+		paddle1->RenderPaddle(&mSpriteClips[0], mRenderer, mSpriteSheet);
+		paddle2->RenderPaddle(&mSpriteClips[1], mRenderer, mSpriteSheet);
+		//Render ball
+		ball->RenderBall(&mSpriteClips[2], mRenderer, mSpriteSheet);
+	}
 }

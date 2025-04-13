@@ -33,6 +33,7 @@ void End::exit()
 	p2message.Free();
 	mRenderer = NULL;
 	mFont = NULL;
+	std::cout << "End screen resources freed" << std::endl;
 }
 
 void End::handleEvent(SDL_Event& event)

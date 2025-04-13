@@ -14,17 +14,14 @@ namespace pong
 		void InitSDL();
 		void Quit();
 		void ChangeState(State mState);
-		std::array<int, 2>& getPlayerScores()
-		{
-			return gPlayerScores;
-		}
+		std::array<int, 2>& getPlayerScores() { return gPlayerScores; }
 	private:
 		SDL_Window*			gWindow;
 		SDL_Renderer*		gRenderer;
 		TTF_Font*			gFont;
 		State				gState;
 		SDL_Event			gEvent;
-		std::array<int, 2> gPlayerScores;
+		std::array<int, 2>	gPlayerScores;
 		bool				quit;
  	};
 	

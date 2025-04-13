@@ -1,4 +1,6 @@
 #include "TitleScreen.h"
+#include "HelpScreen.h"
+//#include "OptionScreen.h"
 #include "CourtScreen.h"
 #include "game.h"
 using namespace pong;
@@ -19,42 +21,43 @@ void Title::enter(SDL_Renderer* renderer, TTF_Font* font)
 	//If line is not selected, display in white
 	if (!mPlayTextNormal.LoadFromRenderedText(std::string("Play"), mFont, white, mRenderer))
 	{
-		std::cout << "Unable to load play text unselected for p1" << std::endl;
+		std::cout << "Unable to load play text unselected" << std::endl;
 		return;
 	}
 	if (!mHelpTextNormal.LoadFromRenderedText(std::string("Help"), mFont, white, mRenderer))
 	{
-		std::cout << "Unable to load instructions for p1" << std::endl;
+		std::cout << "Unable to load help text unselected" << std::endl;
 		return;
 	}
 	if (!mQuitTextNormal.LoadFromRenderedText(std::string("Quit"), mFont, white, mRenderer))
 	{
-		std::cout << "Unable to load instructions for p1" << std::endl;
+		std::cout << "Unable to load quit text unselected" << std::endl;
 		return;
 	}
 	//If line is selected, display in yellow
 	SDL_Color yellow = { 0xFF, 0xFF, 0x00, 0xFF };
 	if (!mPlayTextSelected.LoadFromRenderedText(std::string("Play"), mFont, yellow, mRenderer))
 	{
-		std::cout << "Unable to load instructions for p1" << std::endl;
+		std::cout << "Unable to load play text selected" << std::endl;
 		return;
 	}
 	if (!mHelpTextSelected.LoadFromRenderedText(std::string("Help"), mFont, yellow, mRenderer))
 	{
-		std::cout << "Unable to load instructions for p1" << std::endl;
+		std::cout << "Unable to load help text selected" << std::endl;
 		return;
 	}
 	if (!mQuitTextSelected.LoadFromRenderedText(std::string("Quit"), mFont, yellow, mRenderer))
 	{
-		std::cout << "Unable to load instructions for p1" << std::endl;
+		std::cout << "Unable to load quit text selected" << std::endl;
 		return;
 	}
 	//Title screen image
-	if (!mTitleScreen.LoadFromFile("Assets/Title4.png", mRenderer))
+	if (!mTitleScreen.LoadFromFile("Assets/Title.png", mRenderer))
 	{
 		std::cout << "Unable to load title screen image" << std::endl;
 		return;
 	}
+	std::cout << "Title screen loaded successfully" << std::endl;
 }
 
 void Title::exit()
@@ -65,7 +68,7 @@ void Title::exit()
 	mHelpTextSelected.Free();
 	mQuitTextNormal.Free();
 	mQuitTextSelected.Free();
-	std::cout << "Title resources freed" << std::endl;
+	std::cout << "Title resources freed, exited" << std::endl;
 }
 
 void Title::handleEvent(SDL_Event& event)
@@ -94,8 +97,12 @@ void Title::handleEvent(SDL_Event& event)
 				else if (mSelectedMenuIndex == MenuIndex::help)
 				{
 					std::cout << "Help button selected" << std::endl;
-					//mGame.ChangeState(std::make_shared<Help>(mGame));
+					mGame.ChangeState(std::make_shared<Help>(mGame));
 				}
+				//else if (mSelectedMenuIndex == MenuIndex::option)
+				//{
+				//	mGame.ChangeState(std::make_shared<Option>(mGame));
+				//}
 				else mGame.Quit();
 				break;
 			}
