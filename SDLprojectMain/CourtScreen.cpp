@@ -22,50 +22,44 @@ void Court::enter(SDL_Renderer* renderer, TTF_Font* font)
 {
 	this->mRenderer = renderer;
 	this->mFont = font;
-	SDL_Color color = { 0x00, 0x00, 0x00, 0xFF };
 	paddle1 = new Paddle(50, SCREEN_HEIGHT / 2);
 	paddle2 = new Paddle(SCREEN_WIDTH - 50, SCREEN_HEIGHT / 2);
 	ball = new Ball(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
 	mGame.getPlayerScores()[PlayerIndex::first] = 0;
 	mGame.getPlayerScores()[PlayerIndex::second] = 0;
-	if (!player1score.LoadFromRenderedText(std::to_string(mGame.getPlayerScores()[PlayerIndex::first]), mFont, color, mRenderer))
-	{
-		std::cout << "Unable to load score texture for p1" << std::endl;
-		return;
-	}
-	if (!player2score.LoadFromRenderedText(std::to_string(mGame.getPlayerScores()[PlayerIndex::second]), mFont, color, mRenderer))
-	{
-		std::cout << "Unable to load score texture for p2" << std::endl;
-		return;
-	}
-	if (!mBackgroundTexture.LoadFromFile("Assets/Pong court.png", mRenderer))
-	{
-		std::cout << "Unable to load map texture" << std::endl;
-		return;
-	}
-	if (!mSpriteSheet.LoadFromFile("Assets/sprites.png", mRenderer))
-	{
-		std::cout << "Unable to load sprites" << std::endl;
-		return;
-	}
-	else
-	{
-		//Left paddle sprite
-		mSpriteClips[0].x = 20;
-		mSpriteClips[0].y = 20;
-		mSpriteClips[0].w = 10;
-		mSpriteClips[0].h = 130;
-		//Right paddle sprite
-		mSpriteClips[1].x = 70;
-		mSpriteClips[1].y = 20;
-		mSpriteClips[1].w = 10;
-		mSpriteClips[1].h = 130;
-		//Ball sprite
-		mSpriteClips[2].x = 112;
-		mSpriteClips[2].y = 12;
-		mSpriteClips[2].w = 25;
-		mSpriteClips[2].h = 25;
-	}
+	LoadMedia();
+}
+
+void Court::LoadMedia()
+{
+	SDL_Color color = { 0x00, 0x00, 0x00, 0xFF };
+
+	player1score.LoadFromRenderedText(std::to_string(mGame.getPlayerScores()[PlayerIndex::first]), mFont, color, mRenderer);
+
+	player2score.LoadFromRenderedText(std::to_string(mGame.getPlayerScores()[PlayerIndex::second]), mFont, color, mRenderer);
+	
+	mBackgroundTexture.LoadFromFile("Assets/Pong court.png", mRenderer);
+
+	mSpriteSheet.LoadFromFile("Assets/sprites.png", mRenderer);
+
+	mDefaultBackground.LoadFromFile("Assets/Background.png", mRenderer);
+	mDefaultBackground.SetAlpha(150);
+
+	//Left paddle sprite
+	mSpriteClips[0].x = 20;
+	mSpriteClips[0].y = 20;
+	mSpriteClips[0].w = 10;
+	mSpriteClips[0].h = 130;
+	//Right paddle sprite
+	mSpriteClips[1].x = 70;
+	mSpriteClips[1].y = 20;
+	mSpriteClips[1].w = 10;
+	mSpriteClips[1].h = 130;
+	//Ball sprite
+	mSpriteClips[2].x = 112;
+	mSpriteClips[2].y = 12;
+	mSpriteClips[2].w = 25;
+	mSpriteClips[2].h = 25;
 }
 
 void Court::handleEvent(SDL_Event& event)
@@ -216,21 +210,18 @@ void Court::update(float deltaTime)
 
 void Court::render()
 {
+	//Render play court
+	mBackgroundTexture.renderTexture(mRenderer, 0, 0);
+	//Render players score
+	player1score.renderTexture(mRenderer, SCREEN_WIDTH / 4, 20);
+	player2score.renderTexture(mRenderer, 3 * SCREEN_WIDTH / 4, 20);
+	//Render player paddles
+	paddle1->RenderPaddle(&mSpriteClips[0], mRenderer, mSpriteSheet);
+	paddle2->RenderPaddle(&mSpriteClips[1], mRenderer, mSpriteSheet);
+	//Render ball
+	ball->RenderBall(&mSpriteClips[2], mRenderer, mSpriteSheet);
 	if (mIsPaused == true)
 	{
-
-	}
-	else
-	{
-		//Render play court
-		mBackgroundTexture.renderTexture(mRenderer, 0, 0);
-		//Render players score
-		player1score.renderTexture(mRenderer, SCREEN_WIDTH / 4, 20);
-		player2score.renderTexture(mRenderer, 3 * SCREEN_WIDTH / 4, 20);
-		//Render player paddles
-		paddle1->RenderPaddle(&mSpriteClips[0], mRenderer, mSpriteSheet);
-		paddle2->RenderPaddle(&mSpriteClips[1], mRenderer, mSpriteSheet);
-		//Render ball
-		ball->RenderBall(&mSpriteClips[2], mRenderer, mSpriteSheet);
+		mDefaultBackground.renderTexture(mRenderer, 0, 0);
 	}
 }

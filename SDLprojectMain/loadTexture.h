@@ -12,18 +12,21 @@ namespace pong
 
 		~LoadTexture();
 
+		bool LoadFromRenderedText(std::string textureText, TTF_Font* gFont, SDL_Color textColor, SDL_Renderer* gRenderer);
+		
+		bool LoadFromFile(std::string path, SDL_Renderer* gRenderer);
+		
 		void Free();
 
 		void renderTexture(SDL_Renderer* renderer, int x, int y, SDL_Rect* clip = NULL);
 
+		void SetBlendMode(SDL_BlendMode mode);
+
+		void SetAlpha(Uint8 alpha);
+		
 		int getHeight();
 
 		int getWidth();
-
-		bool LoadFromRenderedText(std::string textureText, TTF_Font* gFont, SDL_Color textColor, SDL_Renderer* gRenderer);
-
-		bool LoadFromFile(std::string path, SDL_Renderer* gRenderer);
-
 
 	private:
 

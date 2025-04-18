@@ -20,6 +20,7 @@ namespace pong
 		void			handleEvent(SDL_Event& e)							override;
 		void			update(float deltaTime)								override;
 		void			render()											override;
+		void			LoadMedia();
 		void			updatePlayerScore();
 		void			updateGameObjects(float &mTime);
 		void			handleInput();
@@ -28,6 +29,7 @@ namespace pong
 		SDL_Renderer*	mRenderer;
 		TTF_Font*		mFont;
 		LoadTexture		mBackgroundTexture;
+		LoadTexture		mDefaultBackground;
 		SDL_Rect		mSpriteClips[3];
 		LoadTexture		mSpriteSheet;
 		LoadTexture		player1score;

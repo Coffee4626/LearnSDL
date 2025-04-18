@@ -22,6 +22,16 @@ void LoadTexture::Free()
     }
 }
 
+void LoadTexture::SetAlpha(Uint8 alpha)
+{
+	SDL_SetTextureAlphaMod(mTexture, alpha);
+}
+
+void LoadTexture::SetBlendMode(SDL_BlendMode mode)
+{
+	SDL_SetTextureBlendMode(mTexture, mode);
+}
+
 
 void LoadTexture::renderTexture(SDL_Renderer* renderer, int x, int y, SDL_Rect* clip)
 {
@@ -73,7 +83,8 @@ bool LoadTexture::LoadFromFile(std::string path, SDL_Renderer* gRenderer)
 
 	if (tmpSurface == NULL)
 	{
-		std::cout << "fail to load texture" << std::endl;
+		std::cout << path << std::endl;
+		std::cout << IMG_GetError() << std::endl;
 	}
 	else
 	{
@@ -82,7 +93,8 @@ bool LoadTexture::LoadFromFile(std::string path, SDL_Renderer* gRenderer)
 		tmpTexture = SDL_CreateTextureFromSurface(gRenderer, tmpSurface);
 		if (tmpTexture == NULL)
 		{
-			std::cout << "Can not create texture from surface."<< std::endl;
+			std::cout << path << std::endl;
+			std::cout << IMG_GetError() << std::endl;
 		}
 		else
 		{

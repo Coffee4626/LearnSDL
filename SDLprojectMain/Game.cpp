@@ -40,11 +40,13 @@ void Game::InitSDL()
 	if (IMG_Init(IMG_INIT_PNG || IMG_INIT_JPG) == 0)
 	{
 		std::cout << "Unable to initialize IMG: " << IMG_GetError() << std::endl;
+		return;
 	}
 
 	if (Mix_Init(MIX_INIT_MP3) == 0)
 	{
 		std::cout << "Unable to initialize MIX: " << Mix_GetError() << std::endl;
+		return;
 	}
 
 	gWindow = SDL_CreateWindow("PONG", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
@@ -65,8 +67,8 @@ void Game::InitSDL()
 	if (gFont == NULL)
 	{
 		std::cout << "Unable to load a font for the application: " << TTF_GetError() << std::endl;
+		return;
 	}
-
 	std::cout << "Initialization complete" << std::endl;
 }
 
@@ -104,7 +106,6 @@ void Game::GameLoop()
 		float elapsedTime = currentTime - previousTime;
 		previousTime = currentTime;
 		lag += elapsedTime;
-
 		while (SDL_PollEvent(&gEvent))
 		{
 			if (gEvent.type == SDL_QUIT)

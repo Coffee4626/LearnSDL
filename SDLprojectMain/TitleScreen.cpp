@@ -68,6 +68,7 @@ void Title::exit()
 	mHelpTextSelected.Free();
 	mQuitTextNormal.Free();
 	mQuitTextSelected.Free();
+
 	std::cout << "Title resources freed, exited" << std::endl;
 }
 
