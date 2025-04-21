@@ -28,8 +28,10 @@ namespace pong
 		Game&			mGame;
 		SDL_Renderer*	mRenderer;
 		TTF_Font*		mFont;
+		Mix_Music*		mBGM;
 		LoadTexture		mBackgroundTexture;
 		LoadTexture		mDefaultBackground;
+		LoadTexture		mPausedText;
 		SDL_Rect		mSpriteClips[3];
 		LoadTexture		mSpriteSheet;
 		LoadTexture		player1score;

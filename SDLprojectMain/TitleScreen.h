@@ -15,10 +15,13 @@ namespace pong
 		void		handleEvent(SDL_Event& e)						override;
 		void		update(float deltaTime)							override;
 		void		render()										override;
+		void		LoadMedia();
 	private:
 		SDL_Renderer* mRenderer;
 		TTF_Font*	mFont;
 		Game&		mGame;
+		Mix_Music*	mBGM;
+		Mix_Chunk*	mMenuSFX;
 		LoadTexture mPlayTextNormal;
 		LoadTexture mPlayTextSelected;
 		LoadTexture mHelpTextNormal;

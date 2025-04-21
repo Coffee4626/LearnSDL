@@ -15,7 +15,7 @@ Court::Court(Game& game) :
 	ball(nullptr),
 	mIsPaused(false)
 {
-	
+	//...	
 }
 
 void Court::enter(SDL_Renderer* renderer, TTF_Font* font)
@@ -37,7 +37,9 @@ void Court::LoadMedia()
 	player1score.LoadFromRenderedText(std::to_string(mGame.getPlayerScores()[PlayerIndex::first]), mFont, color, mRenderer);
 
 	player2score.LoadFromRenderedText(std::to_string(mGame.getPlayerScores()[PlayerIndex::second]), mFont, color, mRenderer);
-	
+
+	mPausedText.LoadFromRenderedText("Paused", mFont, { 0x00, 0x00, 0x00, 0xFF }, mRenderer);
+
 	mBackgroundTexture.LoadFromFile("Assets/Pong court.png", mRenderer);
 
 	mSpriteSheet.LoadFromFile("Assets/sprites.png", mRenderer);
@@ -223,5 +225,6 @@ void Court::render()
 	if (mIsPaused == true)
 	{
 		mDefaultBackground.renderTexture(mRenderer, 0, 0);
+		mPausedText.renderTexture(mRenderer, (SCREEN_WIDTH - mPausedText.getWidth()) / 2 , (SCREEN_HEIGHT - mPausedText.getHeight()) / 2);
 	}
 }

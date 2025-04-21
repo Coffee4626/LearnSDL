@@ -1,5 +1,7 @@
 #include "Collision.h"
+
 using namespace pong;
+
 Collision::Contact Collision::CheckCollision(Ball &ball, Paddle &paddle)
 {
 	float BallLeftSide = ball.BallPosition.x;
@@ -107,7 +109,7 @@ void Collision::HandleCollision(Ball &ball, Paddle &paddle1, Paddle &paddle2)
 	{
 		ball.BallPosition.x += contact1.PenetrationDepth;
 		ball.BallVelocityX = -1.05f * ball.BallVelocityX;
-
+		Mix_PlayChannel(-1, mBallHitPaddle, 0);
 		if (contact1.ContactPoint == CollisionPoint::Top)
 		{
 			ball.BallVelocityY = -0.75f * 2;
@@ -129,6 +131,7 @@ void Collision::HandleCollision(Ball &ball, Paddle &paddle1, Paddle &paddle2)
 	{
 		ball.BallPosition.x += contact2.PenetrationDepth;
 		ball.BallVelocityX = -1.05 * ball.BallVelocityX;
+		Mix_PlayChannel(-1, mBallHitPaddle, 0);
 
 		if (contact2.ContactPoint == CollisionPoint::Top)
 		{
@@ -149,6 +152,7 @@ void Collision::HandleCollision(Ball &ball, Paddle &paddle1, Paddle &paddle2)
 	}
 	if (contact3.ContactPoint == Collision::Top || contact3.ContactPoint == Collision::Bottom)
 	{
+		Mix_PlayChannel(-1, mBallHitWall, 0);
 		ball.BallPosition.y += contact3.PenetrationDepth;
 		ball.BallVelocityY = -ball.BallVelocityY;
 	}

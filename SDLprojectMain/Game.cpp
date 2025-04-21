@@ -43,7 +43,7 @@ void Game::InitSDL()
 		return;
 	}
 
-	if (Mix_Init(MIX_INIT_MP3) == 0)
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) == -1)
 	{
 		std::cout << "Unable to initialize MIX: " << Mix_GetError() << std::endl;
 		return;

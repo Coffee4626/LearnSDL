@@ -15,6 +15,7 @@ namespace pong
 		void Quit();
 		void ChangeState(State mState);
 		std::array<int, 2>& getPlayerScores() { return gPlayerScores; }
+		//Get settings
 	private:
 		SDL_Window*			gWindow;
 		SDL_Renderer*		gRenderer;
