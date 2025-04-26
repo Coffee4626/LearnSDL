@@ -20,7 +20,9 @@ void LoadTexture::Free()
         mWidth = 0;
         mHeight = 0;
     }
+
 }
+
 
 void LoadTexture::SetAlpha(Uint8 alpha)
 {
@@ -31,7 +33,6 @@ void LoadTexture::SetBlendMode(SDL_BlendMode mode)
 {
 	SDL_SetTextureBlendMode(mTexture, mode);
 }
-
 
 void LoadTexture::renderTexture(SDL_Renderer* renderer, int x, int y, SDL_Rect* clip)
 {
@@ -45,6 +46,17 @@ void LoadTexture::renderTexture(SDL_Renderer* renderer, int x, int y, SDL_Rect* 
 
     SDL_RenderCopy(renderer, mTexture, clip, &renderingSpace);
 }
+
+TTF_Font* LoadTexture::LoadFont(const char* path, int size)
+{
+	TTF_Font* gFont = TTF_OpenFont(path, size);
+	if (gFont == nullptr)
+	{
+		std::cout << "Unable to load a font for the application: " << TTF_GetError() << std::endl;
+	}
+	return gFont;
+}
+
 
 bool LoadTexture::LoadFromRenderedText(std::string textureText, TTF_Font* gFont, SDL_Color textColor, SDL_Renderer* gRenderer)
 {
@@ -109,7 +121,6 @@ bool LoadTexture::LoadFromFile(std::string path, SDL_Renderer* gRenderer)
 	return mTexture != NULL;
 }
 
-
 int LoadTexture::getHeight()
 {
     return mHeight;
@@ -119,3 +130,9 @@ int LoadTexture::getWidth()
 {
     return mWidth;
 }
+
+
+
+
+
+

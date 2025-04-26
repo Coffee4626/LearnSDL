@@ -11,16 +11,23 @@ namespace pong
 		COURT_SCREEN,
 		RESULT_SCREEN
 	};
+
+	class GameStateManager;
+
 	class GameState
 	{
 	public:
-		virtual void enter(SDL_Renderer* renderer, TTF_Font* font) = 0;
+		virtual void enter() = 0;
 		virtual void exit() = 0;
 		virtual void handleEvent(SDL_Event& e) = 0;
 		virtual void update(float deltaTime) = 0;
 		virtual void render() = 0;
+
+		void SetStateManager(GameStateManager* manager);
+		void RequestChangeScene(SceneType newScene);
+
+		GameStateManager* mStateManager;
 	};
-typedef std::shared_ptr<GameState> State;
 }
 
 #endif // !GAME_STATE_H

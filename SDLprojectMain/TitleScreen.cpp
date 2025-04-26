@@ -1,24 +1,28 @@
 #include "TitleScreen.h"
-#include "HelpScreen.h"
-//#include "OptionScreen.h"
-#include "CourtScreen.h"
-#include "game.h"
+#include "StateManager.h"
+#include "Game.h"
 using namespace pong;
 
-Title::Title(Game& game) : 
+Title::Title(Game& game, SDL_Renderer* renderer, TTF_Font* font) :
 	mGame(game),
-	mRenderer(nullptr),
-	mFont(nullptr),
+	mRenderer(renderer),
+	mFont(font),
 	mSelectedMenuIndex(0)
 {
-	//...
-}
-void Title::enter(SDL_Renderer* renderer, TTF_Font* font)
-{
-	this->mRenderer = renderer;
-	this->mFont = font;
 	LoadMedia();
-	Mix_PlayMusic(mBGM, -1);
+}
+Title::~Title()
+{
+	mPlayTextNormal.Free();
+	mHelpTextNormal.Free();
+	mQuitTextNormal.Free();
+	mPlayTextSelected.Free();
+	mHelpTextSelected.Free();
+	mQuitTextSelected.Free();
+}
+void Title::enter()
+{
+
 }
 
 void Title::LoadMedia()
@@ -43,8 +47,8 @@ void Title::LoadMedia()
 	mTitleScreen.LoadFromFile("Assets/Title.png", mRenderer);
 
 	//Title screen BGM and sound fx
-	mBGM = Mix_LoadMUS("Assets/MenuBGM.wav");
-	mMenuSFX = Mix_LoadWAV("Assets/MenuScrollSound.wav");
+	//mBGM = Mix_LoadMUS("Assets/MenuBGM.wav");
+	//mMenuSFX = Mix_LoadWAV("Assets/MenuScrollSound.wav");
 
 	std::cout << "Title screen loaded successfully" << std::endl;
 }
@@ -58,11 +62,6 @@ void Title::exit()
 	mHelpTextSelected.Free();
 	mQuitTextNormal.Free();
 	mQuitTextSelected.Free();
-	//Freeing music and sfx
-	Mix_FreeChunk(mMenuSFX);
-	Mix_FreeMusic(mBGM);
-	mMenuSFX = nullptr;
-	mBGM = nullptr;
 	std::cout << "Title resources freed, exited" << std::endl;
 }
 
@@ -72,37 +71,32 @@ void Title::handleEvent(SDL_Event& event)
 	{
 		switch (event.key.keysym.sym)
 		{
-			case SDLK_DOWN:
+		case SDLK_DOWN:
+		{
+			mSelectedMenuIndex = (mSelectedMenuIndex + 1) % 3;
+			//Mix_PlayChannel(-1, mMenuSFX, 0);
+			break;
+		}
+		case SDLK_UP:
+		{
+			mSelectedMenuIndex = (mSelectedMenuIndex - 1 + 3) % 3;
+			//Mix_PlayChannel(-1, mMenuSFX, 0);
+			break;
+		}
+		case SDLK_RETURN:
+		{
+			if (mSelectedMenuIndex == MenuIndex::play)
 			{
-				mSelectedMenuIndex = (mSelectedMenuIndex + 1) % 3;
-				Mix_PlayChannel(-1, mMenuSFX, 0);
-				break;
+				std::cout << "Play button selected" << std::endl;
+				RequestChangeScene(SceneType::COURT_SCREEN);
 			}
-			case SDLK_UP:
+			else if (mSelectedMenuIndex == MenuIndex::help)
 			{
-				mSelectedMenuIndex = (mSelectedMenuIndex - 1 + 3) % 3;
-				Mix_PlayChannel(-1, mMenuSFX, 0);
-				break;
+				std::cout << "Help button selected" << std::endl;
 			}
-			case SDLK_RETURN:
-			{
-				if (mSelectedMenuIndex == MenuIndex::play)
-				{
-					std::cout << "Play button selected" << std::endl;
-					mGame.ChangeState(std::make_shared<Court>(mGame));
-				}
-				else if (mSelectedMenuIndex == MenuIndex::help)
-				{
-					std::cout << "Help button selected" << std::endl;
-					mGame.ChangeState(std::make_shared<Help>(mGame));
-				}
-				//else if (mSelectedMenuIndex == MenuIndex::option)
-				//{
-				//	mGame.ChangeState(std::make_shared<Option>(mGame));
-				//}
-				else mGame.Quit();
-				break;
-			}
+			else mGame.Quit();
+			break;
+		}
 		}
 	}
 }

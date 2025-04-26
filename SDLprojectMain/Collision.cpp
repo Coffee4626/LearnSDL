@@ -2,7 +2,7 @@
 
 using namespace pong;
 
-Collision::Contact Collision::CheckCollision(Ball &ball, Paddle &paddle)
+Collision::Contact Collision::CheckCollision(Ball& ball, Paddle& paddle)
 {
 	float BallLeftSide = ball.BallPosition.x;
 	float BallRightSide = ball.BallPosition.x + ball.BallPosition.w;
@@ -76,7 +76,7 @@ Collision::Contact Collision::CheckCollisionWithWall(Ball& ball)
 	float BallRightSide = ball.BallPosition.x + ball.BallPosition.w;
 	float BallTopSide = ball.BallPosition.y;
 	float BallBottomSide = ball.BallPosition.y + ball.BallPosition.h;
-	
+
 	Contact contact{};
 	if (BallLeftSide <= 0.0f)
 	{
@@ -99,7 +99,7 @@ Collision::Contact Collision::CheckCollisionWithWall(Ball& ball)
 	return contact;
 }
 
-void Collision::HandleCollision(Ball &ball, Paddle &paddle1, Paddle &paddle2)
+void Collision::HandleCollision(Ball& ball, Paddle& paddle1, Paddle& paddle2)
 {
 	Contact contact1 = CheckCollision(ball, paddle1);
 	Contact contact2 = CheckCollision(ball, paddle2);
@@ -109,7 +109,7 @@ void Collision::HandleCollision(Ball &ball, Paddle &paddle1, Paddle &paddle2)
 	{
 		ball.BallPosition.x += contact1.PenetrationDepth;
 		ball.BallVelocityX = -1.05f * ball.BallVelocityX;
-		Mix_PlayChannel(-1, mBallHitPaddle, 0);
+		//Mix_PlayChannel(-1, mBallHitPaddle, 0);
 		if (contact1.ContactPoint == CollisionPoint::Top)
 		{
 			ball.BallVelocityY = -0.75f * 2;
@@ -131,7 +131,7 @@ void Collision::HandleCollision(Ball &ball, Paddle &paddle1, Paddle &paddle2)
 	{
 		ball.BallPosition.x += contact2.PenetrationDepth;
 		ball.BallVelocityX = -1.05 * ball.BallVelocityX;
-		Mix_PlayChannel(-1, mBallHitPaddle, 0);
+		//Mix_PlayChannel(-1, mBallHitPaddle, 0);
 
 		if (contact2.ContactPoint == CollisionPoint::Top)
 		{
@@ -152,7 +152,7 @@ void Collision::HandleCollision(Ball &ball, Paddle &paddle1, Paddle &paddle2)
 	}
 	if (contact3.ContactPoint == Collision::Top || contact3.ContactPoint == Collision::Bottom)
 	{
-		Mix_PlayChannel(-1, mBallHitWall, 0);
+		//Mix_PlayChannel(-1, mBallHitWall, 0);
 		ball.BallPosition.y += contact3.PenetrationDepth;
 		ball.BallVelocityY = -ball.BallVelocityY;
 	}
@@ -171,4 +171,3 @@ void Collision::HandleCollision(Ball &ball, Paddle &paddle1, Paddle &paddle2)
 		ball.BallVelocityY = ball.InitialBallVelocityY;
 	}
 }
-

@@ -1,33 +1,31 @@
 #include "CourtScreen.h"
-#include "ResultScreen.h"
+#include "StateManager.h"
 #include "Game.h"
 
 using namespace pong;
 
 bool buttonsinput[total_paddle];
 
-Court::Court(Game& game) : 
+Court::Court(Game& game, SDL_Renderer* renderer, TTF_Font* font) :
 	mGame(game),
-	mRenderer(nullptr),
-	mFont(nullptr),
-	paddle1(nullptr), 
-	paddle2(nullptr), 
+	mRenderer(renderer),
+	mFont(font),
+	paddle1(nullptr),
+	paddle2(nullptr),
 	ball(nullptr),
 	mIsPaused(false)
 {
-	//...	
+	std::cout << "Court constructor called" << std::endl;
+	LoadMedia();
 }
 
-void Court::enter(SDL_Renderer* renderer, TTF_Font* font)
+void Court::enter()
 {
-	this->mRenderer = renderer;
-	this->mFont = font;
 	paddle1 = new Paddle(50, SCREEN_HEIGHT / 2);
 	paddle2 = new Paddle(SCREEN_WIDTH - 50, SCREEN_HEIGHT / 2);
 	ball = new Ball(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
 	mGame.getPlayerScores()[PlayerIndex::first] = 0;
 	mGame.getPlayerScores()[PlayerIndex::second] = 0;
-	LoadMedia();
 }
 
 void Court::LoadMedia()
@@ -156,10 +154,6 @@ void Court::handleInput()
 void Court::exit()
 {
 	//Freeing textures
-	player1score.Free();
-	player2score.Free();
-	mBackgroundTexture.Free();
-	mSpriteSheet.Free();
 	paddle1 = NULL;
 	paddle2 = NULL;
 	ball = NULL;
@@ -185,11 +179,11 @@ void Court::updatePlayerScore()
 	}
 	if (scores[PlayerIndex::first] > 2 || scores[PlayerIndex::second] > 2)
 	{
-		mGame.ChangeState(std::make_shared<End>(mGame));
+		RequestChangeScene(SceneType::RESULT_SCREEN);
 	}
 }
 
-void Court::updateGameObjects(float &mTime)
+void Court::updateGameObjects(float& mTime)
 {
 	//Update paddle position based on time
 	paddle1->UpdatePaddlePosition(mTime);
@@ -225,6 +219,6 @@ void Court::render()
 	if (mIsPaused == true)
 	{
 		mDefaultBackground.renderTexture(mRenderer, 0, 0);
-		mPausedText.renderTexture(mRenderer, (SCREEN_WIDTH - mPausedText.getWidth()) / 2 , (SCREEN_HEIGHT - mPausedText.getHeight()) / 2);
+		mPausedText.renderTexture(mRenderer, (SCREEN_WIDTH - mPausedText.getWidth()) / 2, (SCREEN_HEIGHT - mPausedText.getHeight()) / 2);
 	}
 }

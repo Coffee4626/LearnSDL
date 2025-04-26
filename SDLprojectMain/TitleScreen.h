@@ -9,8 +9,9 @@ namespace pong
 	class Title : public GameState
 	{
 	public:
-		Title		(Game& game);
-		void		enter(SDL_Renderer* renderer, TTF_Font* font)	override;
+		Title(Game& game, SDL_Renderer* renderer, TTF_Font* font);
+		~Title();
+		void		enter()	override;
 		void		exit()											override;
 		void		handleEvent(SDL_Event& e)						override;
 		void		update(float deltaTime)							override;
@@ -18,10 +19,8 @@ namespace pong
 		void		LoadMedia();
 	private:
 		SDL_Renderer* mRenderer;
-		TTF_Font*	mFont;
-		Game&		mGame;
-		Mix_Music*	mBGM;
-		Mix_Chunk*	mMenuSFX;
+		TTF_Font* mFont;
+		Game& mGame;
 		LoadTexture mPlayTextNormal;
 		LoadTexture mPlayTextSelected;
 		LoadTexture mHelpTextNormal;

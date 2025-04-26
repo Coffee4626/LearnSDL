@@ -1,22 +1,24 @@
 #include "Game.h"
-#include "TitleScreen.h"
 using namespace pong;
 
-Game::Game() : gWindow(nullptr), 
-	gRenderer(nullptr), 
-	gFont(nullptr), 
-	gPlayerScores({0, 0}), 
-	quit(false)
+Game::Game() : gWindow(nullptr),
+gRenderer(nullptr),
+gFont(nullptr),
+gPlayerScores({ 0, 0 }),
+quit(false),
+gStateManager(nullptr)
 {
-	
+
 }
 
 Game::~Game()
 {
+	if (gStateManager) delete gStateManager;
+	gStateManager = nullptr;
 	gFont = nullptr;
 	gRenderer = nullptr;
 	gWindow = nullptr;
-	
+
 	TTF_CloseFont(gFont);
 	Mix_Quit();
 	TTF_Quit();
@@ -36,7 +38,7 @@ void Game::InitSDL()
 		std::cout << "Unable to initialize TTF: " << TTF_GetError() << std::endl;
 		return;
 	}
-	
+
 	if (IMG_Init(IMG_INIT_PNG || IMG_INIT_JPG) == 0)
 	{
 		std::cout << "Unable to initialize IMG: " << IMG_GetError() << std::endl;
@@ -69,23 +71,24 @@ void Game::InitSDL()
 		std::cout << "Unable to load a font for the application: " << TTF_GetError() << std::endl;
 		return;
 	}
+
+	gStateManager = new GameStateManager();
+	InitScene();
+
+	gStateManager->ChangeState(SceneType::TITLE_SCREEN);
+
 	std::cout << "Initialization complete" << std::endl;
 }
 
-
-void Game::ChangeState(State mState)
+void Game::InitScene()
 {
-	if (mState == NULL)
-	{
-		std::cout << "Unable to set active scene as null" << std::endl;
-		return;
-	}
-	if (gState)
-	{
-		gState->exit();
-	}
-	gState = mState;
-	gState->enter(gRenderer, gFont);
+	gTitleScreen = std::make_shared<Title>(*this, gRenderer, gFont);
+	gCourtScreen = std::make_shared<Court>(*this, gRenderer, gFont);
+	gResultScreen = std::make_shared<End>(*this, gRenderer, gFont);
+
+	gStateManager->LoadState(SceneType::TITLE_SCREEN, gTitleScreen);
+	gStateManager->LoadState(SceneType::COURT_SCREEN, gCourtScreen);
+	gStateManager->LoadState(SceneType::RESULT_SCREEN, gResultScreen);
 }
 
 void Game::Quit()
@@ -97,9 +100,9 @@ void Game::Quit()
 void Game::GameLoop()
 {
 	InitSDL();
-	ChangeState(std::make_shared<Title>(*this));	
 	Uint32 previousTime = SDL_GetTicks();
 	float lag = 0;
+
 	while (!quit)
 	{
 		Uint32 currentTime = SDL_GetTicks();
@@ -112,16 +115,16 @@ void Game::GameLoop()
 			{
 				Quit();
 			}
-			gState->handleEvent(gEvent);
+			gStateManager->HandleEvent(gEvent);
 		}
 		while (lag >= FrameDelay)
 		{
 			lag -= FrameDelay;
-			gState->update(FrameDelay);
+			gStateManager->Update(FrameDelay);
 		}
 		SDL_SetRenderDrawColor(gRenderer, 0, 0, 0, 255);
 		SDL_RenderClear(gRenderer);
-		gState->render();
+		gStateManager->Render();
 		SDL_RenderPresent(gRenderer);
 	}
 }

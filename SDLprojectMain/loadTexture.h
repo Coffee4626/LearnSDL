@@ -1,7 +1,10 @@
 #ifndef LOAD_TEXTURE_H
 #define LOAD_TEXTURE_H
 
-#include "GameBase.h"
+#include <SDL.h>
+#include <SDL_image.h>
+#include <SDL_ttf.h>
+#include <iostream>
 namespace pong
 {
 	class LoadTexture
@@ -15,6 +18,8 @@ namespace pong
 		bool LoadFromRenderedText(std::string textureText, TTF_Font* gFont, SDL_Color textColor, SDL_Renderer* gRenderer);
 		
 		bool LoadFromFile(std::string path, SDL_Renderer* gRenderer);
+
+		TTF_Font* LoadFont(const char* path, int size);
 		
 		void Free();
 

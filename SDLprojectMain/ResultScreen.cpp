@@ -1,38 +1,24 @@
-#include "CourtScreen.h"
 #include "ResultScreen.h"
+#include "StateManager.h"
 #include "Game.h"
 using namespace pong;
-End::End(Game& game) :
+End::End(Game& game, SDL_Renderer* renderer, TTF_Font* font) :
 	mGame(game),
-	mRenderer(nullptr),
-	mFont(nullptr)
+	mRenderer(renderer),
+	mFont(font)
 {
-	
+	std::cout << "Result constructor called" << std::endl;
+	p1message.LoadFromFile("Assets/Left player win.png", mRenderer);
+	p2message.LoadFromFile("Assets/Right player win.png", mRenderer);
 }
 
-void End::enter(SDL_Renderer* renderer, TTF_Font* font)
+void End::enter()
 {
-	this->mRenderer = renderer;
-	this->mFont = font;
-	SDL_Color color = { 0xFF, 0xFF, 0xFF, 0xFF };
-	if (!p1message.LoadFromFile("Assets/Left player win.png", mRenderer))
-	{
-		std::cout << "Unable to load win message for p1" << std::endl;
-		return;
-	}
-	if (!p2message.LoadFromFile("Assets/Right player win.png", mRenderer))
-	{
-		std::cout << "Unable to load win message for p2" << std::endl;
-		return;
-	}
+
 }
 
 void End::exit()
 {
-	p1message.Free();
-	p2message.Free();
-	mRenderer = NULL;
-	mFont = NULL;
 	std::cout << "End screen resources freed" << std::endl;
 }
 
@@ -40,7 +26,7 @@ void End::handleEvent(SDL_Event& event)
 {
 	if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_RETURN)
 	{
-		mGame.ChangeState(std::make_shared<Court>(mGame));
+		RequestChangeScene(SceneType::COURT_SCREEN);
 	}
 	else if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE)
 	{
