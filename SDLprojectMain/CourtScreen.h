@@ -24,6 +24,7 @@ namespace pong
 	{
 	public:
 		Court(Game& game, SDL_Renderer* renderer, TTF_Font* font);
+		~Court();
 		void			enter()												override;
 		void			exit()												override;
 		void			handleEvent(SDL_Event& e)							override;

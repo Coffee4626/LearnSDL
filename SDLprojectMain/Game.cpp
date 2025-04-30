@@ -7,22 +7,30 @@ gFont(nullptr),
 gPlayerScores({ 0, 0 }),
 quit(false),
 gStateManager(nullptr),
-gMaxScore(10)
+gMaxScore(1)
 {
 	std::cout << "Game constructor called" << std::endl;
 }
 
 Game::~Game()
 {
+	gTitleScreen.reset();
+	gCourtScreen.reset();
+	gResultScreen.reset();
 	if (gStateManager) delete gStateManager;
 	gStateManager = nullptr;
-	gFont = nullptr;
+
 	gRenderer = nullptr;
 	gWindow = nullptr;
-
+	gSound.Free();
+	Mix_CloseAudio();
 	TTF_CloseFont(gFont);
+	SDL_DestroyRenderer(gRenderer);
+	SDL_DestroyWindow(gWindow);
+	gFont = nullptr;
 	Mix_Quit();
 	TTF_Quit();
+	IMG_Quit();
 	SDL_Quit();
 }
 

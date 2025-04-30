@@ -12,6 +12,13 @@ End::End(Game& game, SDL_Renderer* renderer, TTF_Font* font) :
 	p2message.LoadFromFile("Assets/Right player win.png", mRenderer);
 }
 
+End::~End()
+{
+	p1message.Free();
+	p2message.Free();
+	std::cout << "Result destructor called" << std::endl;
+}
+
 void End::enter()
 {
 	std::cout << "Entered Result screen" << std::endl;

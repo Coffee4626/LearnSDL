@@ -20,7 +20,6 @@ void LoadTexture::Free()
         mWidth = 0;
         mHeight = 0;
     }
-
 }
 
 

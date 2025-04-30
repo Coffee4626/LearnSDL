@@ -16,6 +16,12 @@ namespace pong
 	const int SCREEN_WIDTH = 1400;
 	const int SCREEN_HEIGHT = 800;
 
+	const int MAX_VOLUME = 128;
+	const int MIN_VOLUME = 0;
+
+	const int MAX_SCORE = 10;
+	const int MIN_SCORE = 1;
+
 	const float FPS = 60;
 	const float FrameDelay = 1000.0f / FPS;
 

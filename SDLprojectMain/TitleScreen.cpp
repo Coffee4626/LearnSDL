@@ -9,26 +9,37 @@ Title::Title(Game& game, SDL_Renderer* renderer, TTF_Font* font) :
 	mFont(font),
 	mSelectedMenuIndex(0),
 	mVolume(mGame.gSound.GetVolume()),
-	mMaxScore(0),
+	mMaxScore(1),
 	mSelectedSettingsMenuIndex(0)
 {
 	std::cout << "Title constructor called" << std::endl;
 	LoadMedia();
 }
+
 Title::~Title()
 {
+	mTitleScreen.Free();
+	mInstructionsForPlayers.Free();
+	mInstructionsToPause.Free();
+	//mInstructionsForPowerup.Free();
+
 	mPlayTextNormal.Free();
 	mHelpTextNormal.Free();
 	mSettingsTextNormal.Free();
 	mVolumeTextNormal.Free();
 	mScoreTextNormal.Free();
 	mQuitTextNormal.Free();
+
 	mPlayTextSelected.Free();
 	mHelpTextSelected.Free();
 	mSettingsTextSelected.Free();
 	mQuitTextSelected.Free();
 	mVolumeTextSelected.Free();
 	mScoreTextSelected.Free();
+
+	mBGM.Free();
+	mMenuSFX.Free();
+	std::cout << "Title destructor called" << std::endl;
 }
 void Title::enter()
 {
@@ -70,7 +81,6 @@ void Title::LoadMedia()
 	mInstructionsForPlayers.LoadFromRenderedText("Left player uses W and S, Right player use Up and Down", mFont, white, mRenderer);
 	//mInstructionsForPowerup.LoadFromRenderedText(std::string("Powerup: Press P"), mFont, white, mRenderer);
 	mInstructionsToPause.LoadFromRenderedText("Pause: Press ESC in game", mFont, white, mRenderer);
-	//mInstructionsForSettings.LoadFromRenderedText(std::string("Settings: Press S in game"), mFont, white, mRenderer);
 
 	//Title screen image
 	mTitleScreen.LoadFromFile("Assets/Title.png", mRenderer);
@@ -190,25 +200,25 @@ void Title::handleEvent(SDL_Event& event)
 
 void Title::UpdateSettings()
 {
-	if (mVolume > 128)
+	if (mVolume > MAX_VOLUME)
 	{
-		mVolume = 128;
+		mVolume = MAX_VOLUME;
 	}
-	if (mVolume < 0)
+	if (mVolume < MIN_VOLUME)
 	{
-		mVolume = 0;
+		mVolume = MIN_VOLUME;
 	}
 	mGame.gSound.SetVolume(mVolume);
 	mVolumeTextSelected.LoadFromRenderedText("Volume " + 
 		std::to_string((mGame.gSound.GetVolume() * 100) / 128), mFont, { 0xFF, 0xFF, 0x00, 0xFF }, mRenderer);
 
-	if (mMaxScore > 10)
+	if (mMaxScore > MAX_SCORE)
 	{
-		mMaxScore = 10;
+		mMaxScore = MAX_SCORE;
 	}
-	if (mMaxScore < 0)
+	if (mMaxScore < MIN_SCORE)
 	{
-		mMaxScore = 0;
+		mMaxScore = MIN_SCORE;
 	}
 	mGame.SetMaxScore(mMaxScore);
 	std::cout << mGame.GetMaxScore() << std::endl;

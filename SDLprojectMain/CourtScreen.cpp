@@ -19,7 +19,28 @@ Court::Court(Game& game, SDL_Renderer* renderer, TTF_Font* font) :
 	std::cout << "Court constructor called" << std::endl;
 	LoadMedia();
 }
-
+Court::~Court()
+{
+	mBackgroundTexture.Free();
+	mDefaultBackground.Free();
+	mPausedText.Free();
+	mSpriteSheet.Free();
+	mBallHitPaddle.Free();
+	mBallHitWall.Free();
+	player1score.Free();
+	player2score.Free();
+	mResumeTextNormal.Free();
+	mSettingsTextNormal.Free();
+	mQuitTextNormal.Free();
+	mResumeTextSelected.Free();
+	mSettingsTextSelected.Free();
+	mQuitTextSelected.Free();
+	mVolumeTextNormal.Free();
+	mVolumeTextSelected.Free();
+	mScoreTextNormal.Free();
+	mScoreTextSelected.Free();
+	std::cout << "Court destructor called" << std::endl;
+}
 void Court::enter()
 {
 	paddle1 = new Paddle(50, SCREEN_HEIGHT / 2);

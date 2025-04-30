@@ -35,8 +35,8 @@ namespace pong
 
 		LoadTexture mInstructionsForPlayers;
 		LoadTexture mInstructionsToPause;
-		LoadTexture mInstructionsForPowerup;
-		LoadTexture mInstructionsForSettings;
+		//LoadTexture mInstructionsForPowerup;
+
 		LoadTexture mPlayTextNormal;
 		LoadTexture mPlayTextSelected;
 		LoadTexture mHelpTextNormal;
@@ -46,6 +46,7 @@ namespace pong
 		LoadTexture mQuitTextNormal;
 		LoadTexture mQuitTextSelected;
 		LoadTexture mTitleScreen;
+
 		LoadTexture		mVolumeTextNormal;
 		LoadTexture		mVolumeTextSelected;
 		LoadTexture		mScoreTextNormal;
