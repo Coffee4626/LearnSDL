@@ -14,12 +14,13 @@ End::End(Game& game, SDL_Renderer* renderer, TTF_Font* font) :
 
 void End::enter()
 {
+	std::cout << "Entered Result screen" << std::endl;
 
 }
 
 void End::exit()
 {
-	std::cout << "End screen resources freed" << std::endl;
+	std::cout << "Result screen exited" << std::endl;
 }
 
 void End::handleEvent(SDL_Event& event)
@@ -42,7 +43,7 @@ void End::update(float deltaTime)
 void End::render()
 {
 	const auto& scores = mGame.getPlayerScores();
-	if (scores[0] > 2)
+	if (scores[0] > mGame.GetMaxScore())
 	{
 		p1message.renderTexture(mRenderer, 0, 0);
 	}

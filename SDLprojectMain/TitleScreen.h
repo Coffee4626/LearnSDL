@@ -6,6 +6,13 @@ namespace pong
 {
 	class Game;
 
+	enum SettingsIndex
+	{
+		volume,
+		score,
+		total_settings = 2
+	};
+
 	class Title : public GameState
 	{
 	public:
@@ -17,18 +24,39 @@ namespace pong
 		void		update(float deltaTime)							override;
 		void		render()										override;
 		void		LoadMedia();
+		void	UpdateSettings();
 	private:
+		Game& mGame;
 		SDL_Renderer* mRenderer;
 		TTF_Font* mFont;
-		Game& mGame;
+
+		Sound mBGM;
+		Sound mMenuSFX;
+
+		LoadTexture mInstructionsForPlayers;
+		LoadTexture mInstructionsToPause;
+		LoadTexture mInstructionsForPowerup;
+		LoadTexture mInstructionsForSettings;
 		LoadTexture mPlayTextNormal;
 		LoadTexture mPlayTextSelected;
 		LoadTexture mHelpTextNormal;
 		LoadTexture mHelpTextSelected;
+		LoadTexture mSettingsTextNormal;
+		LoadTexture mSettingsTextSelected;
 		LoadTexture mQuitTextNormal;
 		LoadTexture mQuitTextSelected;
 		LoadTexture mTitleScreen;
+		LoadTexture		mVolumeTextNormal;
+		LoadTexture		mVolumeTextSelected;
+		LoadTexture		mScoreTextNormal;
+		LoadTexture		mScoreTextSelected;
+
 		int mSelectedMenuIndex;
+		int mSelectedSettingsMenuIndex;
+		bool mHelpSelected = false;
+		bool mSettingsSelected = false;
+		int mVolume;
+		int mMaxScore;
 	};
 }
 

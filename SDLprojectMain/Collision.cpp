@@ -109,7 +109,6 @@ void Collision::HandleCollision(Ball& ball, Paddle& paddle1, Paddle& paddle2)
 	{
 		ball.BallPosition.x += contact1.PenetrationDepth;
 		ball.BallVelocityX = -1.05f * ball.BallVelocityX;
-		//Mix_PlayChannel(-1, mBallHitPaddle, 0);
 		if (contact1.ContactPoint == CollisionPoint::Top)
 		{
 			ball.BallVelocityY = -0.75f * 2;
@@ -131,7 +130,6 @@ void Collision::HandleCollision(Ball& ball, Paddle& paddle1, Paddle& paddle2)
 	{
 		ball.BallPosition.x += contact2.PenetrationDepth;
 		ball.BallVelocityX = -1.05 * ball.BallVelocityX;
-		//Mix_PlayChannel(-1, mBallHitPaddle, 0);
 
 		if (contact2.ContactPoint == CollisionPoint::Top)
 		{
@@ -152,12 +150,12 @@ void Collision::HandleCollision(Ball& ball, Paddle& paddle1, Paddle& paddle2)
 	}
 	if (contact3.ContactPoint == Collision::Top || contact3.ContactPoint == Collision::Bottom)
 	{
-		//Mix_PlayChannel(-1, mBallHitWall, 0);
 		ball.BallPosition.y += contact3.PenetrationDepth;
 		ball.BallVelocityY = -ball.BallVelocityY;
 	}
 	else if (contact3.ContactPoint == Collision::LeftWall)
 	{
+		//Reset ball position and velocity
 		ball.BallPosition.x = SCREEN_WIDTH / 2;
 		ball.BallPosition.y = SCREEN_HEIGHT / 2;
 		ball.BallVelocityX = -ball.InitialBallVelocityX;
@@ -165,6 +163,7 @@ void Collision::HandleCollision(Ball& ball, Paddle& paddle1, Paddle& paddle2)
 	}
 	else if (contact3.ContactPoint == Collision::RightWall)
 	{
+		//Reset ball position and velocity
 		ball.BallPosition.x = SCREEN_WIDTH / 2;
 		ball.BallPosition.y = SCREEN_HEIGHT / 2;
 		ball.BallVelocityX = ball.InitialBallVelocityX;

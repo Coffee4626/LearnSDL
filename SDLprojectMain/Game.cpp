@@ -6,9 +6,10 @@ gRenderer(nullptr),
 gFont(nullptr),
 gPlayerScores({ 0, 0 }),
 quit(false),
-gStateManager(nullptr)
+gStateManager(nullptr),
+gMaxScore(10)
 {
-
+	std::cout << "Game constructor called" << std::endl;
 }
 
 Game::~Game()
@@ -23,6 +24,16 @@ Game::~Game()
 	Mix_Quit();
 	TTF_Quit();
 	SDL_Quit();
+}
+
+void Game::SetMaxScore(int maxScore)
+{
+	gMaxScore = maxScore;
+}
+
+int Game::GetMaxScore() const
+{
+	return gMaxScore;
 }
 
 void Game::InitSDL()

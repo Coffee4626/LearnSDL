@@ -9,6 +9,7 @@
 #include <SDL_mixer.h>
 #include <SDL_ttf.h>
 #include "LoadTexture.h"
+#include "LoadSound.h"
 
 namespace pong
 {
@@ -38,9 +39,10 @@ namespace pong
 	{
 		play,
 		help,
+		settings,
 		quit,
+		total_menu = 4,
 	};
-
 
 };
 

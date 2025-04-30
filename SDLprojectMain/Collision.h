@@ -9,6 +9,7 @@ namespace pong
 	class Collision
 	{
 	public:
+
 		enum CollisionPoint
 		{
 			None,
@@ -29,9 +30,6 @@ namespace pong
 		Contact		CheckCollision(Ball& ball, Paddle& paddle);
 		Contact		CheckCollisionWithWall(Ball& ball);
 		void		HandleCollision(Ball& ball, Paddle& paddle1, Paddle& paddle2);
-	private:
-		//Mix_Chunk* mBallHitWall = Mix_LoadWAV("Assets/BallHitWall.wav");
-		//Mix_Chunk* mBallHitPaddle = Mix_LoadWAV("Assets/BallHitPaddle.wav");
 	};
 }
 

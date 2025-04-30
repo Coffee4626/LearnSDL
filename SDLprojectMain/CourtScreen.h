@@ -7,9 +7,18 @@
 #include "Paddle.h"
 #include "Ball.h"
 #include "Collision.h"
+
 namespace pong
 {
 	class Game;
+
+	enum CourtMenu
+	{
+		Courtresume,
+		Courtsettings,
+		Courtquit,
+		totalCourtMenu = 3
+	};
 
 	class Court : public GameState
 	{
@@ -20,6 +29,7 @@ namespace pong
 		void			handleEvent(SDL_Event& e)							override;
 		void			update(float deltaTime)								override;
 		void			render()											override;
+		void			DisplayCourtMenu();
 		void			LoadMedia();
 		void			updatePlayerScore();
 		void			updateGameObjects(float& mTime);
@@ -28,6 +38,10 @@ namespace pong
 		Game& mGame;
 		SDL_Renderer* mRenderer;
 		TTF_Font* mFont;
+
+		Sound mBallHitPaddle;
+		Sound mBallHitWall;
+
 		LoadTexture		mBackgroundTexture;
 		LoadTexture		mDefaultBackground;
 		LoadTexture		mPausedText;
@@ -35,11 +49,25 @@ namespace pong
 		LoadTexture		mSpriteSheet;
 		LoadTexture		player1score;
 		LoadTexture		player2score;
-		Collision		collision;
+
+		LoadTexture		mResumeTextNormal;
+		LoadTexture		mSettingsTextNormal;
+		LoadTexture 	mQuitTextNormal;
+		LoadTexture		mResumeTextSelected;
+		LoadTexture		mSettingsTextSelected;	
+		LoadTexture		mQuitTextSelected;
+		LoadTexture		mVolumeTextNormal;
+		LoadTexture		mVolumeTextSelected;
+		LoadTexture		mScoreTextNormal;
+		LoadTexture		mScoreTextSelected;
+		
+		Collision collision;
 		Paddle* paddle1;
 		Paddle* paddle2;
 		Ball* ball;
+		int mSelectedMenuIndex;
 		bool			mIsPaused;
+		bool			mSettingsMenuOpen;
 	};
 }
 

@@ -13,7 +13,8 @@ Court::Court(Game& game, SDL_Renderer* renderer, TTF_Font* font) :
 	paddle1(nullptr),
 	paddle2(nullptr),
 	ball(nullptr),
-	mIsPaused(false)
+	mIsPaused(false),
+	mSelectedMenuIndex(0)
 {
 	std::cout << "Court constructor called" << std::endl;
 	LoadMedia();
@@ -26,24 +27,54 @@ void Court::enter()
 	ball = new Ball(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
 	mGame.getPlayerScores()[PlayerIndex::first] = 0;
 	mGame.getPlayerScores()[PlayerIndex::second] = 0;
-}
 
-void Court::LoadMedia()
-{
 	SDL_Color color = { 0x00, 0x00, 0x00, 0xFF };
 
 	player1score.LoadFromRenderedText(std::to_string(mGame.getPlayerScores()[PlayerIndex::first]), mFont, color, mRenderer);
 
 	player2score.LoadFromRenderedText(std::to_string(mGame.getPlayerScores()[PlayerIndex::second]), mFont, color, mRenderer);
 
-	mPausedText.LoadFromRenderedText("Paused", mFont, { 0x00, 0x00, 0x00, 0xFF }, mRenderer);
+	std::cout << "Entered Court screen" << std::endl;
+}
 
+void Court::LoadMedia()
+{
+	SDL_Color white = { 0xFF, 0xFF, 0xFF, 0xFF };
+
+	mPausedText.LoadFromRenderedText("Paused", mFont, white, mRenderer);
+
+	mResumeTextNormal.LoadFromRenderedText("Resume", mFont, white, mRenderer);
+
+	mSettingsTextNormal.LoadFromRenderedText("Settings", mFont, white, mRenderer);
+
+	mQuitTextNormal.LoadFromRenderedText("Quit", mFont, white, mRenderer);
+
+	mVolumeTextNormal.LoadFromRenderedText("Volume", mFont, white, mRenderer);
+
+	mScoreTextNormal.LoadFromRenderedText("Max score", mFont, white, mRenderer);
+
+	SDL_Color yellow = { 0xFF, 0xFF, 0x00, 0xFF };
+
+	mResumeTextSelected.LoadFromRenderedText("Resume", mFont, yellow, mRenderer);
+
+	mSettingsTextSelected.LoadFromRenderedText("Settings", mFont, yellow, mRenderer);
+
+	mQuitTextSelected.LoadFromRenderedText("Quit", mFont, yellow, mRenderer);
+
+	mVolumeTextSelected.LoadFromRenderedText("Volume", mFont, yellow, mRenderer);
+
+	mScoreTextNormal.LoadFromRenderedText("Max score", mFont, yellow, mRenderer);
+
+	//Load backgrounds
 	mBackgroundTexture.LoadFromFile("Assets/Pong court.png", mRenderer);
 
 	mSpriteSheet.LoadFromFile("Assets/sprites.png", mRenderer);
 
 	mDefaultBackground.LoadFromFile("Assets/Background.png", mRenderer);
 	mDefaultBackground.SetAlpha(150);
+
+	mBallHitPaddle.LoadSound("Assets/BallHitPaddle.wav");
+	mBallHitWall.LoadSound("Assets/BallHitWall.wav");
 
 	//Left paddle sprite
 	mSpriteClips[0].x = 20;
@@ -76,14 +107,40 @@ void Court::handleEvent(SDL_Event& event)
 			buttonsinput[left_paddle_down] = true;
 			break;
 		case SDLK_UP:
-			buttonsinput[right_paddle_up] = true;
+			if (mIsPaused == false)
+			{
+				buttonsinput[right_paddle_up] = true;
+			}
+			else mSelectedMenuIndex = (mSelectedMenuIndex - 1 + CourtMenu::totalCourtMenu) % CourtMenu::totalCourtMenu;
 			break;
 		case SDLK_DOWN:
-			buttonsinput[right_paddle_down] = true;
+			if (mIsPaused == false)
+			{
+				buttonsinput[right_paddle_down] = true;
+			}
+			else mSelectedMenuIndex = (mSelectedMenuIndex + 1) % CourtMenu::totalCourtMenu;
 			break;
 		case SDLK_ESCAPE:
 			if (mIsPaused == false) mIsPaused = true;
 			else mIsPaused = false;
+			break;
+		case SDLK_RETURN:
+			if (mIsPaused == true)
+			{
+				switch (mSelectedMenuIndex)
+				{
+				case CourtMenu::Courtresume:
+					mIsPaused = false;
+					break;
+				case CourtMenu::Courtsettings:
+					std::cout << "Settings button selected" << std::endl;
+					break;
+				case CourtMenu::Courtquit:
+					std::cout << "Quit button selected" << std::endl;
+					mGame.Quit();
+					break;
+				}
+			}
 		}
 	}
 	//Handle when players stop holding keys
@@ -160,6 +217,7 @@ void Court::exit()
 	delete ball;
 	delete paddle2;
 	delete paddle1;
+	std::cout << "Court screen exited" << std::endl;
 }
 
 void Court::updatePlayerScore()
@@ -177,7 +235,7 @@ void Court::updatePlayerScore()
 		scores[PlayerIndex::second]++;
 		player2score.LoadFromRenderedText(std::to_string(scores[PlayerIndex::second]), mFont, color, mRenderer);
 	}
-	if (scores[PlayerIndex::first] > 2 || scores[PlayerIndex::second] > 2)
+	if (scores[PlayerIndex::first] > mGame.GetMaxScore() || scores[PlayerIndex::second] > mGame.GetMaxScore())
 	{
 		RequestChangeScene(SceneType::RESULT_SCREEN);
 	}
@@ -190,6 +248,17 @@ void Court::updateGameObjects(float& mTime)
 	paddle2->UpdatePaddlePosition(mTime);
 	//Update ball position based on time
 	ball->UpdateBallPosition(mTime);
+	Collision::Contact contact1 = collision.CheckCollisionWithWall(*ball);
+	Collision::Contact contact2 = collision.CheckCollision(*ball, *paddle1);
+	Collision::Contact contact3 = collision.CheckCollision(*ball, *paddle2);
+	if (contact1.ContactPoint == Collision::Top || contact1.ContactPoint == Collision::Bottom)
+	{
+		mBallHitWall.PlaySound(-1, 0, mGame.gSound.GetVolume());
+	}
+	if (contact2.ContactPoint != Collision::None || contact3.ContactPoint != Collision::None)
+	{
+		mBallHitPaddle.PlaySound(-1, 0, mGame.gSound.GetVolume());
+	}
 	//Update player score
 	updatePlayerScore();
 }
@@ -218,7 +287,56 @@ void Court::render()
 	ball->RenderBall(&mSpriteClips[2], mRenderer, mSpriteSheet);
 	if (mIsPaused == true)
 	{
-		mDefaultBackground.renderTexture(mRenderer, 0, 0);
-		mPausedText.renderTexture(mRenderer, (SCREEN_WIDTH - mPausedText.getWidth()) / 2, (SCREEN_HEIGHT - mPausedText.getHeight()) / 2);
+		//Display court menu
+		DisplayCourtMenu();
+	}
+}
+
+void Court::DisplayCourtMenu()
+{
+	int yOffSet = 50;
+	mDefaultBackground.renderTexture(mRenderer, 0, 0);
+	mPausedText.renderTexture(mRenderer, (SCREEN_WIDTH - mPausedText.getWidth()) / 2, (SCREEN_HEIGHT - mPausedText.getHeight()) / 2 - 50);
+
+	if (mSettingsMenuOpen == true)
+	{
+
+	}
+
+	if (mSelectedMenuIndex == CourtMenu::Courtresume)
+	{
+		mResumeTextSelected.renderTexture(mRenderer, 
+			(SCREEN_WIDTH - mResumeTextSelected.getWidth()) / 2, 
+			(SCREEN_HEIGHT - mResumeTextSelected.getHeight()) / 2 + yOffSet);
+	}
+	else
+	{
+		mResumeTextNormal.renderTexture(mRenderer, 
+			(SCREEN_WIDTH - mResumeTextNormal.getWidth()) / 2, 
+			(SCREEN_HEIGHT - mResumeTextNormal.getHeight()) / 2 + yOffSet);
+	}
+	if (mSelectedMenuIndex == CourtMenu::Courtsettings)
+	{
+		mSettingsTextSelected.renderTexture(mRenderer, 
+			(SCREEN_WIDTH - mSettingsTextSelected.getWidth()) / 2, 
+			(SCREEN_HEIGHT - mSettingsTextSelected.getHeight()) / 2 + yOffSet * 2);
+	}
+	else
+	{
+		mSettingsTextNormal.renderTexture(mRenderer, 
+			(SCREEN_WIDTH - mSettingsTextNormal.getWidth()) / 2, 
+			(SCREEN_HEIGHT - mSettingsTextNormal.getHeight()) / 2 + yOffSet * 2);
+	}
+	if (mSelectedMenuIndex == CourtMenu::Courtquit)
+	{
+		mQuitTextSelected.renderTexture(mRenderer, 
+			(SCREEN_WIDTH - mQuitTextSelected.getWidth()) / 2, 
+			(SCREEN_HEIGHT - mQuitTextSelected.getHeight()) / 2 + yOffSet * 3);
+	}
+	else
+	{
+		mQuitTextNormal.renderTexture(mRenderer, 
+			(SCREEN_WIDTH - mQuitTextNormal.getWidth()) / 2, 
+			(SCREEN_HEIGHT - mQuitTextNormal.getHeight()) / 2 + yOffSet * 3);
 	}
 }
