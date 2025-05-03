@@ -42,6 +42,7 @@ namespace pong
 
 		Sound mBallHitPaddle;
 		Sound mBallHitWall;
+		Sound mSFX;
 
 		LoadTexture		mBackgroundTexture;
 		LoadTexture		mDefaultBackground;
@@ -57,6 +58,7 @@ namespace pong
 		LoadTexture		mResumeTextSelected;
 		LoadTexture		mSettingsTextSelected;	
 		LoadTexture		mQuitTextSelected;
+
 		LoadTexture		mVolumeTextNormal;
 		LoadTexture		mVolumeTextSelected;
 		LoadTexture		mScoreTextNormal;
@@ -67,8 +69,9 @@ namespace pong
 		Paddle* paddle2;
 		Ball* ball;
 		int mSelectedMenuIndex;
-		bool			mIsPaused;
-		bool			mSettingsMenuOpen;
+		bool	mIsPaused;
+		bool	mSettingsMenuOpen;
+		int mScore;
 	};
 }
 

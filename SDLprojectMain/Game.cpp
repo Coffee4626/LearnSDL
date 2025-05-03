@@ -6,10 +6,68 @@ gRenderer(nullptr),
 gFont(nullptr),
 gPlayerScores({ 0, 0 }),
 quit(false),
-gStateManager(nullptr),
-gMaxScore(1)
+gStateManager(nullptr)
 {
 	std::cout << "Game constructor called" << std::endl;
+}
+
+void Game::LoadSaveFile()
+{
+	SDL_RWops* SaveFile = SDL_RWFromFile("Settings/SaveData.bin", "r + b");
+	if (SaveFile == nullptr)
+	{
+		std::cout << "Unable to open save file: " << SDL_GetError() << std::endl;
+		SaveFile = SDL_RWFromFile("Settings/SaveData.bin", "w + b");
+		if (SaveFile != nullptr)
+		{
+			std::cout << "Save file created" << std::endl;
+			int defaultVolume = 128;
+			int defaultScore = 10;
+
+			SDL_RWwrite(SaveFile, &defaultVolume, sizeof(int), 1);
+			SDL_RWwrite(SaveFile, &defaultScore, sizeof(int), 1);
+
+			gSound.SetVolume(defaultVolume);
+			gMaxScore = defaultScore;
+
+			SDL_RWclose(SaveFile);
+		}
+		else 
+		{
+			std::cout << "Unable to open save file: " << SDL_GetError() << std::endl;
+		}
+	}
+	else
+	{
+		std::cout << "Reading data from save file" << std::endl;
+		int volume = 0;
+		SDL_RWread(SaveFile, &volume, sizeof(int), 1);
+		gSound.SetVolume(volume);
+		int score = 0;
+		SDL_RWread(SaveFile, &score, sizeof(int), 1);
+		gMaxScore = score;
+		SDL_RWclose(SaveFile);
+	}
+}
+
+void Game::SaveData()
+{
+	SDL_RWops* SaveFile = SDL_RWFromFile("Settings/SaveData.bin", "w+b");
+	if (SaveFile == nullptr) 
+	{
+		std::cout << "Unable to open save file: " << SDL_GetError() << std::endl;
+	}
+	else 
+	{
+		std::cout << "Writing data to save file" << std::endl;
+
+		int volume = gSound.GetVolume();
+		SDL_RWwrite(SaveFile, &volume, sizeof(int), 1);
+
+		SDL_RWwrite(SaveFile, &gMaxScore, sizeof(int), 1);
+
+		SDL_RWclose(SaveFile);
+	}
 }
 
 Game::~Game()
@@ -91,6 +149,8 @@ void Game::InitSDL()
 		return;
 	}
 
+	LoadSaveFile();
+
 	gStateManager = new GameStateManager();
 	InitScene();
 
@@ -112,6 +172,7 @@ void Game::InitScene()
 
 void Game::Quit()
 {
+	SaveData();
 	quit = true;
 	std::cout << "Game quitted" << std::endl;
 }

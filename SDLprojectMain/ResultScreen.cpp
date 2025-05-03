@@ -21,8 +21,8 @@ End::~End()
 
 void End::enter()
 {
+	mScore = mGame.GetMaxScore();
 	std::cout << "Entered Result screen" << std::endl;
-
 }
 
 void End::exit()
@@ -50,7 +50,7 @@ void End::update(float deltaTime)
 void End::render()
 {
 	const auto& scores = mGame.getPlayerScores();
-	if (scores[0] > mGame.GetMaxScore())
+	if (scores[0] > mScore)
 	{
 		p1message.renderTexture(mRenderer, 0, 0);
 	}

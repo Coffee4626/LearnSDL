@@ -23,6 +23,7 @@ namespace pong
 		TTF_Font* mFont;
 		LoadTexture		p1message;
 		LoadTexture		p2message;
+		int mScore;
 	};
 }
 

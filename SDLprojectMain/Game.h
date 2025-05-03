@@ -16,12 +16,15 @@ namespace pong
 		Game();
 		~Game();
 		void GameLoop();
+		void LoadSaveFile();
+		void SaveData();
 		void InitScene();
 		void InitSDL();
 		void Quit();
 		int GetMaxScore() const;
 		void SetMaxScore(int maxScore);
 		std::array<int, 2>& getPlayerScores() { return gPlayerScores; }
+
 		Sound	gSound;
 		int	gMaxScore;
 	private:
@@ -35,6 +38,7 @@ namespace pong
 		std::shared_ptr<Title> gTitleScreen;
 		std::shared_ptr<Court> gCourtScreen;
 		std::shared_ptr<End> gResultScreen;
+
 		bool	quit;
 
 	};

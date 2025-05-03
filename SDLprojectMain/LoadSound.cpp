@@ -5,7 +5,7 @@ using namespace pong;
 Sound::Sound()
 {
 	mChunk = nullptr;
-	mVolume = 128; 
+	mVolume = 128;
 }
 
 Sound::~Sound()

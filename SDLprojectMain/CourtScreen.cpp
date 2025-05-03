@@ -19,6 +19,7 @@ Court::Court(Game& game, SDL_Renderer* renderer, TTF_Font* font) :
 	std::cout << "Court constructor called" << std::endl;
 	LoadMedia();
 }
+
 Court::~Court()
 {
 	mBackgroundTexture.Free();
@@ -39,13 +40,18 @@ Court::~Court()
 	mVolumeTextSelected.Free();
 	mScoreTextNormal.Free();
 	mScoreTextSelected.Free();
+
+	mVolumeTextNormal.Free();
+	mVolumeTextSelected.Free();
 	std::cout << "Court destructor called" << std::endl;
 }
+
 void Court::enter()
 {
 	paddle1 = new Paddle(50, SCREEN_HEIGHT / 2);
 	paddle2 = new Paddle(SCREEN_WIDTH - 50, SCREEN_HEIGHT / 2);
 	ball = new Ball(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+	mScore = mGame.GetMaxScore();
 	mGame.getPlayerScores()[PlayerIndex::first] = 0;
 	mGame.getPlayerScores()[PlayerIndex::second] = 0;
 
@@ -71,8 +77,6 @@ void Court::LoadMedia()
 	mQuitTextNormal.LoadFromRenderedText("Quit", mFont, white, mRenderer);
 
 	mVolumeTextNormal.LoadFromRenderedText("Volume", mFont, white, mRenderer);
-
-	mScoreTextNormal.LoadFromRenderedText("Max score", mFont, white, mRenderer);
 
 	SDL_Color yellow = { 0xFF, 0xFF, 0x00, 0xFF };
 
@@ -158,7 +162,7 @@ void Court::handleEvent(SDL_Event& event)
 					break;
 				case CourtMenu::Courtquit:
 					std::cout << "Quit button selected" << std::endl;
-					mGame.Quit();
+					RequestChangeScene(SceneType::TITLE_SCREEN);
 					break;
 				}
 			}
@@ -256,7 +260,7 @@ void Court::updatePlayerScore()
 		scores[PlayerIndex::second]++;
 		player2score.LoadFromRenderedText(std::to_string(scores[PlayerIndex::second]), mFont, color, mRenderer);
 	}
-	if (scores[PlayerIndex::first] > mGame.GetMaxScore() || scores[PlayerIndex::second] > mGame.GetMaxScore())
+	if (scores[PlayerIndex::first] > mScore || scores[PlayerIndex::second] > mScore)
 	{
 		RequestChangeScene(SceneType::RESULT_SCREEN);
 	}
@@ -317,7 +321,9 @@ void Court::DisplayCourtMenu()
 {
 	int yOffSet = 50;
 	mDefaultBackground.renderTexture(mRenderer, 0, 0);
-	mPausedText.renderTexture(mRenderer, (SCREEN_WIDTH - mPausedText.getWidth()) / 2, (SCREEN_HEIGHT - mPausedText.getHeight()) / 2 - 50);
+	mPausedText.renderTexture(mRenderer, 
+		(SCREEN_WIDTH - mPausedText.getWidth()) / 2, 
+		(SCREEN_HEIGHT - mPausedText.getHeight()) / 2 - 50);
 
 	if (mSettingsMenuOpen == true)
 	{

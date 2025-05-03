@@ -9,7 +9,7 @@ Title::Title(Game& game, SDL_Renderer* renderer, TTF_Font* font) :
 	mFont(font),
 	mSelectedMenuIndex(0),
 	mVolume(mGame.gSound.GetVolume()),
-	mMaxScore(1),
+	mMaxScore(mGame.GetMaxScore()),
 	mSelectedSettingsMenuIndex(0)
 {
 	std::cout << "Title constructor called" << std::endl;
@@ -43,6 +43,7 @@ Title::~Title()
 }
 void Title::enter()
 {
+	mBGM.StopSound(-1);
 	mBGM.PlaySound(-1, 0, mGame.gSound.GetVolume());
 	std::cout << "Entered Title screen" << std::endl;
 }
@@ -73,9 +74,9 @@ void Title::LoadMedia()
 
 	mQuitTextSelected.LoadFromRenderedText("Quit", mFont, yellow, mRenderer);
 
-	mVolumeTextSelected.LoadFromRenderedText("Volume " + std::to_string(mGame.gSound.GetVolume() / 128 * 100), mFont, yellow, mRenderer);
+	mVolumeTextSelected.LoadFromRenderedText("Volume " + std::to_string(mVolume * 100 / 128), mFont, yellow, mRenderer);
 
-	mScoreTextSelected.LoadFromRenderedText("Max score " + std::to_string(mGame.GetMaxScore()), mFont, { 0xFF, 0xFF, 0x00, 0xFF }, mRenderer);
+	mScoreTextSelected.LoadFromRenderedText("Max score " + std::to_string(mMaxScore), mFont, { 0xFF, 0xFF, 0x00, 0xFF }, mRenderer);
 
 	//Instructions for players
 	mInstructionsForPlayers.LoadFromRenderedText("Left player uses W and S, Right player use Up and Down", mFont, white, mRenderer);
