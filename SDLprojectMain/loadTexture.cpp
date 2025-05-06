@@ -16,6 +16,7 @@ void LoadTexture::Free()
 {
     if (mTexture != nullptr)
     {
+		SDL_DestroyTexture(mTexture);
         mTexture = nullptr;
         mWidth = 0;
         mHeight = 0;

@@ -48,6 +48,7 @@ Court::~Court()
 
 void Court::enter()
 {
+	mIsPaused = false;
 	paddle1 = new Paddle(50, SCREEN_HEIGHT / 2);
 	paddle2 = new Paddle(SCREEN_WIDTH - 50, SCREEN_HEIGHT / 2);
 	ball = new Ball(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
@@ -55,11 +56,10 @@ void Court::enter()
 	mGame.getPlayerScores()[PlayerIndex::first] = 0;
 	mGame.getPlayerScores()[PlayerIndex::second] = 0;
 
-	SDL_Color color = { 0x00, 0x00, 0x00, 0xFF };
+	SDL_Color black = { 0x00, 0x00, 0x00, 0xFF };
+	player1score.LoadFromRenderedText(std::to_string(mGame.getPlayerScores()[PlayerIndex::first]), mFont, black, mRenderer);
 
-	player1score.LoadFromRenderedText(std::to_string(mGame.getPlayerScores()[PlayerIndex::first]), mFont, color, mRenderer);
-
-	player2score.LoadFromRenderedText(std::to_string(mGame.getPlayerScores()[PlayerIndex::second]), mFont, color, mRenderer);
+	player2score.LoadFromRenderedText(std::to_string(mGame.getPlayerScores()[PlayerIndex::second]), mFont, black, mRenderer);
 
 	std::cout << "Entered Court screen" << std::endl;
 }
@@ -247,20 +247,20 @@ void Court::exit()
 
 void Court::updatePlayerScore()
 {
-	SDL_Color color = { 0x00, 0x00, 0x00, 0xFF };
+	SDL_Color black = { 0x00, 0x00, 0x00, 0xFF };
 	Collision::Contact contact = collision.CheckCollisionWithWall(*ball);
 	auto& scores = mGame.getPlayerScores();
 	if (contact.ContactPoint == Collision::RightWall)
 	{
 		scores[PlayerIndex::first]++;
-		player1score.LoadFromRenderedText(std::to_string(scores[PlayerIndex::first]), mFont, color, mRenderer);
+		player1score.LoadFromRenderedText(std::to_string(scores[PlayerIndex::first]), mFont, black, mRenderer);
 	}
 	if (contact.ContactPoint == Collision::LeftWall)
 	{
 		scores[PlayerIndex::second]++;
-		player2score.LoadFromRenderedText(std::to_string(scores[PlayerIndex::second]), mFont, color, mRenderer);
+		player2score.LoadFromRenderedText(std::to_string(scores[PlayerIndex::second]), mFont, black, mRenderer);
 	}
-	if (scores[PlayerIndex::first] > mScore || scores[PlayerIndex::second] > mScore)
+	if (scores[PlayerIndex::first] > 100 || scores[PlayerIndex::second] > 100)
 	{
 		RequestChangeScene(SceneType::RESULT_SCREEN);
 	}

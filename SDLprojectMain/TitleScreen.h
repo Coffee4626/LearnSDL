@@ -10,7 +10,8 @@ namespace pong
 	{
 		volume,
 		score,
-		total_settings = 2
+		save,
+		total_settings = 3
 	};
 
 	class Title : public GameState
@@ -23,7 +24,23 @@ namespace pong
 		void		handleEvent(SDL_Event& e)						override;
 		void		update(float deltaTime)							override;
 		void		render()										override;
-		void		LoadMedia();
+		void 		LoadText(LoadTexture& normal, 
+			LoadTexture& selected,
+			const std::string& content, 
+			SDL_Color normalColor, 
+			SDL_Color selectedColor);
+		void NavigateMenu(int direction);
+		void AdjustSettings(int adjustment);
+		void SelectMenuOption();
+		void ExitSubMenu();
+		void RenderHelpState();
+		void RenderSettings();
+		void RenderSettingOption(LoadTexture& normal, LoadTexture& selected,
+			int index, int yOffset);
+		void RenderMainMenuOption(LoadTexture& normal, LoadTexture& selected,
+			int index, int yOffset);
+		void RenderMainMenu();
+		void	LoadMedia();
 		void	UpdateSettings();
 	private:
 		Game& mGame;
@@ -35,7 +52,6 @@ namespace pong
 
 		LoadTexture mInstructionsForPlayers;
 		LoadTexture mInstructionsToPause;
-		//LoadTexture mInstructionsForPowerup;
 
 		LoadTexture mPlayTextNormal;
 		LoadTexture mPlayTextSelected;
@@ -51,6 +67,8 @@ namespace pong
 		LoadTexture		mVolumeTextSelected;
 		LoadTexture		mScoreTextNormal;
 		LoadTexture		mScoreTextSelected;
+		LoadTexture		mSaveTextNormal;
+		LoadTexture		mSaveTextSelected;
 
 		int mSelectedMenuIndex;
 		int mSelectedSettingsMenuIndex;

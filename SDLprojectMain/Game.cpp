@@ -86,6 +86,7 @@ Game::~Game()
 	SDL_DestroyRenderer(gRenderer);
 	SDL_DestroyWindow(gWindow);
 	gFont = nullptr;
+
 	Mix_Quit();
 	TTF_Quit();
 	IMG_Quit();
