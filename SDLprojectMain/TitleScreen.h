@@ -24,10 +24,10 @@ namespace pong
 		void		handleEvent(SDL_Event& e)						override;
 		void		update(float deltaTime)							override;
 		void		render()										override;
-		void 		LoadText(LoadTexture& normal, 
+		void 		LoadText(LoadTexture& normal,
 			LoadTexture& selected,
-			const std::string& content, 
-			SDL_Color normalColor, 
+			const std::string& content,
+			SDL_Color normalColor,
 			SDL_Color selectedColor);
 		void NavigateMenu(int direction);
 		void AdjustSettings(int adjustment);

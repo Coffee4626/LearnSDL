@@ -50,9 +50,9 @@ namespace pong
 		total_menu = 4,
 	};
 
+
+
 };
-
-
 
 
 void logErrorAndExit(const char* msg, const char* error);

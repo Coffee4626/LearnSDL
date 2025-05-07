@@ -16,7 +16,6 @@ void LoadTexture::Free()
 {
     if (mTexture != nullptr)
     {
-		SDL_DestroyTexture(mTexture);
         mTexture = nullptr;
         mWidth = 0;
         mHeight = 0;
@@ -36,6 +35,7 @@ void LoadTexture::SetBlendMode(SDL_BlendMode mode)
 
 void LoadTexture::renderTexture(SDL_Renderer* renderer, int x, int y, SDL_Rect* clip)
 {
+
     SDL_Rect renderingSpace = { x, y, mWidth, mHeight };
 
     if (clip != NULL)
@@ -62,6 +62,7 @@ bool LoadTexture::LoadFromRenderedText(std::string textureText, TTF_Font* gFont,
 {
 
 	SDL_Surface* textSurface = TTF_RenderText_Solid(gFont, textureText.c_str(), textColor);
+	SDL_DestroyTexture(mTexture);
 	Free();
 	if (textSurface == NULL)
 	{

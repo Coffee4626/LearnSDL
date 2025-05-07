@@ -10,8 +10,6 @@
 
 namespace pong
 {
-	class Game;
-
 	enum CourtMenu
 	{
 		Courtresume,
@@ -19,6 +17,8 @@ namespace pong
 		Courtquit,
 		totalCourtMenu = 3
 	};
+
+	class Game;
 
 	class Court : public GameState
 	{
@@ -30,7 +30,7 @@ namespace pong
 		void			handleEvent(SDL_Event& e)							override;
 		void			update(float deltaTime)								override;
 		void			render()											override;
-		void			DisplayCourtMenu();
+		void			RenderCourtMenu();
 		void			LoadMedia();
 		void			updatePlayerScore();
 		void			updateGameObjects(float& mTime);
@@ -56,14 +56,14 @@ namespace pong
 		LoadTexture		mSettingsTextNormal;
 		LoadTexture 	mQuitTextNormal;
 		LoadTexture		mResumeTextSelected;
-		LoadTexture		mSettingsTextSelected;	
+		LoadTexture		mSettingsTextSelected;
 		LoadTexture		mQuitTextSelected;
 
 		LoadTexture		mVolumeTextNormal;
 		LoadTexture		mVolumeTextSelected;
 		LoadTexture		mScoreTextNormal;
 		LoadTexture		mScoreTextSelected;
-		
+
 		Collision collision;
 		Paddle* paddle1;
 		Paddle* paddle2;

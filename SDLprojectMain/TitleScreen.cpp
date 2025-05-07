@@ -225,8 +225,7 @@ void Title::UpdateSettings()
 		mVolume = MIN_VOLUME;
 	}
 	mGame.gSound.SetVolume(mVolume);
-	mVolumeTextSelected.Free();
-	mVolumeTextSelected.LoadFromRenderedText("Volume " + 
+	mVolumeTextSelected.LoadFromRenderedText("Volume " +
 		std::to_string((mGame.gSound.GetVolume() * 100) / 128), mFont, { 0xFF, 0xFF, 0x00, 0xFF }, mRenderer);
 
 	if (mMaxScore > MAX_SCORE)
@@ -263,15 +262,15 @@ void Title::RenderSettings()
 
 void Title::RenderSettingOption(LoadTexture& normal, LoadTexture& selected, int index, int yOffset)
 {
-	if (mSelectedSettingsMenuIndex == index) 
+	if (mSelectedSettingsMenuIndex == index)
 	{
 		selected.renderTexture(mRenderer,
 			SCREEN_WIDTH / 2 - selected.getWidth() / 2,
 			SCREEN_HEIGHT / 2 - selected.getHeight() / 2 + yOffset);
 	}
 	else normal.renderTexture(mRenderer,
-			SCREEN_WIDTH / 2 - normal.getWidth() / 2,
-			SCREEN_HEIGHT / 2 - normal.getHeight() / 2 + yOffset);
+		SCREEN_WIDTH / 2 - normal.getWidth() / 2,
+		SCREEN_HEIGHT / 2 - normal.getHeight() / 2 + yOffset);
 }
 
 void Title::RenderMainMenu()
@@ -295,4 +294,3 @@ void Title::RenderMainMenuOption(LoadTexture& normal, LoadTexture& selected,
 	}
 	else normal.renderTexture(mRenderer, 2 * SCREEN_WIDTH / 3 - normal.getWidth(), yOffset);
 }
-

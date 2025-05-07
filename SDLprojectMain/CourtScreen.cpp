@@ -40,7 +40,6 @@ Court::~Court()
 	mVolumeTextSelected.Free();
 	mScoreTextNormal.Free();
 	mScoreTextSelected.Free();
-
 	mVolumeTextNormal.Free();
 	mVolumeTextSelected.Free();
 	std::cout << "Court destructor called" << std::endl;
@@ -260,7 +259,7 @@ void Court::updatePlayerScore()
 		scores[PlayerIndex::second]++;
 		player2score.LoadFromRenderedText(std::to_string(scores[PlayerIndex::second]), mFont, black, mRenderer);
 	}
-	if (scores[PlayerIndex::first] > 100 || scores[PlayerIndex::second] > 100)
+	if (scores[PlayerIndex::first] > 2 || scores[PlayerIndex::second] > 2)
 	{
 		RequestChangeScene(SceneType::RESULT_SCREEN);
 	}
@@ -313,16 +312,16 @@ void Court::render()
 	if (mIsPaused == true)
 	{
 		//Display court menu
-		DisplayCourtMenu();
+		RenderCourtMenu();
 	}
 }
 
-void Court::DisplayCourtMenu()
+void Court::RenderCourtMenu()
 {
 	int yOffSet = 50;
 	mDefaultBackground.renderTexture(mRenderer, 0, 0);
-	mPausedText.renderTexture(mRenderer, 
-		(SCREEN_WIDTH - mPausedText.getWidth()) / 2, 
+	mPausedText.renderTexture(mRenderer,
+		(SCREEN_WIDTH - mPausedText.getWidth()) / 2,
 		(SCREEN_HEIGHT - mPausedText.getHeight()) / 2 - 50);
 
 	if (mSettingsMenuOpen == true)
@@ -332,38 +331,38 @@ void Court::DisplayCourtMenu()
 
 	if (mSelectedMenuIndex == CourtMenu::Courtresume)
 	{
-		mResumeTextSelected.renderTexture(mRenderer, 
-			(SCREEN_WIDTH - mResumeTextSelected.getWidth()) / 2, 
+		mResumeTextSelected.renderTexture(mRenderer,
+			(SCREEN_WIDTH - mResumeTextSelected.getWidth()) / 2,
 			(SCREEN_HEIGHT - mResumeTextSelected.getHeight()) / 2 + yOffSet);
 	}
 	else
 	{
-		mResumeTextNormal.renderTexture(mRenderer, 
-			(SCREEN_WIDTH - mResumeTextNormal.getWidth()) / 2, 
+		mResumeTextNormal.renderTexture(mRenderer,
+			(SCREEN_WIDTH - mResumeTextNormal.getWidth()) / 2,
 			(SCREEN_HEIGHT - mResumeTextNormal.getHeight()) / 2 + yOffSet);
 	}
 	if (mSelectedMenuIndex == CourtMenu::Courtsettings)
 	{
-		mSettingsTextSelected.renderTexture(mRenderer, 
-			(SCREEN_WIDTH - mSettingsTextSelected.getWidth()) / 2, 
+		mSettingsTextSelected.renderTexture(mRenderer,
+			(SCREEN_WIDTH - mSettingsTextSelected.getWidth()) / 2,
 			(SCREEN_HEIGHT - mSettingsTextSelected.getHeight()) / 2 + yOffSet * 2);
 	}
 	else
 	{
-		mSettingsTextNormal.renderTexture(mRenderer, 
-			(SCREEN_WIDTH - mSettingsTextNormal.getWidth()) / 2, 
+		mSettingsTextNormal.renderTexture(mRenderer,
+			(SCREEN_WIDTH - mSettingsTextNormal.getWidth()) / 2,
 			(SCREEN_HEIGHT - mSettingsTextNormal.getHeight()) / 2 + yOffSet * 2);
 	}
 	if (mSelectedMenuIndex == CourtMenu::Courtquit)
 	{
-		mQuitTextSelected.renderTexture(mRenderer, 
-			(SCREEN_WIDTH - mQuitTextSelected.getWidth()) / 2, 
+		mQuitTextSelected.renderTexture(mRenderer,
+			(SCREEN_WIDTH - mQuitTextSelected.getWidth()) / 2,
 			(SCREEN_HEIGHT - mQuitTextSelected.getHeight()) / 2 + yOffSet * 3);
 	}
 	else
 	{
-		mQuitTextNormal.renderTexture(mRenderer, 
-			(SCREEN_WIDTH - mQuitTextNormal.getWidth()) / 2, 
+		mQuitTextNormal.renderTexture(mRenderer,
+			(SCREEN_WIDTH - mQuitTextNormal.getWidth()) / 2,
 			(SCREEN_HEIGHT - mQuitTextNormal.getHeight()) / 2 + yOffSet * 3);
 	}
 }
