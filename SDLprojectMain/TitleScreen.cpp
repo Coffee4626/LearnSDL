@@ -117,6 +117,7 @@ void Title::LoadMedia()
 	LoadText(mHelpTextNormal, mHelpTextSelected, "Help", white, yellow);
 	LoadText(mSettingsTextNormal, mSettingsTextSelected, "Settings", white, yellow);
 	LoadText(mQuitTextNormal, mQuitTextSelected, "Quit", white, yellow);
+	LoadText(mSaveTextNormal, mSaveTextSelected, "Save", white, yellow);
 
 	//Load instructions text
 	mInstructionsForPlayers.LoadFromRenderedText(
@@ -175,21 +176,21 @@ void Title::SelectMenuOption()
 	{
 		switch (mSelectedMenuIndex)
 		{
-		case MenuIndex::play:
+		case MenuIndex::Title_Play:
 			std::cout << "Play button selected" << std::endl;
 			RequestChangeScene(SceneType::COURT_SCREEN);
 			break;
-		case MenuIndex::help:
+		case MenuIndex::Title_Help:
 			std::cout << "Help button selected" << std::endl;
 			mSelectedMenuIndex = 0;
 			mHelpSelected = true;
 			break;
-		case MenuIndex::settings:
+		case MenuIndex::Title_Settings:
 			std::cout << "Settings button selected" << std::endl;
 			mSelectedMenuIndex = 0;
 			mSettingsSelected = true;
 			break;
-		case MenuIndex::quit:
+		case MenuIndex::Title_Quit:
 			std::cout << "Quit button selected" << std::endl;
 			mGame.Quit();
 			break;
@@ -278,10 +279,10 @@ void Title::RenderMainMenu()
 	int height = SCREEN_HEIGHT / 3;
 	int yOffSet = 50;
 
-	RenderMainMenuOption(mPlayTextNormal, mPlayTextSelected, MenuIndex::play, height);
-	RenderMainMenuOption(mHelpTextNormal, mHelpTextSelected, MenuIndex::help, height + yOffSet);
-	RenderMainMenuOption(mSettingsTextNormal, mSettingsTextSelected, MenuIndex::settings, height + 2 * yOffSet);
-	RenderMainMenuOption(mQuitTextNormal, mQuitTextSelected, MenuIndex::quit, height + 3 * yOffSet);
+	RenderMainMenuOption(mPlayTextNormal, mPlayTextSelected, MenuIndex::Title_Play, height);
+	RenderMainMenuOption(mHelpTextNormal, mHelpTextSelected, MenuIndex::Title_Help, height + yOffSet);
+	RenderMainMenuOption(mSettingsTextNormal, mSettingsTextSelected, MenuIndex::Title_Settings, height + 2 * yOffSet);
+	RenderMainMenuOption(mQuitTextNormal, mQuitTextSelected, MenuIndex::Title_Quit, height + 3 * yOffSet);
 }
 
 void Title::RenderMainMenuOption(LoadTexture& normal, LoadTexture& selected,

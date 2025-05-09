@@ -31,17 +31,15 @@ Court::~Court()
 	player1score.Free();
 	player2score.Free();
 	mResumeTextNormal.Free();
-	mSettingsTextNormal.Free();
 	mQuitTextNormal.Free();
 	mResumeTextSelected.Free();
-	mSettingsTextSelected.Free();
 	mQuitTextSelected.Free();
-	mVolumeTextNormal.Free();
-	mVolumeTextSelected.Free();
-	mScoreTextNormal.Free();
-	mScoreTextSelected.Free();
-	mVolumeTextNormal.Free();
-	mVolumeTextSelected.Free();
+
+	for (int i = 0; i < TOTAL_PARTICLES; i++)
+	{
+		delete particles[i];
+	}
+
 	std::cout << "Court destructor called" << std::endl;
 }
 
@@ -55,6 +53,11 @@ void Court::enter()
 	mGame.getPlayerScores()[PlayerIndex::first] = 0;
 	mGame.getPlayerScores()[PlayerIndex::second] = 0;
 
+	for (int i = 0; i < TOTAL_PARTICLES; i++)
+	{
+		particles[i] = new Particle(ball->GetBallX(), ball->GetBallY(), &mParticleTexture, &mShimmerTexture);
+	}
+
 	SDL_Color black = { 0x00, 0x00, 0x00, 0xFF };
 	player1score.LoadFromRenderedText(std::to_string(mGame.getPlayerScores()[PlayerIndex::first]), mFont, black, mRenderer);
 
@@ -66,28 +69,15 @@ void Court::enter()
 void Court::LoadMedia()
 {
 	SDL_Color white = { 0xFF, 0xFF, 0xFF, 0xFF };
-
-	mPausedText.LoadFromRenderedText("Paused", mFont, white, mRenderer);
-
-	mResumeTextNormal.LoadFromRenderedText("Resume", mFont, white, mRenderer);
-
-	mSettingsTextNormal.LoadFromRenderedText("Settings", mFont, white, mRenderer);
-
-	mQuitTextNormal.LoadFromRenderedText("Quit", mFont, white, mRenderer);
-
-	mVolumeTextNormal.LoadFromRenderedText("Volume", mFont, white, mRenderer);
-
 	SDL_Color yellow = { 0xFF, 0xFF, 0x00, 0xFF };
 
-	mResumeTextSelected.LoadFromRenderedText("Resume", mFont, yellow, mRenderer);
+	mPausedText.LoadFromRenderedText("Paused", mFont, white, mRenderer);
+	LoadText(mResumeTextNormal, mResumeTextSelected, "Resume", white, yellow);
+	LoadText(mQuitTextNormal, mQuitTextSelected, "Quit", white, yellow);
 
-	mSettingsTextSelected.LoadFromRenderedText("Settings", mFont, yellow, mRenderer);
-
-	mQuitTextSelected.LoadFromRenderedText("Quit", mFont, yellow, mRenderer);
-
-	mVolumeTextSelected.LoadFromRenderedText("Volume", mFont, yellow, mRenderer);
-
-	mScoreTextNormal.LoadFromRenderedText("Max score", mFont, yellow, mRenderer);
+	//Load Particles
+	mParticleTexture.LoadFromFile("Assets/red.bmp", mRenderer);
+	mShimmerTexture.LoadFromFile("Assets/shimmer.bmp", mRenderer);
 
 	//Load backgrounds
 	mBackgroundTexture.LoadFromFile("Assets/Pong court.png", mRenderer);
@@ -117,6 +107,14 @@ void Court::LoadMedia()
 	mSpriteClips[2].h = 25;
 }
 
+
+void Court::LoadText(LoadTexture& normal, LoadTexture& selected,
+	const std::string& content, SDL_Color normalColor, SDL_Color selectedColor)
+{
+	normal.LoadFromRenderedText(content, mFont, normalColor, mRenderer);
+	selected.LoadFromRenderedText(content, mFont, selectedColor, mRenderer);
+}
+
 void Court::handleEvent(SDL_Event& event)
 {
 	//Getting inputs
@@ -135,14 +133,14 @@ void Court::handleEvent(SDL_Event& event)
 			{
 				buttonsinput[right_paddle_up] = true;
 			}
-			else mSelectedMenuIndex = (mSelectedMenuIndex - 1 + CourtMenu::totalCourtMenu) % CourtMenu::totalCourtMenu;
+			else mSelectedMenuIndex = (mSelectedMenuIndex - 1 + CourtIndex::totalCourtMenu) % CourtIndex::totalCourtMenu;
 			break;
 		case SDLK_DOWN:
 			if (mIsPaused == false)
 			{
 				buttonsinput[right_paddle_down] = true;
 			}
-			else mSelectedMenuIndex = (mSelectedMenuIndex + 1) % CourtMenu::totalCourtMenu;
+			else mSelectedMenuIndex = (mSelectedMenuIndex + 1) % CourtIndex::totalCourtMenu;
 			break;
 		case SDLK_ESCAPE:
 			if (mIsPaused == false) mIsPaused = true;
@@ -153,13 +151,10 @@ void Court::handleEvent(SDL_Event& event)
 			{
 				switch (mSelectedMenuIndex)
 				{
-				case CourtMenu::Courtresume:
+				case CourtIndex::Court_Resume:
 					mIsPaused = false;
 					break;
-				case CourtMenu::Courtsettings:
-					std::cout << "Settings button selected" << std::endl;
-					break;
-				case CourtMenu::Courtquit:
+				case CourtIndex::Court_Quit:
 					std::cout << "Quit button selected" << std::endl;
 					RequestChangeScene(SceneType::TITLE_SCREEN);
 					break;
@@ -259,11 +254,13 @@ void Court::updatePlayerScore()
 		scores[PlayerIndex::second]++;
 		player2score.LoadFromRenderedText(std::to_string(scores[PlayerIndex::second]), mFont, black, mRenderer);
 	}
-	if (scores[PlayerIndex::first] > 2 || scores[PlayerIndex::second] > 2)
+	if (scores[PlayerIndex::first] > mScore || scores[PlayerIndex::second] > mScore)
 	{
 		RequestChangeScene(SceneType::RESULT_SCREEN);
 	}
 }
+
+
 
 void Court::updateGameObjects(float& mTime)
 {
@@ -297,6 +294,23 @@ void Court::update(float deltaTime)
 	}
 }
 
+void Court::RenderParticles()
+{
+	for (int i = 0; i < TOTAL_PARTICLES; i++)
+	{
+		if (particles[i]->isDead())
+		{
+			delete particles[i];
+			particles[i] = new Particle(ball->GetBallX(), ball->GetBallY(), &mParticleTexture, &mShimmerTexture);
+		}
+	}
+
+	for (int i = 0; i < TOTAL_PARTICLES; i++)
+	{
+		particles[i]->Render(mRenderer);
+	}
+}
+
 void Court::render()
 {
 	//Render play court
@@ -309,6 +323,7 @@ void Court::render()
 	paddle2->RenderPaddle(&mSpriteClips[1], mRenderer, mSpriteSheet);
 	//Render ball
 	ball->RenderBall(&mSpriteClips[2], mRenderer, mSpriteSheet);
+	RenderParticles();
 	if (mIsPaused == true)
 	{
 		//Display court menu
@@ -323,13 +338,7 @@ void Court::RenderCourtMenu()
 	mPausedText.renderTexture(mRenderer,
 		(SCREEN_WIDTH - mPausedText.getWidth()) / 2,
 		(SCREEN_HEIGHT - mPausedText.getHeight()) / 2 - 50);
-
-	if (mSettingsMenuOpen == true)
-	{
-
-	}
-
-	if (mSelectedMenuIndex == CourtMenu::Courtresume)
+	if (mSelectedMenuIndex == CourtIndex::Court_Resume)
 	{
 		mResumeTextSelected.renderTexture(mRenderer,
 			(SCREEN_WIDTH - mResumeTextSelected.getWidth()) / 2,
@@ -341,28 +350,16 @@ void Court::RenderCourtMenu()
 			(SCREEN_WIDTH - mResumeTextNormal.getWidth()) / 2,
 			(SCREEN_HEIGHT - mResumeTextNormal.getHeight()) / 2 + yOffSet);
 	}
-	if (mSelectedMenuIndex == CourtMenu::Courtsettings)
-	{
-		mSettingsTextSelected.renderTexture(mRenderer,
-			(SCREEN_WIDTH - mSettingsTextSelected.getWidth()) / 2,
-			(SCREEN_HEIGHT - mSettingsTextSelected.getHeight()) / 2 + yOffSet * 2);
-	}
-	else
-	{
-		mSettingsTextNormal.renderTexture(mRenderer,
-			(SCREEN_WIDTH - mSettingsTextNormal.getWidth()) / 2,
-			(SCREEN_HEIGHT - mSettingsTextNormal.getHeight()) / 2 + yOffSet * 2);
-	}
-	if (mSelectedMenuIndex == CourtMenu::Courtquit)
+	if (mSelectedMenuIndex == CourtIndex::Court_Quit)
 	{
 		mQuitTextSelected.renderTexture(mRenderer,
 			(SCREEN_WIDTH - mQuitTextSelected.getWidth()) / 2,
-			(SCREEN_HEIGHT - mQuitTextSelected.getHeight()) / 2 + yOffSet * 3);
+			(SCREEN_HEIGHT - mQuitTextSelected.getHeight()) / 2 + yOffSet * 2);
 	}
 	else
 	{
 		mQuitTextNormal.renderTexture(mRenderer,
 			(SCREEN_WIDTH - mQuitTextNormal.getWidth()) / 2,
-			(SCREEN_HEIGHT - mQuitTextNormal.getHeight()) / 2 + yOffSet * 3);
+			(SCREEN_HEIGHT - mQuitTextNormal.getHeight()) / 2 + yOffSet * 2);
 	}
 }

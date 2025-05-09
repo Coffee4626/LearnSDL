@@ -25,6 +25,8 @@ namespace pong
 	const float FPS = 60;
 	const float FrameDelay = 1000.0f / FPS;
 
+	const int TOTAL_PARTICLES = 10;
+
 	enum buttons
 	{
 		left_paddle_up,
@@ -43,15 +45,12 @@ namespace pong
 
 	enum MenuIndex
 	{
-		play,
-		help,
-		settings,
-		quit,
+		Title_Play,
+		Title_Help,
+		Title_Settings,
+		Title_Quit,
 		total_menu = 4,
 	};
-
-
-
 };
 
 

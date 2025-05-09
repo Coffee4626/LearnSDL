@@ -19,30 +19,28 @@ namespace pong
 	public:
 		Title(Game& game, SDL_Renderer* renderer, TTF_Font* font);
 		~Title();
-		void		enter()	override;
-		void		exit()											override;
-		void		handleEvent(SDL_Event& e)						override;
-		void		update(float deltaTime)							override;
-		void		render()										override;
+		void	enter()											override;
+		void	exit()											override;
+		void	handleEvent(SDL_Event& e)						override;
+		void	update(float deltaTime)							override;
+		void	render()										override;
+		void	NavigateMenu(int direction);
+		void	AdjustSettings(int adjustment);
+		void	SelectMenuOption();
+		void	ExitSubMenu();
+		void	RenderHelpState();
+		void	RenderSettings();
+		void	RenderSettingOption(LoadTexture& normal, LoadTexture& selected, int index, int yOffset);
+		void	RenderMainMenuOption(LoadTexture& normal, LoadTexture& selected, int index, int yOffset);
+		void	RenderMainMenu();
+		void	LoadMedia();
+	private:
+		void	UpdateSettings();
 		void 		LoadText(LoadTexture& normal,
 			LoadTexture& selected,
 			const std::string& content,
 			SDL_Color normalColor,
 			SDL_Color selectedColor);
-		void NavigateMenu(int direction);
-		void AdjustSettings(int adjustment);
-		void SelectMenuOption();
-		void ExitSubMenu();
-		void RenderHelpState();
-		void RenderSettings();
-		void RenderSettingOption(LoadTexture& normal, LoadTexture& selected,
-			int index, int yOffset);
-		void RenderMainMenuOption(LoadTexture& normal, LoadTexture& selected,
-			int index, int yOffset);
-		void RenderMainMenu();
-		void	LoadMedia();
-		void	UpdateSettings();
-	private:
 		Game& mGame;
 		SDL_Renderer* mRenderer;
 		TTF_Font* mFont;

@@ -7,14 +7,14 @@
 #include "Paddle.h"
 #include "Ball.h"
 #include "Collision.h"
+#include "Particle.h"
 
 namespace pong
 {
-	enum CourtMenu
+	enum CourtIndex
 	{
-		Courtresume,
-		Courtsettings,
-		Courtquit,
+		Court_Resume,
+		Court_Quit,
 		totalCourtMenu = 3
 	};
 
@@ -30,12 +30,15 @@ namespace pong
 		void			handleEvent(SDL_Event& e)							override;
 		void			update(float deltaTime)								override;
 		void			render()											override;
+		void RenderParticles();
 		void			RenderCourtMenu();
 		void			LoadMedia();
 		void			updatePlayerScore();
 		void			updateGameObjects(float& mTime);
 		void			handleInput();
 	private:
+		void LoadText(LoadTexture& normal, LoadTexture& selected,
+			const std::string& content, SDL_Color normalColor, SDL_Color selectedColor);
 		Game& mGame;
 		SDL_Renderer* mRenderer;
 		TTF_Font* mFont;
@@ -53,25 +56,23 @@ namespace pong
 		LoadTexture		player2score;
 
 		LoadTexture		mResumeTextNormal;
-		LoadTexture		mSettingsTextNormal;
 		LoadTexture 	mQuitTextNormal;
 		LoadTexture		mResumeTextSelected;
-		LoadTexture		mSettingsTextSelected;
 		LoadTexture		mQuitTextSelected;
 
-		LoadTexture		mVolumeTextNormal;
-		LoadTexture		mVolumeTextSelected;
-		LoadTexture		mScoreTextNormal;
-		LoadTexture		mScoreTextSelected;
-
+		LoadTexture		mParticleTexture;
+		LoadTexture		mShimmerTexture;
+		
 		Collision collision;
 		Paddle* paddle1;
 		Paddle* paddle2;
 		Ball* ball;
-		int mSelectedMenuIndex;
+
+		Particle* particles[TOTAL_PARTICLES];
+		int	mSelectedMenuIndex;
 		bool	mIsPaused;
-		bool	mSettingsMenuOpen;
-		int mScore;
+		int	mVolume;
+		int	mScore;
 	};
 }
 

@@ -10,6 +10,7 @@ Ball::Ball()
 	InitialBallVelocityY = 0;
 	BallVelocityX = InitialBallVelocityX;
 	BallVelocityY = InitialBallVelocityY;
+
 }
 
 Ball::Ball(float x, float y)
@@ -35,5 +36,22 @@ void Ball::RenderBall(SDL_Rect* currentClip, SDL_Renderer* renderer, LoadTexture
 	mBallTexture.renderTexture(renderer, BallPosition.x, BallPosition.y, currentClip);
 }
 
+int Ball::GetBallX()
+{
+	return BallPosition.x;
+}
+
+int Ball::GetBallY()
+{
+	return BallPosition.y;
+}
+
+//void Ball::ResetBall()
+//{
+//	BallPosition.x = SCREEN_WIDTH / 2;
+//	BallPosition.y = SCREEN_HEIGHT / 2;
+//	BallVelocityX = InitialBallVelocityX;
+//	BallVelocityY = InitialBallVelocityY;
+//}
 
 
