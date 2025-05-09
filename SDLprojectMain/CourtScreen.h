@@ -38,7 +38,7 @@ namespace pong
 		void			handleInput();
 	private:
 		void LoadText(LoadTexture& normal, LoadTexture& selected,
-			const std::string& content, SDL_Color normalColor, SDL_Color selectedColor);
+			const char* content, SDL_Color normalColor, SDL_Color selectedColor);
 		Game& mGame;
 		SDL_Renderer* mRenderer;
 		TTF_Font* mFont;

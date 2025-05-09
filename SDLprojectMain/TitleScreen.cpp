@@ -132,7 +132,7 @@ void Title::LoadMedia()
 }
 
 void Title::LoadText(LoadTexture& normal, LoadTexture& selected,
-	const std::string& content, SDL_Color normalColor, SDL_Color selectedColor)
+	const char* content, SDL_Color normalColor, SDL_Color selectedColor)
 {
 	normal.LoadFromRenderedText(content, mFont, normalColor, mRenderer);
 	selected.LoadFromRenderedText(content, mFont, selectedColor, mRenderer);
