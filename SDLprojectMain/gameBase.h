@@ -25,7 +25,7 @@ namespace pong
 	const float FPS = 60;
 	const float FrameDelay = 1000.0f / FPS;
 
-	const int TOTAL_PARTICLES = 10;
+	const int TOTAL_PARTICLES = 20;
 
 	enum buttons
 	{

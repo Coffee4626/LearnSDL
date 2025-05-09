@@ -38,7 +38,7 @@ namespace pong
 		void	UpdateSettings();
 		void 		LoadText(LoadTexture& normal,
 			LoadTexture& selected,
-			const std::string& content,
+			const char* content,
 			SDL_Color normalColor,
 			SDL_Color selectedColor);
 		Game& mGame;
