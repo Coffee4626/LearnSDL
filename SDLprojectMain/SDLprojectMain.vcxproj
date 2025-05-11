@@ -140,13 +140,11 @@
     <ClCompile Include="CourtScreen.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameState.cpp" />
-    <ClCompile Include="GameUtils.cpp" />
     <ClCompile Include="LoadSound.cpp" />
     <ClCompile Include="LoadTexture.cpp" />
     <ClCompile Include="GameBase.cpp" />
     <ClCompile Include="Paddle.cpp" />
     <ClCompile Include="Particle.cpp" />
-    <ClCompile Include="ParticleEngine.cpp" />
     <ClCompile Include="ResultScreen.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="StateManager.cpp" />
@@ -158,13 +156,11 @@
     <ClInclude Include="CourtScreen.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameBase.h" />
-    <ClInclude Include="GameUtils.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="LoadSound.h" />
     <ClInclude Include="LoadTexture.h" />
     <ClInclude Include="Paddle.h" />
     <ClInclude Include="Particle.h" />
-    <ClInclude Include="ParticleEngine.h" />
     <ClInclude Include="ResultScreen.h" />
     <ClInclude Include="StateManager.h" />
     <ClInclude Include="TitleScreen.h" />
