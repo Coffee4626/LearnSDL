@@ -30,13 +30,10 @@
   
   -Pause/Unpause game:
     	![image](https://github.com/user-attachments/assets/e7806fdf-ed37-489d-9102-2271cd5251e3)
-  -Chỉnh sửa volume và score
-    	![image](https://github.com/user-attachments/assets/39da74c2-c5a6-4bf4-b525-eb28bd329e58)
-    	![image](https://github.com/user-attachments/assets/a20ea028-a190-4ef9-8d7e-4589c70dbe9f)
-  
+  -Chỉnh sửa volume, score
+  	![image](https://github.com/user-attachments/assets/78429199-bd50-4610-8ba6-5feb4f1b0d51)
   -Lưu lại settings của người chơi:
-    	![image](https://github.com/user-attachments/assets/31023e5f-671a-4835-b1d7-d4aa94b8224d)
-  
+  	![image](https://github.com/user-attachments/assets/5ae20e00-0b39-4cf1-979f-d5b9ca03d326)
 **4.Nguồn hình ảnh / âm thanh**
   -[Background music](https://www.youtube.com/watch?v=bc0KhhjJP98)
   -[Pong SFX](https://www.youtube.com/watch?v=wDMassjkVUA)
