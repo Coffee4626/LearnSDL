@@ -14,12 +14,13 @@
   -Particle engine đơn giản:
 		![image](https://github.com/user-attachments/assets/9b75503e-265f-4f0f-9886-16f98e8b45df)
   
-  -Hệ thống UI
+  -Hệ thống UI:
+  
     -![image](https://github.com/user-attachments/assets/79c37e54-898a-425e-93d4-571cf6026cc6)
     -![image](https://github.com/user-attachments/assets/6e15426b-286d-4c03-ac88-c2e5b8f7b0d1)
     -![image](https://github.com/user-attachments/assets/8be01175-ece4-42f2-9ad3-9426787e9055)
   
-  -Hệ thống âm thanh
+  -Hệ thống âm thanh:
       -SFX khi di chuyển giữa các option trong menu
       -SFX khi bóng va chạm vào vợt
       -SFX khi bóng va chạm vào thành
@@ -27,14 +28,15 @@
     
   -Thuật toán Seperating axis theorem(SAT)
   
-  -Pause/Unpause game
-    -![image](https://github.com/user-attachments/assets/e7806fdf-ed37-489d-9102-2271cd5251e3)
+  -Pause/Unpause game:
+    	![image](https://github.com/user-attachments/assets/e7806fdf-ed37-489d-9102-2271cd5251e3)
   -Chỉnh sửa volume và score
-    -![image](https://github.com/user-attachments/assets/39da74c2-c5a6-4bf4-b525-eb28bd329e58)
-    -![image](https://github.com/user-attachments/assets/a20ea028-a190-4ef9-8d7e-4589c70dbe9f)
+    	![image](https://github.com/user-attachments/assets/39da74c2-c5a6-4bf4-b525-eb28bd329e58)
+    	![image](https://github.com/user-attachments/assets/a20ea028-a190-4ef9-8d7e-4589c70dbe9f)
   
-  -Lưu lại settings của người chơi
-    -![image](https://github.com/user-attachments/assets/31023e5f-671a-4835-b1d7-d4aa94b8224d)
+  -Lưu lại settings của người chơi:
+  	
+    	![image](https://github.com/user-attachments/assets/31023e5f-671a-4835-b1d7-d4aa94b8224d)
   
 **4.Nguồn hình ảnh / âm thanh**
   -[Background music](https://www.youtube.com/watch?v=bc0KhhjJP98)
