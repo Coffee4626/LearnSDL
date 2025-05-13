@@ -2,15 +2,15 @@
 
 **1.Tác giả**
 
-  -Họ và tên: Đào Đình Bình
+  * Họ và tên: Đào Đình Bình
   
-  -Mã sinh viên: 24021389
+  * Mã sinh viên: 24021389
 
 **2.Giới thiệu game**
 
-  -Lấy ý tưởng từ trò chơi arcade cổ điển pong
+  * Lấy ý tưởng từ trò chơi arcade cổ điển pong
   
-  -2 người chơi điều khiển 2 vợt để đưa bóng vào thành đối phương
+  * 2 người chơi điều khiển 2 vợt để đưa bóng vào thành đối phương
 
 **3.Điểm nổi bật**
 
