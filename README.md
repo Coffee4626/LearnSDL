@@ -14,14 +14,14 @@
 
 **3.Điểm nổi bật**
 
-  -Game state manager để chuyển trạng thái game dựa vào input và điểm người chơi
+    -Game state manager để chuyển trạng thái game dựa vào input và điểm người chơi
   
-  -Particle engine đơn giản:
+    -Particle engine đơn giản:
 
   
 ![image](https://github.com/user-attachments/assets/9b75503e-265f-4f0f-9886-16f98e8b45df)
   
-  -Hệ thống UI:
+    -Hệ thống UI:
   
 ![image](https://github.com/user-attachments/assets/79c37e54-898a-425e-93d4-571cf6026cc6)
     
@@ -29,28 +29,28 @@
     
 ![image](https://github.com/user-attachments/assets/8be01175-ece4-42f2-9ad3-9426787e9055)
   
-  -Hệ thống âm thanh:
+    -Hệ thống âm thanh:
   
-SFX khi di chuyển giữa các option trong menu
+      -SFX khi di chuyển giữa các option trong menu
       
-SFX khi bóng va chạm vào vợt
+      -SFX khi bóng va chạm vào vợt
       
-SFX khi bóng va chạm vào thành
+      -SFX khi bóng va chạm vào thành
       
-Background music
+      -Background music
     
-  -Thuật toán Seperating axis theorem(SAT)
+    -Thuật toán Seperating axis theorem(SAT)
   
-  -Pause/Unpause game:
+    -Pause/Unpause game:
   
 ![image](https://github.com/user-attachments/assets/e7806fdf-ed37-489d-9102-2271cd5251e3)
      
-  -Chỉnh sửa volume, score:
+    -Chỉnh sửa volume, score:
   
   
 ![image](https://github.com/user-attachments/assets/78429199-bd50-4610-8ba6-5feb4f1b0d51)
    
-  -Lưu lại settings của người chơi:
+    -Lưu lại settings của người chơi:
   
   
 ![image](https://github.com/user-attachments/assets/5ae20e00-0b39-4cf1-979f-d5b9ca03d326)
