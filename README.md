@@ -12,7 +12,7 @@
   
   * 2 người chơi điều khiển 2 vợt để đưa bóng vào thành đối phương
 
-  * Ngưỡng điểm mong muốn: 8.5
+  * Ngưỡng điểm mong muốn: 9
 
 **3.Điểm nổi bật**
 
