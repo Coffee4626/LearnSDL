@@ -15,7 +15,6 @@
 		![image](https://github.com/user-attachments/assets/9b75503e-265f-4f0f-9886-16f98e8b45df)
   
   -Hệ thống UI:
-  
     -![image](https://github.com/user-attachments/assets/79c37e54-898a-425e-93d4-571cf6026cc6)
     -![image](https://github.com/user-attachments/assets/6e15426b-286d-4c03-ac88-c2e5b8f7b0d1)
     -![image](https://github.com/user-attachments/assets/8be01175-ece4-42f2-9ad3-9426787e9055)
@@ -34,11 +33,15 @@
   	![image](https://github.com/user-attachments/assets/78429199-bd50-4610-8ba6-5feb4f1b0d51)
   -Lưu lại settings của người chơi:
   	![image](https://github.com/user-attachments/assets/5ae20e00-0b39-4cf1-979f-d5b9ca03d326)
+
+
 **4.Nguồn hình ảnh / âm thanh**
   -[Background music](https://www.youtube.com/watch?v=bc0KhhjJP98)
   -[Pong SFX](https://www.youtube.com/watch?v=wDMassjkVUA)
   -[Sprites](https://opengameart.org/content/pong-graphics)
   -[Menu SFX](https://www.youtube.com/watch?v=61nU94VvEzY)
+
+
 **5.Nguồn tham khảo**
   -Tài liệu code SDL2 của [Lazyfoo](https://lazyfoo.net/tutorials/SDL/index.php)
   -[Timestep và deltaTime](https://gafferongames.com/post/fix_your_timestep/)
