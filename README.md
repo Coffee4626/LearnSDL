@@ -12,6 +12,8 @@
   
   * 2 người chơi điều khiển 2 vợt để đưa bóng vào thành đối phương
 
+  * Ngưỡng điểm mong muốn: 8.5
+
 **3.Điểm nổi bật**
 
   * Game state manager để chuyển trạng thái game dựa vào input và điểm người chơi
@@ -67,7 +69,7 @@
   * [Menu SFX](https://www.youtube.com/watch?v=61nU94VvEzY)
 
 
-**5.Nguồn tham khảo**
+**5.Nguồn tham khảo và mức độ sử dụng AI**
 
   * Tài liệu code SDL2 của [Lazyfoo](https://lazyfoo.net/tutorials/SDL/index.php)
   
@@ -76,3 +78,5 @@
   * [Collision detection](https://www.youtube.com/watch?v=oOEnWQZIePs)
   
   * [Game state manager](http://gamedevgeek.com/tutorials/managing-game-states-in-c/)
+
+  * Mức độ sử dụng AI: Sử dụng trong mục đích tra cứu và giải thích những phần code chưa hiểu khi tìm hiểu trên các trang reference.
