@@ -17,6 +17,8 @@
   -Game state manager để chuyển trạng thái game dựa vào input và điểm người chơi
   
   -Particle engine đơn giản:
+
+  
 ![image](https://github.com/user-attachments/assets/9b75503e-265f-4f0f-9886-16f98e8b45df)
   
   -Hệ thống UI:
