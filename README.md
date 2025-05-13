@@ -35,7 +35,6 @@
     	![image](https://github.com/user-attachments/assets/a20ea028-a190-4ef9-8d7e-4589c70dbe9f)
   
   -Lưu lại settings của người chơi:
-  	
     	![image](https://github.com/user-attachments/assets/31023e5f-671a-4835-b1d7-d4aa94b8224d)
   
 **4.Nguồn hình ảnh / âm thanh**
