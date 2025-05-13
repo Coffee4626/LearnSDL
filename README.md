@@ -37,13 +37,19 @@
 
 **4.Nguồn hình ảnh / âm thanh**
   -[Background music](https://www.youtube.com/watch?v=bc0KhhjJP98)
+  
   -[Pong SFX](https://www.youtube.com/watch?v=wDMassjkVUA)
+  
   -[Sprites](https://opengameart.org/content/pong-graphics)
+  
   -[Menu SFX](https://www.youtube.com/watch?v=61nU94VvEzY)
 
 
 **5.Nguồn tham khảo**
   -Tài liệu code SDL2 của [Lazyfoo](https://lazyfoo.net/tutorials/SDL/index.php)
+  
   -[Timestep và deltaTime](https://gafferongames.com/post/fix_your_timestep/)
+  
   -[Collision detection](https://www.youtube.com/watch?v=oOEnWQZIePs)
+  
   -[Game state manager](http://gamedevgeek.com/tutorials/managing-game-states-in-c/)
